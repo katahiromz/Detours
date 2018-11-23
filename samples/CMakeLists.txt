@@ -104,12 +104,12 @@ subdirs(
     withdll
     #cping
     #disas
+    #dtest
     dumpe
     dumpi
-    #echo
+    echo
     comeasy
     commem
-    #findfunc
     region
     traceapi
     tracebld
@@ -119,18 +119,25 @@ subdirs(
     tracessl
     tracetcp
     tracelnk
-    impmunge)
+    impmunge
+)
 
 if (NOT (DETOURS_TARGET_PROCESSOR STREQUAL "ARM64"))
-    #subdirs(einst findfunc)
+    subdirs(
+        einst
+        findfunc
+    )
 endif()
 
 if (DETOURS_TARGET_PROCESSOR STREQUAL "X86")
-    #subdirs(excep)
+    subdirs(excep)
 endif()
 
 if (NOT (DETOURS_TARGET_PROCESSOR STREQUAL "ARM") AND NOT (DETOURS_TARGET_PROCESSOR STREQUAL "ARM64"))
-    #subdirs(member tryman)
+    subdirs(
+        member
+        #tryman
+    )
 endif()
 
 if (DETOURS_TARGET_PROCESSOR STREQUAL "X64" OR DETOURS_TARGET_PROCESSOR STREQUAL "IA64")

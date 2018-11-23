@@ -1,0 +1,21 @@
+add_library(target${DETOURS_BITS} SHARED target.cpp target.rc target.def)
+set_target_properties(target${DETOURS_BITS} PROPERTIES OUTPUT_NAME "target${DETOURS_BITS}")
+if (MSVC)
+    target_link_options(target${DETOURS_BITS} PRIVATE /base:0x1900000)
+else()
+    target_link_options(target${DETOURS_BITS} PRIVATE -Ttext-segment=1900000)
+endif()
+
+add_library(extend${DETOURS_BITS} SHARED extend.cpp extend.rc extend.def)
+set_target_properties(extend${DETOURS_BITS} PROPERTIES OUTPUT_NAME "extend${DETOURS_BITS}")
+if (MSVC)
+    target_link_options(extend${DETOURS_BITS} PRIVATE /base:0x1a00000)
+else()
+    target_link_options(extend${DETOURS_BITS} PRIVATE -Ttext-segment=1a00000)
+endif()
+
+add_executable(findfunc findfunc.cpp)
+target_link_libraries(findfunc ${DEPS} target${DETOURS_BITS})
+
+add_executable(symtest symtest.cpp)
+target_link_libraries(symtest ${DEPS} target${DETOURS_BITS})
