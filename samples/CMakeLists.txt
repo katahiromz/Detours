@@ -103,7 +103,7 @@ subdirs(
     setdll
     withdll
     #cping
-    #disas
+    disas
     dtest
     dumpe
     dumpi
