@@ -114,8 +114,8 @@ subdirs(
     traceapi
     tracebld
     tracemem
-    #tracereg
-    #traceser
+    tracereg
+    traceser
     #tracessl
     #tracetcp
     #tracelnk
