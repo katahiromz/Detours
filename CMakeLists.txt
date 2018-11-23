@@ -55,7 +55,7 @@ endif()
 
 ##############################################################################
 # TODO: Set environment variable DETOURS_TARGET_PROCESSOR to X86, X64, IA64, ARM or ARM64.
-# For example: C:\Detours> set DETOURS_TARGET_PROCESSOR=X86
+#       For example: C:\Detours> set DETOURS_TARGET_PROCESSOR=X86
 
 # DETOURS_CONFIG
 set(DETOURS_CONFIG $ENV{DETOURS_CONFIG})
