@@ -100,8 +100,8 @@ subdirs(
     syelog
     simple
     slept
-    #setdll
-    #withdll
+    setdll
+    withdll
     #cping
     #disas
     #dumpe
@@ -111,7 +111,7 @@ subdirs(
     #commem
     #findfunc
     #region
-    #traceapi
+    traceapi
     #tracebld
     #tracemem
     #tracereg
