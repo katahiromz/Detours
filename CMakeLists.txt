@@ -130,12 +130,12 @@ endif()
 
 ##############################################################################
 
-set(ROOT .)
+set(ROOT "${CMAKE_SOURCE_DIR}")
 
 set(INCD "${ROOT}/include")
 set(LIBD "${ROOT}/lib.${DETOURS_TARGET_PROCESSOR}${DETOURS_CONFIG}")
 set(BIND "${ROOT}/bin.${DETOURS_TARGET_PROCESSOR}${DETOURS_CONFIG}")
-set(OBJD "obj.${DETOURS_TARGET_PROCESSOR}${DETOURS_CONFIG}")
+set(OBJD "${ROOT}/obj.${DETOURS_TARGET_PROCESSOR}${DETOURS_CONFIG}")
 
 if (NOT (DETOURS_OPTION_PROCESSOR STREQUAL ""))
     set(OPTD "${ROOT}/bin.${DETOURS_OPTION_PROCESSOR}${DETOURS_CONFIG}")
