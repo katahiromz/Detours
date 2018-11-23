@@ -116,9 +116,9 @@ subdirs(
     tracemem
     tracereg
     traceser
-    #tracessl
-    #tracetcp
-    #tracelnk
+    tracessl
+    tracetcp
+    tracelnk
     #impmunge
 )
 
