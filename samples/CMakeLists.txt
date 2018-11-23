@@ -104,13 +104,13 @@ subdirs(
     withdll
     #cping
     #disas
-    #dumpe
-    #dumpi
+    dumpe
+    dumpi
     #echo
-    #comeasy
-    #commem
+    comeasy
+    commem
     #findfunc
-    #region
+    region
     traceapi
     tracebld
     tracemem
@@ -119,8 +119,7 @@ subdirs(
     tracessl
     tracetcp
     tracelnk
-    #impmunge
-)
+    impmunge)
 
 if (NOT (DETOURS_TARGET_PROCESSOR STREQUAL "ARM64"))
     #subdirs(einst findfunc)
