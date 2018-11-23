@@ -1,4 +1,3 @@
-LIBRARY dslept
 EXPORTS
     DetourFinishHelperProcess
     TimedSleepEx
