@@ -89,23 +89,6 @@ endif()
 
 ##############################################################################
 
-if (NOT (EXISTS "${INCD}"))
-    file(MAKE_DIRECTORY "${INCD}")
-    message(STATUS "Created ${INCD}")
-endif()
-if (NOT (EXISTS "${LIBD}"))
-    file(MAKE_DIRECTORY "${LIBD}")
-    message(STATUS "Created ${LIBD}")
-endif()
-if (NOT (EXISTS "${BIND}"))
-    file(MAKE_DIRECTORY "${BIND}")
-    message(STATUS "Created ${BIND}")
-endif()
-if (NOT (EXISTS "${OBJD}"))
-    file(MAKE_DIRECTORY "${OBJD}")
-    message(STATUS "Created ${OBJD}")
-endif()
-
 add_library(detours
     detours.cpp
     modules.cpp

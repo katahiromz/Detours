@@ -130,45 +130,62 @@ endif()
 
 ##############################################################################
 
-set(ROOT "${CMAKE_SOURCE_DIR}")
+set(ROOT ${CMAKE_SOURCE_DIR})
 
-set(INCD "${ROOT}/include")
-set(LIBD "${ROOT}/lib.${DETOURS_TARGET_PROCESSOR}${DETOURS_CONFIG}")
-set(BIND "${ROOT}/bin.${DETOURS_TARGET_PROCESSOR}${DETOURS_CONFIG}")
-set(OBJD "${ROOT}/obj.${DETOURS_TARGET_PROCESSOR}${DETOURS_CONFIG}")
+set(INCD "${CMAKE_BINARY_DIR}/include")
+set(LIBD "${CMAKE_BINARY_DIR}/lib.${DETOURS_TARGET_PROCESSOR}${DETOURS_CONFIG}")
+set(BIND "${CMAKE_BINARY_DIR}/bin.${DETOURS_TARGET_PROCESSOR}${DETOURS_CONFIG}")
+set(OBJD "${CMAKE_BINARY_DIR}/obj.${DETOURS_TARGET_PROCESSOR}${DETOURS_CONFIG}")
 
 if (NOT (DETOURS_OPTION_PROCESSOR STREQUAL ""))
-    set(OPTD "${ROOT}/bin.${DETOURS_OPTION_PROCESSOR}${DETOURS_CONFIG}")
+    set(OPTD "${CMAKE_BINARY_DIR}/bin.${DETOURS_OPTION_PROCESSOR}${DETOURS_CONFIG}")
 endif()
 
-set(INCDS "${ROOT}/include")
+set(INCDS "${CMAKE_BINARY_DIR}/include")
 
-set(LIBDS "${ROOT}/lib.x86${DETOURS_CONFIG}"
-          "${ROOT}/lib.x64${DETOURS_CONFIG}"
-          "${ROOT}/lib.ia64${DETOURS_CONFIG}"
-          "${ROOT}/lib.arm${DETOURS_CONFIG}"
-          "${ROOT}/lib.arm64${DETOURS_CONFIG}")
+set(LIBDS "${CMAKE_BINARY_DIR}/lib.x86${DETOURS_CONFIG}"
+          "${CMAKE_BINARY_DIR}/lib.x64${DETOURS_CONFIG}"
+          "${CMAKE_BINARY_DIR}/lib.ia64${DETOURS_CONFIG}"
+          "${CMAKE_BINARY_DIR}/lib.arm${DETOURS_CONFIG}"
+          "${CMAKE_BINARY_DIR}/lib.arm64${DETOURS_CONFIG}")
 
-set(BINDS "${ROOT}/bin.x86${DETOURS_CONFIG}"
-          "${ROOT}/bin.x64${DETOURS_CONFIG}"
-          "${ROOT}/bin.ia64${DETOURS_CONFIG}"
-          "${ROOT}/bin.arm${DETOURS_CONFIG}"
-          "${ROOT}/bin.arm64${DETOURS_CONFIG}")
+set(BINDS "${CMAKE_BINARY_DIR}/bin.x86${DETOURS_CONFIG}"
+          "${CMAKE_BINARY_DIR}/bin.x64${DETOURS_CONFIG}"
+          "${CMAKE_BINARY_DIR}/bin.ia64${DETOURS_CONFIG}"
+          "${CMAKE_BINARY_DIR}/bin.arm${DETOURS_CONFIG}"
+          "${CMAKE_BINARY_DIR}/bin.arm64${DETOURS_CONFIG}")
 
-set(OBJDS "obj.x86${DETOURS_CONFIG}"
-          "obj.x64${DETOURS_CONFIG}"
-          "obj.ia64${DETOURS_CONFIG}"
-          "obj.arm${DETOURS_CONFIG}"
-          "obj.arm64${DETOURS_CONFIG}")
+set(OBJDS "${CMAKE_BINARY_DIR}/obj.x86${DETOURS_CONFIG}"
+          "${CMAKE_BINARY_DIR}/obj.x64${DETOURS_CONFIG}"
+          "${CMAKE_BINARY_DIR}/obj.ia64${DETOURS_CONFIG}"
+          "${CMAKE_BINARY_DIR}/obj.arm${DETOURS_CONFIG}"
+          "${CMAKE_BINARY_DIR}/obj.arm64${DETOURS_CONFIG}")
+
+if (NOT (EXISTS "${INCD}"))
+    file(MAKE_DIRECTORY "${INCD}")
+    message(STATUS "Created ${INCD}")
+endif()
+if (NOT (EXISTS "${LIBD}"))
+    file(MAKE_DIRECTORY "${LIBD}")
+    message(STATUS "Created ${LIBD}")
+endif()
+if (NOT (EXISTS "${BIND}"))
+    file(MAKE_DIRECTORY "${BIND}")
+    message(STATUS "Created ${BIND}")
+endif()
+if (NOT (EXISTS "${OBJD}"))
+    file(MAKE_DIRECTORY "${OBJD}")
+    message(STATUS "Created ${OBJD}")
+endif()
 
 # set output directory
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/${LIBD})
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/${LIBD})
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/${BIND})
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${LIBD})
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${LIBD})
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${BIND})
 
 ##############################################################################
 
-include_directories(${INCDS} src/include samples/syelog)
+include_directories(${INCDS} samples/syelog)
 
 # subdirectories
 subdirs(src samples)
