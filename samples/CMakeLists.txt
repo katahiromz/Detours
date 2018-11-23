@@ -113,7 +113,7 @@ subdirs(
     #region
     traceapi
     tracebld
-    #tracemem
+    tracemem
     #tracereg
     #traceser
     #tracessl
