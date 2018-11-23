@@ -15,9 +15,6 @@ else()
     set(DETOURS_SAMPLE_CFLAGS ${DETOURS_SAMPLE_CFLAGS} /I${INCD})
 endif()
 
-set(DETOURS_SAMPLE_LIBFLAGS /nologo)
-set(DETOURS_SAMPLE_LINKFLAGS /release /incremental:no /profile /nodefaultlib:oldnames.lib)
-
 if (DEFINED DETOURS_WIN_7 AND DEFINED DETOURS_CL_17_OR_NEWER)
     set(DETOURS_SAMPLE_CFLAGS ${DETOURS_SAMPLE_CFLAGS} /D_USING_V110_SDK71_)
 endif()
@@ -48,5 +45,7 @@ set(DEPS syelog detours)
 set(LIBS ${DEPS})
 
 ##############################################################################
+
+add_definitions(${DETOURS_SAMPLE_CFLAGS})
 
 subdirs(syelog traceapi)

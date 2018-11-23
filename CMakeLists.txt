@@ -54,7 +54,8 @@ elseif (MSVC)
 endif()
 
 ##############################################################################
-# getting environment variables...
+# TODO: Set environment variable DETOURS_TARGET_PROCESSOR to X86, X64, IA64, ARM or ARM64.
+# For example: C:\Detours> set DETOURS_TARGET_PROCESSOR=X86
 
 # DETOURS_CONFIG
 set(DETOURS_CONFIG $ENV{DETOURS_CONFIG})
@@ -156,10 +157,13 @@ set(OBJDS "obj.x86${DETOURS_CONFIG}"
           "obj.arm64${DETOURS_CONFIG}")
 
 # set output directory
-set(RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/${OBJD})
-set(LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/${LIBD})
+set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/${BIND})
+set(OBJECT_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/${OBJD})
+set(LIBRARY_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/${LIBD})
 
 ##############################################################################
+
+include_directories(${INCDS} src/include samples/syelog)
 
 # subdirectories
 subdirs(src samples)

@@ -53,8 +53,7 @@ add_library(detours
     disolx64.cpp
     disolia64.cpp
     disolarm.cpp
-    disolarm64.cpp
-    uimports.cpp)
+    disolarm64.cpp)
 target_compile_definitions(detours PRIVATE ${DETOURS_CFLAGS})
 
 file(COPY detours.h DESTINATION ${INCD})
