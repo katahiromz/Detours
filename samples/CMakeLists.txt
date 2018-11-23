@@ -112,7 +112,7 @@ subdirs(
     #findfunc
     #region
     traceapi
-    #tracebld
+    tracebld
     #tracemem
     #tracereg
     #traceser
