@@ -104,7 +104,7 @@ subdirs(
     withdll
     #cping
     #disas
-    #dtest
+    dtest
     dumpe
     dumpi
     echo

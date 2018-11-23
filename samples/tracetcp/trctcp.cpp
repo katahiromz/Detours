@@ -7,7 +7,9 @@
 //  Copyright (c) Microsoft Corporation.  All rights reserved.
 //
 #define _WIN32_WINNT        0x0400
-#define WIN32
+#ifndef WIN32
+    #define WIN32
+#endif
 #define NT
 #define _WINSOCK_DEPRECATED_NO_WARNINGS
 

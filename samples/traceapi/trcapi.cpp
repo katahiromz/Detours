@@ -8,7 +8,9 @@
 //
 #undef WIN32_LEAN_AND_MEAN
 #define _WIN32_WINNT        0x400
-//#define WIN32
+#ifndef WIN32
+    #define WIN32
+#endif
 #define NT
 #define _WINSOCK_DEPRECATED_NO_WARNINGS
 

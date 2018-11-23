@@ -1,0 +1,10 @@
+add_library(dtarge${DETOURS_BITS} SHARED dtarge.cpp dtarge.rc dtarge.def)
+target_link_libraries(dtarge${DETOURS_BITS} ${DEPS})
+
+add_executable(dtest dtest.cpp)
+target_link_libraries(dtest ${DEPS} dtarge${DETOURS_BITS})
+if (MSVC)
+    target_link_options(dtest PRIVATE /entry:WinMainCRTStartup)
+else()
+    target_link_options(dtest PRIVATE -eWinMainCRTStartup)
+endif()

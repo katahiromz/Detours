@@ -7,6 +7,7 @@ else()
 endif()
 
 add_library(extend${DETOURS_BITS} SHARED extend.cpp extend.rc extend.def)
+target_link_libraries(extend${DETOURS_BITS} ${DEPS})
 set_target_properties(extend${DETOURS_BITS} PROPERTIES OUTPUT_NAME "extend${DETOURS_BITS}")
 if (MSVC)
     target_link_options(extend${DETOURS_BITS} PRIVATE /base:0x1a00000)

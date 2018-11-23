@@ -8,7 +8,9 @@
 //
 
 #define _WIN32_WINNT        0x0500
-//#define WIN32
+#ifndef WIN32
+    #define WIN32
+#endif
 #define NT
 
 #define DBG_TRACE   0

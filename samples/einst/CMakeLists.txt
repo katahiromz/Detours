@@ -25,5 +25,5 @@ else()
     target_link_options(edll3x${DETOURS_BITS} PRIVATE -Ttext-segment=7300000)
 endif()
 
-add_executable(einst einst.cpp)
+add_executable(einst WIN32 einst.cpp)
 target_link_libraries(einst ${DEPS} edll1x${DETOURS_BITS} edll2x${DETOURS_BITS} edll3x${DETOURS_BITS})
