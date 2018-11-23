@@ -54,20 +54,25 @@ elseif (MSVC)
 endif()
 
 ##############################################################################
-# TODO: Set environment variable DETOURS_TARGET_PROCESSOR to X86, X64, IA64, ARM or ARM64.
-#       For example: C:\Detours> set DETOURS_TARGET_PROCESSOR=X86
+# options
+
+option(DETOURS_WIN_7 "DETOURS_WIN_7" OFF)
+option(DETOURS_CL_17_OR_NEWER "DETOURS_CL_17_OR_NEWER" OFF)
+option(DETOURS_ANALYZE "DETOURS_ANALYZE" OFF)
+
+##############################################################################
 
 # DETOURS_CONFIG
-set(DETOURS_CONFIG $ENV{DETOURS_CONFIG})
+set(DETOURS_CONFIG "")
 
 # DETOURS_TARGET_PROCESSOR
-set(DETOURS_TARGET_PROCESSOR "$ENV{DETOURS_TARGET_PROCESSOR}")
+set(DETOURS_TARGET_PROCESSOR "X86")
 
 # PROCESSOR_ARCHITECTURE
-set(PROCESSOR_ARCHITECTURE "$ENV{PROCESSOR_ARCHITECTURE}")
+set(PROCESSOR_ARCHITECTURE "X86")
 
 # PROCESSOR_ARCHITEW6432
-set(PROCESSOR_ARCHITEW6432 "$ENV{PROCESSOR_ARCHITEW6432}")
+set(PROCESSOR_ARCHITEW6432 "")
 
 ##############################################################################
 
@@ -167,3 +172,5 @@ include_directories(${INCDS} src/include samples/syelog)
 
 # subdirectories
 subdirs(src samples)
+
+##############################################################################

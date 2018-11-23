@@ -1,0 +1,6 @@
+LIBRARY dslept
+EXPORTS
+    DetourFinishHelperProcess
+    TimedSleepEx
+    UntimedSleepEx
+    GetSleptTicks

@@ -1,0 +1,4 @@
+LIBRARY simple
+EXPORTS
+    DetourFinishHelperProcess
+    TimedSleepEx

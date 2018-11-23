@@ -1,0 +1,8 @@
+LIBRARY slept
+EXPORTS
+    DetourFinishHelperProcess
+    TimedSleepEx
+    UntimedSleepEx
+    GetSleptTicks
+    TestTicks
+    TestTicksEx

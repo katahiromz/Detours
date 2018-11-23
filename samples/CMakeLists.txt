@@ -6,10 +6,58 @@ if (NOT DEFINED CLIB)
     set(CLIB /MT)
 endif()
 
-set(DETOURS_SAMPLE_AFLAGS /nologo /Zi /c /Fl)
-set(DETOURS_SAMPLE_CFLAGS /nologo /Zi ${CLIB} /Gm- /W4 /WX /Od)
+set(DETOURS_SAMPLE_AFLAGS /Zi /c /Fl)
 
-if (DETOURS_SOURCE_BROWSING EQUAL 1)
+##############################################################################
+
+set(DETOURS_SAMPLE_CFLAGS)
+
+if (MSVC)
+    set(DETOURS_SAMPLE_CFLAGS ${DETOURS_SAMPLE_CFLAGS} ${CLIB})
+endif()
+
+# /Zi: Generates complete debugging information.
+if (MSVC)
+    set(DETOURS_SAMPLE_CFLAGS ${DETOURS_SAMPLE_CFLAGS} /Zi)
+elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+    set(DETOURS_SAMPLE_CFLAGS ${DETOURS_SAMPLE_CFLAGS} -g3 -ggdb)
+elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+    set(DETOURS_SAMPLE_CFLAGS ${DETOURS_SAMPLE_CFLAGS} -g3 -ggdb)
+endif()
+
+# /Gm-: Disable minimal rebuild.
+if (MSVC)
+    set(DETOURS_SAMPLE_CFLAGS ${DETOURS_SAMPLE_CFLAGS} /Gm-)
+endif()
+
+# /W4: Sets which warning level to output.
+if (MSVC)
+    set(DETOURS_SAMPLE_CFLAGS ${DETOURS_SAMPLE_CFLAGS} /W4)
+elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+    set(DETOURS_SAMPLE_CFLAGS ${DETOURS_SAMPLE_CFLAGS} -pedantic -Wall)
+elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+    set(DETOURS_SAMPLE_CFLAGS ${DETOURS_SAMPLE_CFLAGS} -pedantic -Wall)
+endif()
+
+# /WX: Treats all warnings as errors.
+if (MSVC)
+    set(DETOURS_SAMPLE_CFLAGS ${DETOURS_SAMPLE_CFLAGS} /WX)
+elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+    set(DETOURS_SAMPLE_CFLAGS ${DETOURS_SAMPLE_CFLAGS} -Werror)
+elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+    set(DETOURS_SAMPLE_CFLAGS ${DETOURS_SAMPLE_CFLAGS} -Werror)
+endif()
+
+# /Od: Disables optimization.
+if (MSVC)
+    set(DETOURS_SAMPLE_CFLAGS ${DETOURS_SAMPLE_CFLAGS} /Od)
+elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+    set(DETOURS_SAMPLE_CFLAGS ${DETOURS_SAMPLE_CFLAGS} -O0)
+elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+    set(DETOURS_SAMPLE_CFLAGS ${DETOURS_SAMPLE_CFLAGS} -O0)
+endif()
+
+if (NOT (DEFINED DETOURS_SOURCE_BROWSING) OR DETOURS_SOURCE_BROWSING EQUAL 1)
     set(DETOURS_SAMPLE_CFLAGS ${DETOURS_SAMPLE_CFLAGS} /FR)
 else()
     set(DETOURS_SAMPLE_CFLAGS ${DETOURS_SAMPLE_CFLAGS} /I${INCD})
@@ -48,4 +96,44 @@ set(LIBS ${DEPS})
 
 add_definitions(${DETOURS_SAMPLE_CFLAGS})
 
-subdirs(syelog traceapi)
+subdirs(
+    syelog
+    simple
+    slept
+    #setdll
+    #withdll
+    #cping
+    #disas
+    #dumpe
+    #dumpi
+    #echo
+    #comeasy
+    #commem
+    #findfunc
+    #region
+    #traceapi
+    #tracebld
+    #tracemem
+    #tracereg
+    #traceser
+    #tracessl
+    #tracetcp
+    #tracelnk
+    #impmunge
+)
+
+if (NOT (DETOURS_TARGET_PROCESSOR STREQUAL "ARM64"))
+    #subdirs(einst findfunc)
+endif()
+
+if (DETOURS_TARGET_PROCESSOR STREQUAL "X86")
+    #subdirs(excep)
+endif()
+
+if (NOT (DETOURS_TARGET_PROCESSOR STREQUAL "ARM") AND NOT (DETOURS_TARGET_PROCESSOR STREQUAL "ARM64"))
+    #subdirs(member tryman)
+endif()
+
+if (DETOURS_TARGET_PROCESSOR STREQUAL "X64" OR DETOURS_TARGET_PROCESSOR STREQUAL "IA64")
+    #subdirs(talloc)
+endif()
