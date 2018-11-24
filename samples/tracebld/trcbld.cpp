@@ -678,7 +678,7 @@ VOID EnvVars::Add(PCWSTR pwzVar, PCWSTR pwzVal)
     WCHAR wzVal[] = L"";
     if (pwzVal != NULL) {
         while (*pwzVal == ' ' || *pwzVal == '\t') {
-            *pwzVal++;
+            pwzVal++;
         }
     }
     else {

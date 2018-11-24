@@ -45,7 +45,7 @@ class CMember
 
 void CMember::Target(void)
 {
-    printf("  CMember::Target!   (this:%p)\n", this);
+    printf("  CMember::Target!   (this:%p)\n", (void *)this);
 }
 
 //////////////////////////////////////////////////////////////// Detour Class.
@@ -61,7 +61,7 @@ class CDetour /* add ": public CMember" to enable access to member variables... 
 
 void CDetour::Mine_Target(void)
 {
-    printf("  CDetour::Mine_Target! (this:%p)\n", this);
+    printf("  CDetour::Mine_Target! (this:%p)\n", (void *)this);
     (this->*Real_Target)();
 }
 
@@ -93,7 +93,7 @@ int main(int argc, char **argv)
                  *(PBYTE*)&pfMine);
 
     LONG l = DetourTransactionCommit();
-    printf("DetourTransactionCommit = %d\n", l);
+    printf("DetourTransactionCommit = %d\n", (int)l);
     printf("\n");
 
     Verify("CMember::Target      ", *(PBYTE*)&pfTarget);

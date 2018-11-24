@@ -135,7 +135,7 @@ BOOL (WINAPI * Real_CreateProcessW)(LPCWSTR a0,
                                     LPPROCESS_INFORMATION a9)
     = CreateProcessW;
 
-#if _MSC_VER < 1300
+#if defined(_MSC_VER) && _MSC_VER < 1300
 SOCKET (WINAPI * Real_WSAAccept)(SOCKET a0,
                                  sockaddr* a1,
                                  LPINT a2,
@@ -470,7 +470,7 @@ BOOL WINAPI Mine_CreateProcessW(LPCWSTR lpApplicationName,
     return rv;
 }
 
-#if _MSC_VER < 1300
+#if defined(_MSC_VER) && _MSC_VER < 1300
 SOCKET WINAPI Mine_WSAAccept(SOCKET a0,
                              sockaddr* a1,
                              LPINT a2,

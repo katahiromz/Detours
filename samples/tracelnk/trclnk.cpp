@@ -220,9 +220,9 @@ HMODULE WINAPI Mine_LoadLibraryW(LPCWSTR a0)
 /////////////////////////////////////////////////////////////
 // AttachDetours
 //
-PCHAR DetRealName(PCHAR psz)
+PCHAR DetRealName(const CHAR *psz)
 {
-    PCHAR pszBeg = psz;
+    const CHAR *pszBeg = psz;
     // Move to end of name.
     while (*psz) {
         psz++;
@@ -234,10 +234,10 @@ PCHAR DetRealName(PCHAR psz)
             (psz[-1] >= '0' && psz[-1] <= '9'))) {
         psz--;
     }
-    return psz;
+    return (PCHAR)psz;
 }
 
-VOID DetAttach(PVOID *ppbReal, PVOID pbMine, PCHAR psz)
+VOID DetAttach(PVOID *ppbReal, PVOID pbMine, const CHAR *psz)
 {
     LONG l = DetourAttach(ppbReal, pbMine);
     if (l != 0) {
@@ -246,7 +246,7 @@ VOID DetAttach(PVOID *ppbReal, PVOID pbMine, PCHAR psz)
     }
 }
 
-VOID DetDetach(PVOID *ppbReal, PVOID pbMine, PCHAR psz)
+VOID DetDetach(PVOID *ppbReal, PVOID pbMine, const CHAR *psz)
 {
     LONG l = DetourDetach(ppbReal, pbMine);
     if (l != 0) {
@@ -255,8 +255,8 @@ VOID DetDetach(PVOID *ppbReal, PVOID pbMine, PCHAR psz)
     }
 }
 
-#define ATTACH(x)       DetAttach(&(PVOID&)Real_##x,Mine_##x,#x)
-#define DETACH(x)       DetDetach(&(PVOID&)Real_##x,Mine_##x,#x)
+#define ATTACH(x)       DetAttach(&(PVOID&)Real_##x, (void *)Mine_##x, #x)
+#define DETACH(x)       DetDetach(&(PVOID&)Real_##x, (void *)Mine_##x, #x)
 
 LONG AttachDetours(VOID)
 {
@@ -552,6 +552,7 @@ BOOL ImportEnumerate(HINSTANCE hInst)
                    "  %-32.32s %4I64d %p\n", pszName, nOrdinal, pFunc);
         }
     }
+    pSectionHeaders = pSectionHeaders;
     return TRUE;
 }
 

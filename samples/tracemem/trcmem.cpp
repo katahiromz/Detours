@@ -220,9 +220,9 @@ BOOL WINAPI Mine_CreateProcessW(LPCWSTR lpApplicationName,
 //////////////////////////////////////////////////////////////////////////////
 // AttachDetours
 //
-PCHAR DetRealName(PCHAR psz)
+PCHAR DetRealName(const CHAR *psz)
 {
-    PCHAR pszBeg = psz;
+    const CHAR *pszBeg = psz;
     // Move to end of name.
     while (*psz) {
         psz++;
@@ -234,7 +234,7 @@ PCHAR DetRealName(PCHAR psz)
             (psz[-1] >= '0' && psz[-1] <= '9'))) {
         psz--;
     }
-    return psz;
+    return (PCHAR)psz;
 }
 
 VOID DetAttach(PVOID *ppbReal, PVOID pbMine, const CHAR *psz)
@@ -413,7 +413,7 @@ VOID _Print(const CHAR *psz, ...)
     SetLastError(dwErr);
 }
 
-VOID AssertMessage(CONST CHAR *pszMsg, CONST CHAR *pszFile, ULONG nLine)
+VOID AssertMessage(CONST CHAR *pszMsg, CONST CHAR *pszFile, INT nLine)
 {
     Syelog(SYELOG_SEVERITY_FATAL,
            "ASSERT(%s) failed in %s, line %d.\n", pszMsg, pszFile, nLine);

@@ -34,7 +34,6 @@ VOID AssertMessage(PCSTR szMsg, PCSTR szFile, INT nLine)
 
 #define ASSERT(x)   \
 do { if (!(x)) { AssertMessage(#x, __FILE__, __LINE__); DebugBreak(); }} while (0)
-    ;
 
 
 //////////////////////////////////////////////////////////////////////////////

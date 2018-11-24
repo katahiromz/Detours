@@ -87,7 +87,7 @@ VOID MyErrExit(PCSTR pszMsg)
 {
     DWORD error = GetLastError();
 
-    fprintf(stderr, "TRACEBLD: Error %d in %s.\n", error, pszMsg);
+    fprintf(stderr, "TRACEBLD: Error %d in %s.\n", (int)error, pszMsg);
     fflush(stderr);
     exit(1);
 }
@@ -383,7 +383,7 @@ DWORD CopyEnvironment(PWCHAR pwzzOut, PCWSTR pwzzIn)
 
 //////////////////////////////////////////////////////////////////////////////
 //
-DWORD main(int argc, char **argv)
+int main(int argc, char **argv)
 {
     HANDLE hCompletionPort;
     BOOL fNeedHelp = FALSE;
@@ -458,7 +458,7 @@ DWORD main(int argc, char **argv)
     }
 
     // Create the completion port.
-    hCompletionPort = CreateIoCompletionPort(INVALID_HANDLE_VALUE, NULL, NULL, 0);
+    hCompletionPort = CreateIoCompletionPort(INVALID_HANDLE_VALUE, NULL, 0, 0);
     if (hCompletionPort == NULL) {
         MyErrExit("CreateIoCompletionPort");
     }
@@ -567,7 +567,7 @@ DWORD main(int argc, char **argv)
         return 9008;
     }
 
-    printf("TRACEBLD: %d processes.\n", s_nTotalClients);
+    printf("TRACEBLD: %d processes.\n", (int)s_nTotalClients);
 
     return dwResult;
 }

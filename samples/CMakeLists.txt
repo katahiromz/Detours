@@ -121,8 +121,8 @@ subdirs(
     tracemem
     tracereg
     traceser
-    tracessl
-    tracetcp
+    #tracessl
+    #tracetcp
     tracelnk
     impmunge
 )
@@ -139,7 +139,9 @@ if (NOT (DETOURS_TARGET_PROCESSOR STREQUAL "ARM64"))
 endif()
 
 if (DETOURS_TARGET_PROCESSOR STREQUAL "X86")
-    subdirs(excep)
+    if (MSVC)
+        subdirs(excep)
+    endif()
 endif()
 
 if (NOT (DETOURS_TARGET_PROCESSOR STREQUAL "ARM") AND NOT (DETOURS_TARGET_PROCESSOR STREQUAL "ARM64"))

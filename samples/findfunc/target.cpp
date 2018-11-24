@@ -20,6 +20,7 @@ extern "C" DWORD WINAPI Hidden(DWORD dwCount)
 // We use this point to ensure Hidden isn't inlined.
 static DWORD (WINAPI * SelfHidden)(DWORD dwCount) = Hidden;
 
+extern "C"
 DWORD WINAPI Target(DWORD dwCount)
 {
     printf("target.dll:   Target  (%d) -> %d.\n", (int)dwCount, (int)(dwCount + 100));
@@ -28,6 +29,7 @@ DWORD WINAPI Target(DWORD dwCount)
     return dwCount;
 }
 
+extern "C"
 BOOL WINAPI DllMain(HINSTANCE hinst, DWORD dwReason, LPVOID reserved)
 {
     (void)hinst;

@@ -104,7 +104,7 @@ VOID dprintf(const char * fmt, ...)
 //
 DWORD_PTR WINAPI LocalTarget1(DWORD_PTR v1)
 {
-    printf("  LocalTarget1 (%d)\n", (DWORD)v1);
+    printf("  LocalTarget1 (%d)\n", (int)(DWORD)v1);
     // dprintf("LocalTarget1\n");
     // __debugbreak();
     return 9000;
@@ -115,7 +115,7 @@ DWORD_PTR WINAPI LocalTarget1(DWORD_PTR v1)
 DWORD_PTR WINAPI MyLocalTarget1(DWORD_PTR v1)
 {
     printf("  MyLocalTarget1 (%d)\n",
-           (DWORD)v1);
+           (int)(DWORD)v1);
     // dprintf("LocalTarget1, Trampoline_LocalTarget1=%p\n", Trampoline_LocalTarget1);
     return Trampoline_LocalTarget1(v1);
 }
@@ -129,28 +129,28 @@ DWORD_PTR WINAPI MyTarget0()
 DWORD_PTR WINAPI MyTarget1(DWORD_PTR v1)
 {
     printf("  MyTarget1 (%d)\n",
-           (DWORD)v1);
+           (int)(DWORD)v1);
     return Trampoline_Target1(v1);
 }
 
 DWORD_PTR WINAPI MyTarget2(DWORD_PTR v1, DWORD_PTR v2)
 {
     printf("  MyTarget2 (%d,%d)\n",
-           (DWORD)v1, (DWORD)v2);
+           (int)(DWORD)v1, (int)(DWORD)v2);
     return Trampoline_Target2(v1,v2);
 }
 
 DWORD_PTR WINAPI MyTarget3(DWORD_PTR v1, DWORD_PTR v2, DWORD_PTR v3)
 {
     printf("  MyTarget3 (%d,%d,%d)\n",
-           (DWORD)v1, (DWORD)v2, (DWORD)v3);
+           (int)(DWORD)v1, (int)(DWORD)v2, (int)(DWORD)v3);
     return Trampoline_Target3(v1,v2,v3);
 }
 
 DWORD_PTR WINAPI MyTarget4(DWORD_PTR v1, DWORD_PTR v2, DWORD_PTR v3, DWORD_PTR v4)
 {
     printf("  MyTarget4 (%d,%d,%d,%d)\n",
-           (DWORD)v1, (DWORD)v2, (DWORD)v3, (DWORD)v4);
+           (int)(DWORD)v1, (int)(DWORD)v2, (int)(DWORD)v3, (int)(DWORD)v4);
     return Trampoline_Target4(v1,v2,v3,v4);
 }
 
@@ -158,8 +158,8 @@ DWORD_PTR WINAPI MyTarget5(DWORD_PTR v1, DWORD_PTR v2, DWORD_PTR v3, DWORD_PTR v
                            DWORD_PTR v5)
 {
     printf("  MyTarget5 (%d,%d,%d,%d,%d)\n",
-           (DWORD)v1, (DWORD)v2, (DWORD)v3, (DWORD)v4,
-           (DWORD)v5);
+           (int)(DWORD)v1, (int)(DWORD)v2, (int)(DWORD)v3, (int)(DWORD)v4,
+           (int)(DWORD)v5);
     return Trampoline_Target5(v1,v2,v3,v4,v5);
 }
 
@@ -167,8 +167,8 @@ DWORD_PTR WINAPI MyTarget6(DWORD_PTR v1, DWORD_PTR v2, DWORD_PTR v3, DWORD_PTR v
                            DWORD_PTR v5, DWORD_PTR v6)
 {
     printf("  MyTarget6 (%d,%d,%d,%d,%d,%d)\n",
-           (DWORD)v1, (DWORD)v2, (DWORD)v3, (DWORD)v4,
-           (DWORD)v5, (DWORD)v6);
+           (int)(DWORD)v1, (int)(DWORD)v2, (int)(DWORD)v3, (int)(DWORD)v4,
+           (int)(DWORD)v5, (int)(DWORD)v6);
     return Trampoline_Target6(v1,v2,v3,v4,v5,v6);
 }
 
@@ -176,8 +176,8 @@ DWORD_PTR WINAPI MyTarget7(DWORD_PTR v1, DWORD_PTR v2, DWORD_PTR v3, DWORD_PTR v
                            DWORD_PTR v5, DWORD_PTR v6, DWORD_PTR v7)
 {
     printf("  MyTarget7 (%d,%d,%d,%d,%d,%d,%d)\n",
-           (DWORD)v1, (DWORD)v2, (DWORD)v3, (DWORD)v4,
-           (DWORD)v5, (DWORD)v6, (DWORD)v7);
+           (int)(DWORD)v1, (int)(DWORD)v2, (int)(DWORD)v3, (int)(DWORD)v4,
+           (int)(DWORD)v5, (int)(DWORD)v6, (int)(DWORD)v7);
     return Trampoline_Target7(v1,v2,v3,v4,v5,v6,v7);
 }
 
@@ -185,8 +185,8 @@ DWORD_PTR WINAPI MyTarget8(DWORD_PTR v1, DWORD_PTR v2, DWORD_PTR v3, DWORD_PTR v
                            DWORD_PTR v5, DWORD_PTR v6, DWORD_PTR v7, DWORD_PTR v8)
 {
     printf("  MyTarget8 (%d,%d,%d,%d,%d,%d,%d,%d)\n",
-           (DWORD)v1, (DWORD)v2, (DWORD)v3, (DWORD)v4,
-           (DWORD)v5, (DWORD)v6, (DWORD)v7, (DWORD)v8);
+           (int)(DWORD)v1, (int)(DWORD)v2, (int)(DWORD)v3, (int)(DWORD)v4,
+           (int)(DWORD)v5, (int)(DWORD)v6, (int)(DWORD)v7, (int)(DWORD)v8);
     return Trampoline_Target8(v1,v2,v3,v4,v5,v6,v7,v8);
 }
 
@@ -195,9 +195,9 @@ DWORD_PTR WINAPI MyTarget9(DWORD_PTR v1, DWORD_PTR v2, DWORD_PTR v3, DWORD_PTR v
                          DWORD_PTR v9)
 {
     printf("  MyTarget9 (%d,%d,%d,%d,%d,%d,%d,%d,%d)\n",
-           (DWORD)v1, (DWORD)v2, (DWORD)v3, (DWORD)v4,
-           (DWORD)v5, (DWORD)v6, (DWORD)v7, (DWORD)v8,
-           (DWORD)v9);
+           (int)(DWORD)v1, (int)(DWORD)v2, (int)(DWORD)v3, (int)(DWORD)v4,
+           (int)(DWORD)v5, (int)(DWORD)v6, (int)(DWORD)v7, (int)(DWORD)v8,
+           (int)(DWORD)v9);
     return Trampoline_Target9(v1,v2,v3,v4,v5,v6,v7,v8,v9);
 }
 
@@ -206,9 +206,9 @@ DWORD_PTR WINAPI MyTarget10(DWORD_PTR v1, DWORD_PTR v2, DWORD_PTR v3, DWORD_PTR 
                             DWORD_PTR v9, DWORD_PTR v10)
 {
     printf("  MyTarget10(%d,%d,%d,%d,%d,%d,%d,%d,%d,%d)\n",
-           (DWORD)v1, (DWORD)v2, (DWORD)v3, (DWORD)v4,
-           (DWORD)v5, (DWORD)v6, (DWORD)v7, (DWORD)v8,
-           (DWORD)v9, (DWORD)v10);
+           (int)(DWORD)v1, (int)(DWORD)v2, (int)(DWORD)v3, (int)(DWORD)v4,
+           (int)(DWORD)v5, (int)(DWORD)v6, (int)(DWORD)v7, (int)(DWORD)v8,
+           (int)(DWORD)v9, (int)(DWORD)v10);
     return Trampoline_Target10(v1,v2,v3,v4,v5,v6,v7,v8,v9,v10);
 }
 
@@ -217,9 +217,9 @@ DWORD_PTR WINAPI MyTarget11(DWORD_PTR v1, DWORD_PTR v2, DWORD_PTR v3, DWORD_PTR 
                             DWORD_PTR v9, DWORD_PTR v10, DWORD_PTR v11)
 {
     printf("  MyTarget11(%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d)\n",
-           (DWORD)v1, (DWORD)v2, (DWORD)v3, (DWORD)v4,
-           (DWORD)v5, (DWORD)v6, (DWORD)v7, (DWORD)v8,
-           (DWORD)v9, (DWORD)v10, (DWORD)v11);
+           (int)(DWORD)v1, (int)(DWORD)v2, (int)(DWORD)v3, (int)(DWORD)v4,
+           (int)(DWORD)v5, (int)(DWORD)v6, (int)(DWORD)v7, (int)(DWORD)v8,
+           (int)(DWORD)v9, (int)(DWORD)v10, (int)(DWORD)v11);
     return Trampoline_Target11(v1,v2,v3,v4,v5,v6,v7,v8,v9,v10,v11);
 }
 
@@ -228,9 +228,9 @@ DWORD_PTR WINAPI MyTarget12(DWORD_PTR v1, DWORD_PTR v2, DWORD_PTR v3, DWORD_PTR 
                             DWORD_PTR v9, DWORD_PTR v10, DWORD_PTR v11, DWORD_PTR v12)
 {
     printf("  MyTarget12(%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d)\n",
-           (DWORD)v1, (DWORD)v2, (DWORD)v3, (DWORD)v4,
-           (DWORD)v5, (DWORD)v6, (DWORD)v7, (DWORD)v8,
-           (DWORD)v9, (DWORD)v10, (DWORD)v11, (DWORD)v12);
+           (int)(DWORD)v1, (int)(DWORD)v2, (int)(DWORD)v3, (int)(DWORD)v4,
+           (int)(DWORD)v5, (int)(DWORD)v6, (int)(DWORD)v7, (int)(DWORD)v8,
+           (int)(DWORD)v9, (int)(DWORD)v10, (int)(DWORD)v11, (int)(DWORD)v12);
     return Trampoline_Target12(v1,v2,v3,v4,v5,v6,v7,v8,v9,v10,v11,v12);
 }
 
@@ -240,10 +240,10 @@ DWORD_PTR WINAPI MyTarget13(DWORD_PTR v1, DWORD_PTR v2, DWORD_PTR v3, DWORD_PTR 
                             DWORD_PTR v13)
 {
     printf("  MyTarget13(%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d)\n",
-           (DWORD)v1, (DWORD)v2, (DWORD)v3, (DWORD)v4,
-           (DWORD)v5, (DWORD)v6, (DWORD)v7, (DWORD)v8,
-           (DWORD)v9, (DWORD)v10, (DWORD)v11, (DWORD)v12,
-           (DWORD)v13);
+           (int)(DWORD)v1, (int)(DWORD)v2, (int)(DWORD)v3, (int)(DWORD)v4,
+           (int)(DWORD)v5, (int)(DWORD)v6, (int)(DWORD)v7, (int)(DWORD)v8,
+           (int)(DWORD)v9, (int)(DWORD)v10, (int)(DWORD)v11, (int)(DWORD)v12,
+           (int)(DWORD)v13);
     return Trampoline_Target13(v1,v2,v3,v4,v5,v6,v7,v8,v9,v10,v11,v12,v13);
 }
 
@@ -253,10 +253,10 @@ DWORD_PTR WINAPI MyTarget14(DWORD_PTR v1, DWORD_PTR v2, DWORD_PTR v3, DWORD_PTR 
                             DWORD_PTR v13, DWORD_PTR v14)
 {
     printf("  MyTarget14(%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d)\n",
-           (DWORD)v1, (DWORD)v2, (DWORD)v3, (DWORD)v4,
-           (DWORD)v5, (DWORD)v6, (DWORD)v7, (DWORD)v8,
-           (DWORD)v9, (DWORD)v10, (DWORD)v11, (DWORD)v12,
-           (DWORD)v13, (DWORD)v14);
+           (int)(DWORD)v1, (int)(DWORD)v2, (int)(DWORD)v3, (int)(DWORD)v4,
+           (int)(DWORD)v5, (int)(DWORD)v6, (int)(DWORD)v7, (int)(DWORD)v8,
+           (int)(DWORD)v9, (int)(DWORD)v10, (int)(DWORD)v11, (int)(DWORD)v12,
+           (int)(DWORD)v13, (int)(DWORD)v14);
     return Trampoline_Target14(v1,v2,v3,v4,v5,v6,v7,v8,v9,v10,v11,v12,v13,v14);
 }
 
@@ -266,10 +266,10 @@ DWORD_PTR WINAPI MyTarget15(DWORD_PTR v1, DWORD_PTR v2, DWORD_PTR v3, DWORD_PTR 
                             DWORD_PTR v13, DWORD_PTR v14, DWORD_PTR v15)
 {
     printf("  MyTarget15(%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d)\n",
-           (DWORD)v1, (DWORD)v2, (DWORD)v3, (DWORD)v4,
-           (DWORD)v5, (DWORD)v6, (DWORD)v7, (DWORD)v8,
-           (DWORD)v9, (DWORD)v10, (DWORD)v11, (DWORD)v12,
-           (DWORD)v13, (DWORD)v14, (DWORD)v15);
+           (int)(DWORD)v1, (int)(DWORD)v2, (int)(DWORD)v3, (int)(DWORD)v4,
+           (int)(DWORD)v5, (int)(DWORD)v6, (int)(DWORD)v7, (int)(DWORD)v8,
+           (int)(DWORD)v9, (int)(DWORD)v10, (int)(DWORD)v11, (int)(DWORD)v12,
+           (int)(DWORD)v13, (int)(DWORD)v14, (int)(DWORD)v15);
     return Trampoline_Target15(v1,v2,v3,v4,v5,v6,v7,v8,v9,v10,v11,v12,v13,v14,v15);
 }
 
@@ -279,10 +279,10 @@ DWORD_PTR WINAPI MyTarget16(DWORD_PTR v1, DWORD_PTR v2, DWORD_PTR v3, DWORD_PTR 
                             DWORD_PTR v13, DWORD_PTR v14, DWORD_PTR v15, DWORD_PTR v16)
 {
     printf("  MyTarget16(%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d)\n",
-           (DWORD)v1, (DWORD)v2, (DWORD)v3, (DWORD)v4,
-           (DWORD)v5, (DWORD)v6, (DWORD)v7, (DWORD)v8,
-           (DWORD)v9, (DWORD)v10, (DWORD)v11, (DWORD)v12,
-           (DWORD)v13, (DWORD)v14, (DWORD)v15, (DWORD)v16);
+           (int)(DWORD)v1, (int)(DWORD)v2, (int)(DWORD)v3, (int)(DWORD)v4,
+           (int)(DWORD)v5, (int)(DWORD)v6, (int)(DWORD)v7, (int)(DWORD)v8,
+           (int)(DWORD)v9, (int)(DWORD)v10, (int)(DWORD)v11, (int)(DWORD)v12,
+           (int)(DWORD)v13, (int)(DWORD)v14, (int)(DWORD)v15, (int)(DWORD)v16);
     return Trampoline_Target16(v1,v2,v3,v4,v5,v6,v7,v8,v9,v10,v11,v12,v13,v14,v15,v16);
 }
 
@@ -302,9 +302,9 @@ DWORD_PTR WINAPI MyTargetV(DWORD_PTR v1, ...)
     printf("  MyTargetV (");
     int i = argc - 1;
     for (; i > 0; i--) {
-        printf("%d,", (DWORD)args[i]);
+        printf("%d,", (int)(DWORD)args[i]);
     }
-    printf("%d)\n", (DWORD)args[0]);
+    printf("%d)\n", (int)(DWORD)args[0]);
 
     switch (argc) {
       default:
@@ -391,9 +391,9 @@ DWORD_PTR WINAPI MyTargetR(DWORD_PTR v1, ...)
         printf("  MyTargetR (");
         int i = argc - 1;
         for (; i > 0; i--) {
-            printf("%d,", (DWORD)args[i]);
+            printf("%d,", (int)(DWORD)args[i]);
         }
-        printf("%d)\n", (DWORD)args[0]);
+        printf("%d)\n", (int)(DWORD)args[0]);
     }
     else {
         printf(".");
@@ -511,7 +511,7 @@ int WINAPI WinMain(HINSTANCE hinst, HINSTANCE hprev, LPSTR lpszCmdLine, int nCmd
 
     DetourTransactionBegin();
     DetourUpdateThread(GetCurrentThread());
-    DetourAttach(&(PVOID&)Trampoline_LocalTarget1, MyLocalTarget1);
+    DetourAttach(&(PVOID&)Trampoline_LocalTarget1, (void *)MyLocalTarget1);
     DetourTransactionCommit();
 
     printf("Calling LocalTarget1 w/ detour\n");
@@ -519,7 +519,7 @@ int WINAPI WinMain(HINSTANCE hinst, HINSTANCE hprev, LPSTR lpszCmdLine, int nCmd
 
     DetourTransactionBegin();
     DetourUpdateThread(GetCurrentThread());
-    DetourAttach(&(PVOID&)Trampoline_Target0, MyTarget0);
+    DetourAttach(&(PVOID&)Trampoline_Target0, (void *)MyTarget0);
     DetourTransactionCommit();
 
     printf("Calling Target0 function.\n");
@@ -529,24 +529,24 @@ int WINAPI WinMain(HINSTANCE hinst, HINSTANCE hprev, LPSTR lpszCmdLine, int nCmd
 
     DetourTransactionBegin();
     DetourUpdateThread(GetCurrentThread());
-    DetourAttach(&(PVOID&)Trampoline_Target1, MyTarget1);
-    DetourAttach(&(PVOID&)Trampoline_Target2, MyTarget2);
-    DetourAttach(&(PVOID&)Trampoline_Target3, MyTarget3);
-    DetourAttach(&(PVOID&)Trampoline_Target4, MyTarget4);
-    DetourAttach(&(PVOID&)Trampoline_Target5, MyTarget5);
-    DetourAttach(&(PVOID&)Trampoline_Target6, MyTarget6);
-    DetourAttach(&(PVOID&)Trampoline_Target7, MyTarget7);
-    DetourAttach(&(PVOID&)Trampoline_Target8, MyTarget8);
-    DetourAttach(&(PVOID&)Trampoline_Target9, MyTarget9);
-    DetourAttach(&(PVOID&)Trampoline_Target10, MyTarget10);
-    DetourAttach(&(PVOID&)Trampoline_Target11, MyTarget11);
-    DetourAttach(&(PVOID&)Trampoline_Target12, MyTarget12);
-    DetourAttach(&(PVOID&)Trampoline_Target13, MyTarget13);
-    DetourAttach(&(PVOID&)Trampoline_Target14, MyTarget14);
-    DetourAttach(&(PVOID&)Trampoline_Target15, MyTarget15);
-    DetourAttach(&(PVOID&)Trampoline_Target16, MyTarget16);
-    DetourAttach(&(PVOID&)Trampoline_TargetV, MyTargetV);
-    DetourAttach(&(PVOID&)Trampoline_TargetR, MyTargetR);
+    DetourAttach(&(PVOID&)Trampoline_Target1, (void *)MyTarget1);
+    DetourAttach(&(PVOID&)Trampoline_Target2, (void *)MyTarget2);
+    DetourAttach(&(PVOID&)Trampoline_Target3, (void *)MyTarget3);
+    DetourAttach(&(PVOID&)Trampoline_Target4, (void *)MyTarget4);
+    DetourAttach(&(PVOID&)Trampoline_Target5, (void *)MyTarget5);
+    DetourAttach(&(PVOID&)Trampoline_Target6, (void *)MyTarget6);
+    DetourAttach(&(PVOID&)Trampoline_Target7, (void *)MyTarget7);
+    DetourAttach(&(PVOID&)Trampoline_Target8, (void *)MyTarget8);
+    DetourAttach(&(PVOID&)Trampoline_Target9, (void *)MyTarget9);
+    DetourAttach(&(PVOID&)Trampoline_Target10, (void *)MyTarget10);
+    DetourAttach(&(PVOID&)Trampoline_Target11, (void *)MyTarget11);
+    DetourAttach(&(PVOID&)Trampoline_Target12, (void *)MyTarget12);
+    DetourAttach(&(PVOID&)Trampoline_Target13, (void *)MyTarget13);
+    DetourAttach(&(PVOID&)Trampoline_Target14, (void *)MyTarget14);
+    DetourAttach(&(PVOID&)Trampoline_Target15, (void *)MyTarget15);
+    DetourAttach(&(PVOID&)Trampoline_Target16, (void *)MyTarget16);
+    DetourAttach(&(PVOID&)Trampoline_TargetV, (void *)MyTargetV);
+    DetourAttach(&(PVOID&)Trampoline_TargetR, (void *)MyTargetR);
     DetourTransactionCommit();
 
     printf("Calling TargetN functions.\n");
@@ -587,7 +587,7 @@ int WINAPI WinMain(HINSTANCE hinst, HINSTANCE hprev, LPSTR lpszCmdLine, int nCmd
     TargetV(16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0);
     TargetR(4,3,2,1,0);
     DWORD_PTR rv = TargetR(100,10,9,8,7,6,5,4,3,2,1,0);
-    printf(" => %d\n", (DWORD)rv);
+    printf(" => %d\n", (int)(DWORD)rv);
 
     Trampoline_Target0_1 = Target0;
     Trampoline_Target0_2 = Target0;
@@ -601,7 +601,7 @@ int WINAPI WinMain(HINSTANCE hinst, HINSTANCE hprev, LPSTR lpszCmdLine, int nCmd
 
     DetourTransactionBegin();
     DetourUpdateThread(GetCurrentThread());
-    DetourAttach(&(PVOID&)Trampoline_Target0_1, MyTarget0_1);
+    DetourAttach(&(PVOID&)Trampoline_Target0_1, (void *)MyTarget0_1);
     DetourTransactionCommit();
 
     //dprintf("Trampoline_Target0_2 = %p\n", DetourCodeFromPointer(Trampoline_Target0_2, NULL));
@@ -611,7 +611,7 @@ int WINAPI WinMain(HINSTANCE hinst, HINSTANCE hprev, LPSTR lpszCmdLine, int nCmd
 
     DetourTransactionBegin();
     DetourUpdateThread(GetCurrentThread());
-    DetourAttach(&(PVOID&)Trampoline_Target0_2, MyTarget0_2);
+    DetourAttach(&(PVOID&)Trampoline_Target0_2, (void *)MyTarget0_2);
     DetourTransactionCommit();
 
     //dprintf("Trampoline_Target0_3 = %p\n", DetourCodeFromPointer(Trampoline_Target0_3, NULL));
@@ -622,7 +622,7 @@ int WINAPI WinMain(HINSTANCE hinst, HINSTANCE hprev, LPSTR lpszCmdLine, int nCmd
 
     DetourTransactionBegin();
     DetourUpdateThread(GetCurrentThread());
-    DetourAttach(&(PVOID&)Trampoline_Target0_3, MyTarget0_3);
+    DetourAttach(&(PVOID&)Trampoline_Target0_3, (void *)MyTarget0_3);
     DetourTransactionCommit();
 
     //dprintf("Trampoline_Target0_3 = %p\n", DetourCodeFromPointer(Trampoline_Target0_3, NULL));
@@ -632,25 +632,25 @@ int WINAPI WinMain(HINSTANCE hinst, HINSTANCE hprev, LPSTR lpszCmdLine, int nCmd
 
     DetourTransactionBegin();
     DetourUpdateThread(GetCurrentThread());
-    DetourDetach(&(PVOID&)Trampoline_Target0, MyTarget0);
-    DetourDetach(&(PVOID&)Trampoline_Target1, MyTarget1);
-    DetourDetach(&(PVOID&)Trampoline_Target2, MyTarget2);
-    DetourDetach(&(PVOID&)Trampoline_Target3, MyTarget3);
-    DetourDetach(&(PVOID&)Trampoline_Target4, MyTarget4);
-    DetourDetach(&(PVOID&)Trampoline_Target5, MyTarget5);
-    DetourDetach(&(PVOID&)Trampoline_Target6, MyTarget6);
-    DetourDetach(&(PVOID&)Trampoline_Target7, MyTarget7);
-    DetourDetach(&(PVOID&)Trampoline_Target8, MyTarget8);
-    DetourDetach(&(PVOID&)Trampoline_Target9, MyTarget9);
-    DetourDetach(&(PVOID&)Trampoline_Target10, MyTarget10);
-    DetourDetach(&(PVOID&)Trampoline_Target11, MyTarget11);
-    DetourDetach(&(PVOID&)Trampoline_Target12, MyTarget12);
-    DetourDetach(&(PVOID&)Trampoline_Target13, MyTarget13);
-    DetourDetach(&(PVOID&)Trampoline_Target14, MyTarget14);
-    DetourDetach(&(PVOID&)Trampoline_Target15, MyTarget15);
-    DetourDetach(&(PVOID&)Trampoline_Target16, MyTarget16);
-    DetourDetach(&(PVOID&)Trampoline_TargetV, MyTargetV);
-    DetourDetach(&(PVOID&)Trampoline_TargetR, MyTargetR);
+    DetourDetach(&(PVOID&)Trampoline_Target0, (void *)MyTarget0);
+    DetourDetach(&(PVOID&)Trampoline_Target1, (void *)MyTarget1);
+    DetourDetach(&(PVOID&)Trampoline_Target2, (void *)MyTarget2);
+    DetourDetach(&(PVOID&)Trampoline_Target3, (void *)MyTarget3);
+    DetourDetach(&(PVOID&)Trampoline_Target4, (void *)MyTarget4);
+    DetourDetach(&(PVOID&)Trampoline_Target5, (void *)MyTarget5);
+    DetourDetach(&(PVOID&)Trampoline_Target6, (void *)MyTarget6);
+    DetourDetach(&(PVOID&)Trampoline_Target7, (void *)MyTarget7);
+    DetourDetach(&(PVOID&)Trampoline_Target8, (void *)MyTarget8);
+    DetourDetach(&(PVOID&)Trampoline_Target9, (void *)MyTarget9);
+    DetourDetach(&(PVOID&)Trampoline_Target10, (void *)MyTarget10);
+    DetourDetach(&(PVOID&)Trampoline_Target11, (void *)MyTarget11);
+    DetourDetach(&(PVOID&)Trampoline_Target12, (void *)MyTarget12);
+    DetourDetach(&(PVOID&)Trampoline_Target13, (void *)MyTarget13);
+    DetourDetach(&(PVOID&)Trampoline_Target14, (void *)MyTarget14);
+    DetourDetach(&(PVOID&)Trampoline_Target15, (void *)MyTarget15);
+    DetourDetach(&(PVOID&)Trampoline_Target16, (void *)MyTarget16);
+    DetourDetach(&(PVOID&)Trampoline_TargetV, (void *)MyTargetV);
+    DetourDetach(&(PVOID&)Trampoline_TargetR, (void *)MyTargetR);
     DetourTransactionCommit();
 
     printf("Done.\n");

@@ -7,6 +7,7 @@
 //  Copyright (c) Microsoft Corporation.  All rights reserved.
 //
 
+extern "C"
 DWORD WINAPI Target(DWORD dwCount);
 
 //

@@ -1139,9 +1139,9 @@ HFILE WINAPI Mine__lopen(LPCSTR a0, int a1)
 /////////////////////////////////////////////////////////////
 // AttachDetours
 //
-PCHAR DetRealName(PCHAR psz)
+PCHAR DetRealName(const CHAR *psz)
 {
-    PCHAR pszBeg = psz;
+    const CHAR *pszBeg = psz;
     // Move to end of name.
     while (*psz) {
         psz++;
@@ -1153,10 +1153,10 @@ PCHAR DetRealName(PCHAR psz)
             (psz[-1] >= '0' && psz[-1] <= '9'))) {
         psz--;
     }
-    return psz;
+    return (PCHAR)psz;
 }
 
-VOID DetAttach(PVOID *ppbReal, PVOID pbMine, PCHAR psz)
+VOID DetAttach(PVOID *ppbReal, PVOID pbMine, const CHAR *psz)
 {
     LONG l = DetourAttach(ppbReal, pbMine);
     if (l != 0) {
@@ -1165,7 +1165,7 @@ VOID DetAttach(PVOID *ppbReal, PVOID pbMine, PCHAR psz)
     }
 }
 
-VOID DetDetach(PVOID *ppbReal, PVOID pbMine, PCHAR psz)
+VOID DetDetach(PVOID *ppbReal, PVOID pbMine, const CHAR *psz)
 {
     LONG l = DetourDetach(ppbReal, pbMine);
     if (l != 0) {
@@ -1174,8 +1174,8 @@ VOID DetDetach(PVOID *ppbReal, PVOID pbMine, PCHAR psz)
     }
 }
 
-#define ATTACH(x)       DetAttach(&(PVOID&)Real_##x,Mine_##x,#x)
-#define DETACH(x)       DetDetach(&(PVOID&)Real_##x,Mine_##x,#x)
+#define ATTACH(x)       DetAttach(&(PVOID&)Real_##x, (void *)Mine_##x, #x)
+#define DETACH(x)       DetDetach(&(PVOID&)Real_##x, (void *)Mine_##x, #x)
 
 LONG AttachDetours(VOID)
 {
@@ -1420,7 +1420,7 @@ VOID _Print(const CHAR *psz, ...)
     SetLastError(dwErr);
 }
 
-VOID AssertMessage(CONST CHAR *pszMsg, CONST CHAR *pszFile, ULONG nLine)
+VOID AssertMessage(CONST CHAR *pszMsg, CONST CHAR *pszFile, INT nLine)
 {
     Syelog(SYELOG_SEVERITY_FATAL,
            "ASSERT(%s) failed in %s, line %d.\n", pszMsg, pszFile, nLine);
