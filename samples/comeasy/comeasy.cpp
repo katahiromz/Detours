@@ -62,6 +62,7 @@ int __cdecl main(int argc, char **argv)
     printf("comeasy.exe: Exiting.\n\n");
     fflush(stdout);
 
+    hr = hr;
     return 0;
 }
 

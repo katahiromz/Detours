@@ -17,11 +17,13 @@ static BOOL fBroke = FALSE;
 static LONG dwSlept = 0;
 static DWORD (WINAPI * TrueSleepEx)(DWORD dwMilliseconds, BOOL bAlertable) = SleepEx;
 
+extern "C"
 DWORD WINAPI UntimedSleepEx(DWORD dwMilliseconds, BOOL bAlertable)
 {
     return TrueSleepEx(dwMilliseconds, bAlertable);
 }
 
+extern "C"
 DWORD WINAPI TimedSleepEx(DWORD dwMilliseconds, BOOL bAlertable)
 {
     DWORD dwBeg = GetTickCount();
@@ -37,16 +39,19 @@ DWORD WINAPI TimedSleepEx(DWORD dwMilliseconds, BOOL bAlertable)
     return ret;
 }
 
+extern "C"
 DWORD WINAPI GetSleptTicks(VOID)
 {
     return dwSlept;
 }
 
+extern "C"
 DWORD WINAPI TestTicks(VOID)
 {
     return TestTicksEx(0);
 }
 
+extern "C"
 DWORD WINAPI TestTicksEx(DWORD Add)
 {
     PDWORD pdw = new DWORD [Add + 1];
@@ -76,6 +81,7 @@ DWORD WINAPI TestTicksEx(DWORD Add)
     return Add;
 }
 
+extern "C"
 BOOL WINAPI DllMain(HINSTANCE hinst, DWORD dwReason, LPVOID reserved)
 {
     LONG error;

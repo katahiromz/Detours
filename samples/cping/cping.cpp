@@ -70,7 +70,7 @@ UINT64 GetTimeStamp(void)
 
 #ifndef NODEBUG
 #undef ASSERT
-VOID PingAssertMessage(CONST PCHAR szMsg, CONST PCHAR szFile, ULONG nLine);
+VOID PingAssertMessage(CONST CHAR *szMsg, CONST CHAR *szFile, INT nLine);
 #define ASSERT(x)   \
 do { if (!((int)(x))) { PingAssertMessage(#x, __FILE__, __LINE__); DebugBreak(); }} while (0)
 ;
@@ -131,7 +131,7 @@ STDAPI PingMessage(PCSTR msg, ...)
     return S_FALSE;
 }
 
-VOID PingAssertMessage(CONST PCHAR szMsg, CONST PCHAR szFile, ULONG nLine)
+VOID PingAssertMessage(CONST CHAR *szMsg, CONST CHAR *szFile, ULONG nLine)
 {
     PingMessage("%08lx ASSERT(%s) failed in %s, line %d.\n",
                 GetCurrentThreadId(), szMsg, szFile, nLine);

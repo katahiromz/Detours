@@ -276,6 +276,7 @@ typedef ULONG ULONG_PTR;
 #if defined(__GNUC__) || defined(__clang__) || defined(DETOURS_NO_SEH)
     #define __try if (1)
     #define __except else if
+    #define __finally
 #endif
 
 #if defined(__GNUC__) || defined(__clang__)

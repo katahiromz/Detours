@@ -116,7 +116,7 @@ subdirs(
     comeasy
     commem
     region
-    traceapi
+    #traceapi
     tracebld
     tracemem
     tracereg

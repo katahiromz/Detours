@@ -152,7 +152,7 @@ BOOL WINAPI DllMain(HINSTANCE hinst, DWORD dwReason, LPVOID reserved)
         if (RealIStreamWrite != NULL) {
             DetourDetach(&(PVOID&)RealIStreamWrite, (PVOID)MineIStreamWrite);
         }
-        DetourDetach(&(PVOID&)TrueEntryPoint, TimedEntryPoint);
+        DetourDetach(&(PVOID&)TrueEntryPoint, (void *)TimedEntryPoint);
         error = DetourTransactionCommit();
 
         printf("wrotei" DETOURS_STRINGIFY(DETOURS_BITS) ".dll:"

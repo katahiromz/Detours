@@ -13,7 +13,7 @@
 
 //////////////////////////////////////////////////////////////////////////////
 //
-static LONG dwSlept = 0;
+//static LONG dwSlept = 0;
 static DWORD (WINAPI * TrueSleepEx)(DWORD dwMilliseconds, BOOL bAlertable) = SleepEx;
 
 DWORD WINAPI LoudSleepEx(DWORD dwMilliseconds, BOOL bAlertable)
@@ -38,7 +38,7 @@ PVOID AttachAndDetach(DWORD dwMilliseconds)
     DetourAttach(&(PVOID&)TrueSleepEx, (void *)LoudSleepEx);
     error = DetourTransactionCommit();
 
-    printf("Attach: %d, Trampoline: %p\n", error, (void *)TrueSleepEx);
+    printf("Attach: %d, Trampoline: %p\n", (int)error, (void *)TrueSleepEx);
 
     trampoline = (void *)TrueSleepEx;
 

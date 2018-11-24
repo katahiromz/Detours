@@ -68,7 +68,7 @@ typedef struct _CLIENT : OVERLAPPED
     TBLOG_MESSAGE   Message;
 
     BOOL LogMessage(PTBLOG_MESSAGE pMessage, DWORD nBytes);
-    BOOL LogMessageV(PCHAR pszMsg, ...);
+    BOOL LogMessageV(const CHAR *pszMsg, ...);
 } CLIENT, *PCLIENT;
 
 //////////////////////////////////////////////////////////////////////////////
@@ -94,7 +94,7 @@ VOID MyErrExit(PCSTR pszMsg)
 
 //////////////////////////////////////////////////////////////////////////////
 //
-BOOL CLIENT::LogMessageV(PCHAR pszMsg, ...)
+BOOL CLIENT::LogMessageV(const CHAR *pszMsg, ...)
 {
     DWORD cbWritten = 0;
     CHAR szBuf[1024];

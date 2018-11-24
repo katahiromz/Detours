@@ -17,15 +17,13 @@
 //
 #ifndef NODEBUG
 #undef ASSERT
-VOID DetourAssertMessage(CONST PCHAR szMsg, CONST PCHAR szFile, DWORD nLine);
+VOID DetourAssertMessage(CONST CHAR *szMsg, CONST CHAR *szFile, DWORD nLine);
 
 #define ASSERT(x)   \
 do { if (!(x)) { DetourAssertMessage(#x, __FILE__, __LINE__); DebugBreak(); }} while (0)
-    ;
 #undef ASSERTX
 #define ASSERTX(x)   \
 do { if (!(x)) { DetourAssertMessage(#x, __FILE__, __LINE__); PCHAR p=(PCHAR)(x); *p = 1; }} while (0)
-    ;
 #else   // NODEBUG
 #undef ASSERT
 #define ASSERT(x)

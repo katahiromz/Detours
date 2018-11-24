@@ -64,7 +64,7 @@ VOID _PrintEnter(PCSTR psz, ...);
 VOID _PrintExit(PCSTR psz, ...);
 VOID _Print(PCSTR psz, ...);
 
-VOID AssertMessage(CONST CHAR *pszMsg, CONST CHAR *pszFile, ULONG nLine);
+VOID AssertMessage(CONST CHAR *pszMsg, CONST CHAR *pszFile, INT nLine);
 
 //////////////////////////////////////////////////////////////////////////////
 //

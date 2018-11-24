@@ -21,6 +21,7 @@ static DWORD (WINAPI * TrueSleepEx)(DWORD dwMilliseconds, BOOL bAlertable) = NUL
 static int (WINAPI * TrueEntryPoint)(VOID) = NULL;
 static int (WINAPI * RawEntryPoint)(VOID) = NULL;
 
+extern "C"
 DWORD WINAPI UntimedSleepEx(DWORD dwMilliseconds, BOOL bAlertable)
 {
     if (TrueSleepEx != NULL) {
@@ -29,6 +30,7 @@ DWORD WINAPI UntimedSleepEx(DWORD dwMilliseconds, BOOL bAlertable)
     return 0;
 }
 
+extern "C"
 DWORD WINAPI TimedSleepEx(DWORD dwMilliseconds, BOOL bAlertable)
 {
     DWORD dwBeg = GetTickCount();
@@ -39,11 +41,13 @@ DWORD WINAPI TimedSleepEx(DWORD dwMilliseconds, BOOL bAlertable)
     return ret;
 }
 
+extern "C"
 DWORD WINAPI GetSleptTicks(VOID)
 {
     return dwSlept;
 }
 
+extern "C"
 int WINAPI TimedEntryPoint(VOID)
 {
     // We couldn't call LoadLibrary in DllMain,
@@ -79,6 +83,7 @@ int WINAPI TimedEntryPoint(VOID)
     return TrueEntryPoint();
 }
 
+extern "C"
 BOOL WINAPI DllMain(HINSTANCE hinst, DWORD dwReason, LPVOID reserved)
 {
     LONG error;

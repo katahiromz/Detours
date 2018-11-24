@@ -11,6 +11,8 @@
 typedef DWORD DWORD_PTR;
 #endif
 
+extern "C" {
+
 DWORD_PTR WINAPI Target0();
 DWORD_PTR WINAPI Target1(DWORD_PTR v1);
 DWORD_PTR WINAPI Target2(DWORD_PTR v1, DWORD_PTR v2);
@@ -54,6 +56,8 @@ DWORD_PTR WINAPI Target16(DWORD_PTR v1, DWORD_PTR v2, DWORD_PTR v3, DWORD_PTR v4
                           DWORD_PTR v13, DWORD_PTR v14, DWORD_PTR v15, DWORD_PTR v16);
 DWORD_PTR WINAPI TargetV(DWORD_PTR v1, ...);
 DWORD_PTR WINAPI TargetR(DWORD_PTR v1, ...);
+
+} // extern "C"
 
 //
 ///////////////////////////////////////////////////////////////// End of File.

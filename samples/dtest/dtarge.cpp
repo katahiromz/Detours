@@ -10,6 +10,8 @@
 #include <windows.h>
 #include "dtarge.h"
 
+extern "C" {
+
 DWORD_PTR WINAPI Target0()
 {
     printf("    Target0 ()\n");
@@ -301,6 +303,8 @@ BOOL WINAPI DllMain(HINSTANCE hinst, DWORD dwReason, LPVOID reserved)
 
     return TRUE;
 }
+
+} // extern "C"
 
 //
 ///////////////////////////////////////////////////////////////// End of File.

@@ -159,7 +159,7 @@ void ProtectToString(DWORD Protect, char *pszBuffer, size_t cBuffer)
     }
 }
 
-static BYTE buffer[65536];
+//static BYTE buffer[65536];
 
 typedef union
 {

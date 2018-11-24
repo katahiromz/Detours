@@ -67,10 +67,10 @@ static TBLOG_PAYLOAD s_ChildPayload;
 static CRITICAL_SECTION s_csChildPayload;
 static DWORD s_nTraceProcessId = 0;
 static LONG s_nChildCnt = 0;
-static PWCHAR s_pwEnvironment = NULL;
-static DWORD s_cwEnvironment = NULL;
-static PCHAR s_pbEnvironment = NULL;
-static DWORD s_cbEnvironment = NULL;
+//static PWCHAR s_pwEnvironment = NULL;
+//static DWORD s_cwEnvironment = NULL;
+//static PCHAR s_pbEnvironment = NULL;
+//static DWORD s_cbEnvironment = NULL;
 
 static CRITICAL_SECTION s_csPipe;                       // Guards access to hPipe.
 static HANDLE           s_hPipe = INVALID_HANDLE_VALUE;
@@ -100,7 +100,7 @@ PBYTE LoadFile(HANDLE hFile, DWORD cbFile);
 static PCHAR RemoveReturns(PCHAR pszBuffer);
 static PWCHAR RemoveReturns(PWCHAR pwzBuffer);
 
-VOID AssertFailed(CONST PCHAR pszMsg, CONST PCHAR pszFile, ULONG nLine);
+VOID AssertFailed(CONST CHAR *pszMsg, CONST CHAR *pszFile, INT nLine);
 
 int WINAPI Mine_EntryPoint(VOID);
 VOID WINAPI Mine_ExitProcess(UINT a0);
@@ -507,7 +507,7 @@ BOOL FindMsvcr()
 
 BOOL FindProc(PVOID * ppvCode, PCSTR pwzFunc)
 {
-    PVOID pv = GetProcAddress(s_hMsvcr, pwzFunc);
+    PVOID pv = (PVOID)GetProcAddress(s_hMsvcr, pwzFunc);
     if (pv != NULL) {
         *ppvCode = pv;
         return TRUE;
@@ -1663,10 +1663,10 @@ static PCHAR do_base(PCHAR pszOut, UINT64 nValue, UINT nBase, PCSTR pszDigits)
         szTmp[nDigit] = pszDigits[nValue % nBase];
         nValue /= nBase;
     }
-    for (nDigit = 0; nDigit < sizeof(szTmp) - 2 && szTmp[nDigit] == '0'; nDigit++) {
+    for (nDigit = 0; nDigit < (int)(sizeof(szTmp) - 2) && szTmp[nDigit] == '0'; nDigit++) {
         // skip leading zeros.
     }
-    for (; nDigit < sizeof(szTmp) - 1; nDigit++) {
+    for (; nDigit < (int)(sizeof(szTmp) - 1); nDigit++) {
         *pszOut++ = szTmp[nDigit];
     }
     *pszOut = '\0';
@@ -2189,6 +2189,7 @@ VOID VSafePrintf(PCSTR pszMsg, va_list args, PCHAR pszBuffer, LONG cbBuffer)
                         *pszOut++ = *pszArg++;
                     }
                 }
+                fDigit = fDigit;
             }
             else {
                 if (pszOut < pszEnd) {
@@ -3359,7 +3360,7 @@ DWORD WINAPI Mine_SetFilePointer(HANDLE hFile,
 
         FileInfo * pInfo = OpenFiles::RecallFile(hFile);
         if (pInfo != NULL) {
-            if (dwMoveMethod == FILE_END && lDistanceToMove == 0xffffffff) {
+            if (dwMoveMethod == FILE_END && lDistanceToMove == (LONG)0xffffffff) {
 #if 0
                 Print("<!-- SetFilePointer(APPEND, %le) -->\n",
                       pInfo->m_pwzPath);
@@ -3750,47 +3751,47 @@ LONG AttachDetours(VOID)
     DetourTransactionBegin();
     DetourUpdateThread(GetCurrentThread());
 
-    DetourAttach(&(PVOID&)Real_EntryPoint, Mine_EntryPoint);
-    DetourAttach(&(PVOID&)Real_ExitProcess, Mine_ExitProcess);
-    DetourAttach(&(PVOID&)Real_CopyFileExA, Mine_CopyFileExA);
-    DetourAttach(&(PVOID&)Real_CopyFileExW, Mine_CopyFileExW);
-    DetourAttach(&(PVOID&)Real_PrivCopyFileExW, Mine_PrivCopyFileExW);
-    DetourAttach(&(PVOID&)Real_CreateHardLinkA, Mine_CreateHardLinkA);
-    DetourAttach(&(PVOID&)Real_CreateHardLinkW, Mine_CreateHardLinkW);
-    DetourAttach(&(PVOID&)Real_CreateDirectoryW, Mine_CreateDirectoryW);
-    DetourAttach(&(PVOID&)Real_CreateDirectoryExW, Mine_CreateDirectoryExW);
-    DetourAttach(&(PVOID&)Real_CreateFileW, Mine_CreateFileW);
-    DetourAttach(&(PVOID&)Real_CreatePipe, Mine_CreatePipe);
-    DetourAttach(&(PVOID&)Real_CreateFileMappingW, Mine_CreateFileMappingW);
-    DetourAttach(&(PVOID&)Real_CloseHandle, Mine_CloseHandle);
-    DetourAttach(&(PVOID&)Real_DuplicateHandle, Mine_DuplicateHandle);
-    DetourAttach(&(PVOID&)Real_CreateProcessW, Mine_CreateProcessW);
-    DetourAttach(&(PVOID&)Real_CreateProcessA, Mine_CreateProcessA);
-    DetourAttach(&(PVOID&)Real_DeleteFileW, Mine_DeleteFileW);
-    DetourAttach(&(PVOID&)Real_DeviceIoControl, Mine_DeviceIoControl);
-    DetourAttach(&(PVOID&)Real_GetFileAttributesW, Mine_GetFileAttributesW);
-    DetourAttach(&(PVOID&)Real_MoveFileA, Mine_MoveFileA);
-    DetourAttach(&(PVOID&)Real_MoveFileW, Mine_MoveFileW);
-    DetourAttach(&(PVOID&)Real_MoveFileExA, Mine_MoveFileExA);
-    DetourAttach(&(PVOID&)Real_MoveFileExW, Mine_MoveFileExW);
-    DetourAttach(&(PVOID&)Real_MoveFileWithProgressW, Mine_MoveFileWithProgressW);
-    DetourAttach(&(PVOID&)Real_SetStdHandle, Mine_SetStdHandle);
-    DetourAttach(&(PVOID&)Real_LoadLibraryA, Mine_LoadLibraryA);
-    DetourAttach(&(PVOID&)Real_LoadLibraryW, Mine_LoadLibraryW);
-    DetourAttach(&(PVOID&)Real_LoadLibraryExA, Mine_LoadLibraryExA);
-    DetourAttach(&(PVOID&)Real_LoadLibraryExW, Mine_LoadLibraryExW);
-    DetourAttach(&(PVOID&)Real_SetFilePointer, Mine_SetFilePointer);
-    DetourAttach(&(PVOID&)Real_SetFilePointerEx, Mine_SetFilePointerEx);
-    DetourAttach(&(PVOID&)Real_ReadFile, Mine_ReadFile);
-    DetourAttach(&(PVOID&)Real_ReadFileEx, Mine_ReadFileEx);
-    DetourAttach(&(PVOID&)Real_WriteFile, Mine_WriteFile);
-    DetourAttach(&(PVOID&)Real_WriteFileEx, Mine_WriteFileEx);
-    DetourAttach(&(PVOID&)Real_WriteConsoleA, Mine_WriteConsoleA);
-    DetourAttach(&(PVOID&)Real_WriteConsoleW, Mine_WriteConsoleW);
-    DetourAttach(&(PVOID&)Real_ExpandEnvironmentStringsA, Mine_ExpandEnvironmentStringsA);
-    DetourAttach(&(PVOID&)Real_ExpandEnvironmentStringsW, Mine_ExpandEnvironmentStringsW);
-    DetourAttach(&(PVOID&)Real_GetEnvironmentVariableA, Mine_GetEnvironmentVariableA);
-    DetourAttach(&(PVOID&)Real_GetEnvironmentVariableW, Mine_GetEnvironmentVariableW);
+    DetourAttach(&(PVOID&)Real_EntryPoint, (void *)Mine_EntryPoint);
+    DetourAttach(&(PVOID&)Real_ExitProcess, (void *)Mine_ExitProcess);
+    DetourAttach(&(PVOID&)Real_CopyFileExA, (void *)Mine_CopyFileExA);
+    DetourAttach(&(PVOID&)Real_CopyFileExW, (void *)Mine_CopyFileExW);
+    DetourAttach(&(PVOID&)Real_PrivCopyFileExW, (void *)Mine_PrivCopyFileExW);
+    DetourAttach(&(PVOID&)Real_CreateHardLinkA, (void *)Mine_CreateHardLinkA);
+    DetourAttach(&(PVOID&)Real_CreateHardLinkW, (void *)Mine_CreateHardLinkW);
+    DetourAttach(&(PVOID&)Real_CreateDirectoryW, (void *)Mine_CreateDirectoryW);
+    DetourAttach(&(PVOID&)Real_CreateDirectoryExW, (void *)Mine_CreateDirectoryExW);
+    DetourAttach(&(PVOID&)Real_CreateFileW, (void *)Mine_CreateFileW);
+    DetourAttach(&(PVOID&)Real_CreatePipe, (void *)Mine_CreatePipe);
+    DetourAttach(&(PVOID&)Real_CreateFileMappingW, (void *)Mine_CreateFileMappingW);
+    DetourAttach(&(PVOID&)Real_CloseHandle, (void *)Mine_CloseHandle);
+    DetourAttach(&(PVOID&)Real_DuplicateHandle, (void *)Mine_DuplicateHandle);
+    DetourAttach(&(PVOID&)Real_CreateProcessW, (void *)Mine_CreateProcessW);
+    DetourAttach(&(PVOID&)Real_CreateProcessA, (void *)Mine_CreateProcessA);
+    DetourAttach(&(PVOID&)Real_DeleteFileW, (void *)Mine_DeleteFileW);
+    DetourAttach(&(PVOID&)Real_DeviceIoControl, (void *)Mine_DeviceIoControl);
+    DetourAttach(&(PVOID&)Real_GetFileAttributesW, (void *)Mine_GetFileAttributesW);
+    DetourAttach(&(PVOID&)Real_MoveFileA, (void *)Mine_MoveFileA);
+    DetourAttach(&(PVOID&)Real_MoveFileW, (void *)Mine_MoveFileW);
+    DetourAttach(&(PVOID&)Real_MoveFileExA, (void *)Mine_MoveFileExA);
+    DetourAttach(&(PVOID&)Real_MoveFileExW, (void *)Mine_MoveFileExW);
+    DetourAttach(&(PVOID&)Real_MoveFileWithProgressW, (void *)Mine_MoveFileWithProgressW);
+    DetourAttach(&(PVOID&)Real_SetStdHandle, (void *)Mine_SetStdHandle);
+    DetourAttach(&(PVOID&)Real_LoadLibraryA, (void *)Mine_LoadLibraryA);
+    DetourAttach(&(PVOID&)Real_LoadLibraryW, (void *)Mine_LoadLibraryW);
+    DetourAttach(&(PVOID&)Real_LoadLibraryExA, (void *)Mine_LoadLibraryExA);
+    DetourAttach(&(PVOID&)Real_LoadLibraryExW, (void *)Mine_LoadLibraryExW);
+    DetourAttach(&(PVOID&)Real_SetFilePointer, (void *)Mine_SetFilePointer);
+    DetourAttach(&(PVOID&)Real_SetFilePointerEx, (void *)Mine_SetFilePointerEx);
+    DetourAttach(&(PVOID&)Real_ReadFile, (void *)Mine_ReadFile);
+    DetourAttach(&(PVOID&)Real_ReadFileEx, (void *)Mine_ReadFileEx);
+    DetourAttach(&(PVOID&)Real_WriteFile, (void *)Mine_WriteFile);
+    DetourAttach(&(PVOID&)Real_WriteFileEx, (void *)Mine_WriteFileEx);
+    DetourAttach(&(PVOID&)Real_WriteConsoleA, (void *)Mine_WriteConsoleA);
+    DetourAttach(&(PVOID&)Real_WriteConsoleW, (void *)Mine_WriteConsoleW);
+    DetourAttach(&(PVOID&)Real_ExpandEnvironmentStringsA, (void *)Mine_ExpandEnvironmentStringsA);
+    DetourAttach(&(PVOID&)Real_ExpandEnvironmentStringsW, (void *)Mine_ExpandEnvironmentStringsW);
+    DetourAttach(&(PVOID&)Real_GetEnvironmentVariableA, (void *)Mine_GetEnvironmentVariableA);
+    DetourAttach(&(PVOID&)Real_GetEnvironmentVariableW, (void *)Mine_GetEnvironmentVariableW);
 
     return DetourTransactionCommit();
 }
@@ -3800,54 +3801,54 @@ LONG DetachDetours(VOID)
     DetourTransactionBegin();
     DetourUpdateThread(GetCurrentThread());
 
-    DetourDetach(&(PVOID&)Real_EntryPoint, Mine_EntryPoint);
-    DetourAttach(&(PVOID&)Real_ExitProcess, Mine_ExitProcess);
-    DetourDetach(&(PVOID&)Real_CopyFileExA, Mine_CopyFileExA);
-    DetourDetach(&(PVOID&)Real_CopyFileExW, Mine_CopyFileExW);
-    DetourDetach(&(PVOID&)Real_PrivCopyFileExW, Mine_PrivCopyFileExW);
-    DetourDetach(&(PVOID&)Real_CreateHardLinkA, Mine_CreateHardLinkA);
-    DetourDetach(&(PVOID&)Real_CreateHardLinkW, Mine_CreateHardLinkW);
-    DetourDetach(&(PVOID&)Real_CreateDirectoryW, Mine_CreateDirectoryW);
-    DetourDetach(&(PVOID&)Real_CreateDirectoryExW, Mine_CreateDirectoryExW);
-    DetourDetach(&(PVOID&)Real_CreateFileW, Mine_CreateFileW);
-    DetourDetach(&(PVOID&)Real_CreatePipe, Mine_CreatePipe);
-    DetourDetach(&(PVOID&)Real_CreateFileMappingW, Mine_CreateFileMappingW);
-    DetourDetach(&(PVOID&)Real_CloseHandle, Mine_CloseHandle);
-    DetourDetach(&(PVOID&)Real_DuplicateHandle, Mine_DuplicateHandle);
-    DetourDetach(&(PVOID&)Real_CreateProcessW, Mine_CreateProcessW);
-    DetourDetach(&(PVOID&)Real_CreateProcessA, Mine_CreateProcessA);
-    DetourDetach(&(PVOID&)Real_DeleteFileW, Mine_DeleteFileW);
-    DetourDetach(&(PVOID&)Real_DeviceIoControl, Mine_DeviceIoControl);
-    DetourDetach(&(PVOID&)Real_GetFileAttributesW, Mine_GetFileAttributesW);
-    DetourDetach(&(PVOID&)Real_MoveFileA, Mine_MoveFileA);
-    DetourDetach(&(PVOID&)Real_MoveFileW, Mine_MoveFileW);
-    DetourDetach(&(PVOID&)Real_MoveFileExA, Mine_MoveFileExA);
-    DetourDetach(&(PVOID&)Real_MoveFileExW, Mine_MoveFileExW);
-    DetourDetach(&(PVOID&)Real_MoveFileWithProgressW, Mine_MoveFileWithProgressW);
-    DetourDetach(&(PVOID&)Real_SetStdHandle, Mine_SetStdHandle);
-    DetourDetach(&(PVOID&)Real_LoadLibraryA, Mine_LoadLibraryA);
-    DetourDetach(&(PVOID&)Real_LoadLibraryW, Mine_LoadLibraryW);
-    DetourDetach(&(PVOID&)Real_LoadLibraryExA, Mine_LoadLibraryExA);
-    DetourDetach(&(PVOID&)Real_LoadLibraryExW, Mine_LoadLibraryExW);
-    DetourDetach(&(PVOID&)Real_SetFilePointer, Mine_SetFilePointer);
-    DetourDetach(&(PVOID&)Real_SetFilePointerEx, Mine_SetFilePointerEx);
-    DetourDetach(&(PVOID&)Real_ReadFile, Mine_ReadFile);
-    DetourDetach(&(PVOID&)Real_ReadFileEx, Mine_ReadFileEx);
-    DetourDetach(&(PVOID&)Real_WriteFile, Mine_WriteFile);
-    DetourDetach(&(PVOID&)Real_WriteFileEx, Mine_WriteFileEx);
-    DetourDetach(&(PVOID&)Real_WriteConsoleA, Mine_WriteConsoleA);
-    DetourDetach(&(PVOID&)Real_WriteConsoleW, Mine_WriteConsoleW);
-    DetourDetach(&(PVOID&)Real_ExpandEnvironmentStringsA, Mine_ExpandEnvironmentStringsA);
-    DetourDetach(&(PVOID&)Real_ExpandEnvironmentStringsW, Mine_ExpandEnvironmentStringsW);
-    DetourDetach(&(PVOID&)Real_GetEnvironmentVariableA, Mine_GetEnvironmentVariableA);
-    DetourDetach(&(PVOID&)Real_GetEnvironmentVariableW, Mine_GetEnvironmentVariableW);
+    DetourDetach(&(PVOID&)Real_EntryPoint, (void *)Mine_EntryPoint);
+    DetourAttach(&(PVOID&)Real_ExitProcess, (void *)Mine_ExitProcess);
+    DetourDetach(&(PVOID&)Real_CopyFileExA, (void *)Mine_CopyFileExA);
+    DetourDetach(&(PVOID&)Real_CopyFileExW, (void *)Mine_CopyFileExW);
+    DetourDetach(&(PVOID&)Real_PrivCopyFileExW, (void *)Mine_PrivCopyFileExW);
+    DetourDetach(&(PVOID&)Real_CreateHardLinkA, (void *)Mine_CreateHardLinkA);
+    DetourDetach(&(PVOID&)Real_CreateHardLinkW, (void *)Mine_CreateHardLinkW);
+    DetourDetach(&(PVOID&)Real_CreateDirectoryW, (void *)Mine_CreateDirectoryW);
+    DetourDetach(&(PVOID&)Real_CreateDirectoryExW, (void *)Mine_CreateDirectoryExW);
+    DetourDetach(&(PVOID&)Real_CreateFileW, (void *)Mine_CreateFileW);
+    DetourDetach(&(PVOID&)Real_CreatePipe, (void *)Mine_CreatePipe);
+    DetourDetach(&(PVOID&)Real_CreateFileMappingW, (void *)Mine_CreateFileMappingW);
+    DetourDetach(&(PVOID&)Real_CloseHandle, (void *)Mine_CloseHandle);
+    DetourDetach(&(PVOID&)Real_DuplicateHandle, (void *)Mine_DuplicateHandle);
+    DetourDetach(&(PVOID&)Real_CreateProcessW, (void *)Mine_CreateProcessW);
+    DetourDetach(&(PVOID&)Real_CreateProcessA, (void *)Mine_CreateProcessA);
+    DetourDetach(&(PVOID&)Real_DeleteFileW, (void *)Mine_DeleteFileW);
+    DetourDetach(&(PVOID&)Real_DeviceIoControl, (void *)Mine_DeviceIoControl);
+    DetourDetach(&(PVOID&)Real_GetFileAttributesW, (void *)Mine_GetFileAttributesW);
+    DetourDetach(&(PVOID&)Real_MoveFileA, (void *)Mine_MoveFileA);
+    DetourDetach(&(PVOID&)Real_MoveFileW, (void *)Mine_MoveFileW);
+    DetourDetach(&(PVOID&)Real_MoveFileExA, (void *)Mine_MoveFileExA);
+    DetourDetach(&(PVOID&)Real_MoveFileExW, (void *)Mine_MoveFileExW);
+    DetourDetach(&(PVOID&)Real_MoveFileWithProgressW, (void *)Mine_MoveFileWithProgressW);
+    DetourDetach(&(PVOID&)Real_SetStdHandle, (void *)Mine_SetStdHandle);
+    DetourDetach(&(PVOID&)Real_LoadLibraryA, (void *)Mine_LoadLibraryA);
+    DetourDetach(&(PVOID&)Real_LoadLibraryW, (void *)Mine_LoadLibraryW);
+    DetourDetach(&(PVOID&)Real_LoadLibraryExA, (void *)Mine_LoadLibraryExA);
+    DetourDetach(&(PVOID&)Real_LoadLibraryExW, (void *)Mine_LoadLibraryExW);
+    DetourDetach(&(PVOID&)Real_SetFilePointer, (void *)Mine_SetFilePointer);
+    DetourDetach(&(PVOID&)Real_SetFilePointerEx, (void *)Mine_SetFilePointerEx);
+    DetourDetach(&(PVOID&)Real_ReadFile, (void *)Mine_ReadFile);
+    DetourDetach(&(PVOID&)Real_ReadFileEx, (void *)Mine_ReadFileEx);
+    DetourDetach(&(PVOID&)Real_WriteFile, (void *)Mine_WriteFile);
+    DetourDetach(&(PVOID&)Real_WriteFileEx, (void *)Mine_WriteFileEx);
+    DetourDetach(&(PVOID&)Real_WriteConsoleA, (void *)Mine_WriteConsoleA);
+    DetourDetach(&(PVOID&)Real_WriteConsoleW, (void *)Mine_WriteConsoleW);
+    DetourDetach(&(PVOID&)Real_ExpandEnvironmentStringsA, (void *)Mine_ExpandEnvironmentStringsA);
+    DetourDetach(&(PVOID&)Real_ExpandEnvironmentStringsW, (void *)Mine_ExpandEnvironmentStringsW);
+    DetourDetach(&(PVOID&)Real_GetEnvironmentVariableA, (void *)Mine_GetEnvironmentVariableA);
+    DetourDetach(&(PVOID&)Real_GetEnvironmentVariableW, (void *)Mine_GetEnvironmentVariableW);
 
-    if (Real_getenv) { DetourDetach(&(PVOID&)Real_getenv, Mine_getenv); }
-    if (Real_getenv_s) { DetourDetach(&(PVOID&)Real_getenv_s, Mine_getenv_s); }
-    if (Real_wgetenv) { DetourDetach(&(PVOID&)Real_wgetenv, Mine_wgetenv); }
-    if (Real_wgetenv_s) { DetourDetach(&(PVOID&)Real_wgetenv, Mine_wgetenv_s); }
-    if (Real_dupenv_s) { DetourDetach(&(PVOID&)Real_dupenv_s, Mine_dupenv_s); }
-    if (Real_wdupenv_s) { DetourDetach(&(PVOID&)Real_wdupenv_s, Mine_wdupenv_s); }
+    if (Real_getenv) { DetourDetach(&(PVOID&)Real_getenv, (void *)Mine_getenv); }
+    if (Real_getenv_s) { DetourDetach(&(PVOID&)Real_getenv_s, (void *)Mine_getenv_s); }
+    if (Real_wgetenv) { DetourDetach(&(PVOID&)Real_wgetenv, (void *)Mine_wgetenv); }
+    if (Real_wgetenv_s) { DetourDetach(&(PVOID&)Real_wgetenv, (void *)Mine_wgetenv_s); }
+    if (Real_dupenv_s) { DetourDetach(&(PVOID&)Real_dupenv_s, (void *)Mine_dupenv_s); }
+    if (Real_wdupenv_s) { DetourDetach(&(PVOID&)Real_wdupenv_s, (void *)Mine_wdupenv_s); }
 
     return DetourTransactionCommit();
 }
@@ -3947,6 +3948,7 @@ LONG EnterFunc()
 
     SetLastError(dwErr);
 
+    nThread = nThread;
     return nIndent;
 }
 
@@ -3966,6 +3968,8 @@ VOID ExitFunc()
     }
 
     SetLastError(dwErr);
+    nIndent = nIndent;
+    nThread = nThread;
 }
 
 VOID Print(const CHAR *psz, ...)
@@ -3984,7 +3988,7 @@ VOID Print(const CHAR *psz, ...)
     SetLastError(dwErr);
 }
 
-VOID AssertFailed(CONST PCHAR pszMsg, CONST PCHAR pszFile, ULONG nLine)
+VOID AssertFailed(CONST CHAR *pszMsg, CONST CHAR *pszFile, INT nLine)
 {
     Tblog("ASSERT(%hs) failed in %s, line %d.\n", pszMsg, pszFile, nLine);
 }
@@ -4526,12 +4530,12 @@ int WINAPI Mine_EntryPoint(VOID)
         DetourTransactionBegin();
         DetourUpdateThread(GetCurrentThread());
 
-        DetourAttachIf(&(PVOID&)Real_getenv, Mine_getenv);
-        DetourAttachIf(&(PVOID&)Real_getenv_s, Mine_getenv_s);
-        DetourAttachIf(&(PVOID&)Real_wgetenv, Mine_wgetenv);
-        DetourAttachIf(&(PVOID&)Real_wgetenv, Mine_wgetenv_s);
-        DetourAttachIf(&(PVOID&)Real_dupenv_s, Mine_dupenv_s);
-        DetourAttachIf(&(PVOID&)Real_wdupenv_s, Mine_wdupenv_s);
+        DetourAttachIf(&(PVOID&)Real_getenv, (void *)Mine_getenv);
+        DetourAttachIf(&(PVOID&)Real_getenv_s, (void *)Mine_getenv_s);
+        DetourAttachIf(&(PVOID&)Real_wgetenv, (void *)Mine_wgetenv);
+        DetourAttachIf(&(PVOID&)Real_wgetenv, (void *)Mine_wgetenv_s);
+        DetourAttachIf(&(PVOID&)Real_dupenv_s, (void *)Mine_dupenv_s);
+        DetourAttachIf(&(PVOID&)Real_wdupenv_s, (void *)Mine_wdupenv_s);
 
         DetourTransactionCommit();
     }

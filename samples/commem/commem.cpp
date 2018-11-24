@@ -109,6 +109,7 @@ int main(int argc, char **argv)
 
     CoUninitialize();
 
+    hr = hr;
     return 0;
 }
 

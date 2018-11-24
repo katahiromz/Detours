@@ -9,12 +9,14 @@ int WINAPI Echo(PCSTR pszMsg);
 
 static int (WINAPI * Real_Echo)(PCSTR pszMsg) = Echo;
 
+extern "C"
 int WINAPI Mine_Echo(PCSTR pszMsg)
 {
     printf("Echo(%s)\n", pszMsg);
     return Real_Echo(pszMsg);
 }
 
+extern "C"
 BOOL WINAPI DllMain(HINSTANCE hinst, DWORD dwReason, LPVOID reserved)
 {
     LONG error;
