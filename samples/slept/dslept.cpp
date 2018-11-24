@@ -55,7 +55,7 @@ int WINAPI TimedEntryPoint(VOID)
 
     DetourTransactionBegin();
     DetourUpdateThread(GetCurrentThread());
-    DetourAttach(&(PVOID&)TrueSleepEx, TimedSleepEx);
+    DetourAttach(&(PVOID&)TrueSleepEx, (void *)TimedSleepEx);
     error = DetourTransactionCommit();
 
     if (error == NO_ERROR) {
@@ -65,7 +65,7 @@ int WINAPI TimedEntryPoint(VOID)
     }
     else {
         printf("dslept" DETOURS_STRINGIFY(DETOURS_BITS) ".dll: "
-               " Error detouring SleepEx(): %d\n", error);
+               " Error detouring SleepEx(): %d\n", (int)error);
     }
 
     Verify("SleepEx", (PVOID)SleepEx);
@@ -102,15 +102,15 @@ BOOL WINAPI DllMain(HINSTANCE hinst, DWORD dwReason, LPVOID reserved)
         TrueEntryPoint = (int (WINAPI *)(VOID))DetourGetEntryPoint(NULL);
         RawEntryPoint = TrueEntryPoint;
 
-        Verify("EntryPoint", RawEntryPoint);
+        Verify("EntryPoint", (PVOID)RawEntryPoint);
 
         DetourTransactionBegin();
         DetourUpdateThread(GetCurrentThread());
-        DetourAttach(&(PVOID&)TrueEntryPoint, TimedEntryPoint);
+        DetourAttach(&(PVOID&)TrueEntryPoint, (void *)TimedEntryPoint);
         error = DetourTransactionCommit();
 
-        Verify("EntryPoint after attach", RawEntryPoint);
-        Verify("EntryPoint trampoline", TrueEntryPoint);
+        Verify("EntryPoint after attach", (PVOID)RawEntryPoint);
+        Verify("EntryPoint trampoline", (PVOID)TrueEntryPoint);
 
         if (error == NO_ERROR) {
             printf("dslept" DETOURS_STRINGIFY(DETOURS_BITS) ".dll: "
@@ -118,20 +118,20 @@ BOOL WINAPI DllMain(HINSTANCE hinst, DWORD dwReason, LPVOID reserved)
         }
         else {
             printf("dslept" DETOURS_STRINGIFY(DETOURS_BITS) ".dll: "
-                   " Error detouring EntryPoint(): %d\n", error);
+                   " Error detouring EntryPoint(): %d\n", (int)error);
         }
     }
     else if (dwReason == DLL_PROCESS_DETACH) {
         DetourTransactionBegin();
         DetourUpdateThread(GetCurrentThread());
         if (TrueSleepEx != NULL) {
-            DetourDetach(&(PVOID&)TrueSleepEx, (PVOID)TimedSleepEx);
+            DetourDetach(&(PVOID&)TrueSleepEx, (void *)TimedSleepEx);
         }
-        DetourDetach(&(PVOID&)TrueEntryPoint, TimedEntryPoint);
+        DetourDetach(&(PVOID&)TrueEntryPoint, (void *)TimedEntryPoint);
         error = DetourTransactionCommit();
 
         printf("dslept" DETOURS_STRINGIFY(DETOURS_BITS) ".dll: "
-               " Removed Sleep() detours (%d), slept %d ticks.\n", error, dwSlept);
+               " Removed Sleep() detours (%d), slept %d ticks.\n", (int)error, (int)dwSlept);
 
         fflush(stdout);
     }

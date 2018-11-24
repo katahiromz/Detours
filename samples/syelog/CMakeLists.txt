@@ -1,4 +1,4 @@
-file(COPY syelog.h DESTINATION ${INCD})
+configure_file(syelog.h ${INCD}/syelog.h COPYONLY)
 
 add_library(syelog syelog.cpp)
 

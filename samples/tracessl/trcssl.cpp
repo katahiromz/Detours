@@ -66,7 +66,7 @@ VOID _PrintEnter(PCSTR psz, ...);
 VOID _PrintExit(PCSTR psz, ...);
 VOID _Print(PCSTR psz, ...);
 
-VOID AssertMessage(CONST PCHAR pszMsg, CONST PCHAR pszFile, ULONG nLine);
+VOID AssertMessage(CONST CHAR *pszMsg, CONST CHAR *pszFile, ULONG nLine);
 
 //////////////////////////////////////////////////////////////////////////////
 //
@@ -1673,7 +1673,7 @@ VOID _Print(const CHAR *psz, ...)
     SetLastError(dwErr);
 }
 
-VOID AssertMessage(CONST PCHAR pszMsg, CONST PCHAR pszFile, ULONG nLine)
+VOID AssertMessage(CONST CHAR *pszMsg, CONST CHAR *pszFile, ULONG nLine)
 {
     Syelog(SYELOG_SEVERITY_FATAL,
            "ASSERT(%s) failed in %s, line %d.\n", pszMsg, pszFile, nLine);
@@ -1729,7 +1729,7 @@ BOOL ProcessAttach(HMODULE hDll)
            "### %ls\n", wzExeName);
     LONG error = AttachDetours();
     if (error != NO_ERROR) {
-        Syelog(SYELOG_SEVERITY_FATAL, "### Error attaching detours: %d\n", error);
+        Syelog(SYELOG_SEVERITY_FATAL, "### Error attaching detours: %d\n", (int)error);
     }
 
     ThreadAttach(hDll);
@@ -1745,7 +1745,7 @@ BOOL ProcessDetach(HMODULE hDll)
 
     LONG error = DetachDetours();
     if (error != NO_ERROR) {
-        Syelog(SYELOG_SEVERITY_FATAL, "### Error detaching detours: %d\n", error);
+        Syelog(SYELOG_SEVERITY_FATAL, "### Error detaching detours: %d\n", (int)error);
     }
 
     Syelog(SYELOG_SEVERITY_NOTICE, "### Closing.\n");

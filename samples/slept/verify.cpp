@@ -56,7 +56,7 @@ static VOID Decode(PCSTR pszDesc, PBYTE pbCode, PBYTE pbOther, PBYTE pbPointer, 
 }
 
 
-VOID WINAPI Verify(PCHAR pszFunc, PVOID pvPointer)
+VOID WINAPI Verify(const CHAR *pszFunc, const VOID *pvPointer)
 {
     PVOID pvCode = DetourCodeFromPointer(pvPointer, NULL);
 

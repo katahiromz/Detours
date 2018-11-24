@@ -163,7 +163,9 @@ PVOID WINAPI DetourFindFunction(_In_ PCSTR pszModule,
 {
     /////////////////////////////////////////////// First, try GetProcAddress.
     //
-#pragma prefast(suppress:28752, "We don't do the unicode conversion for LoadLibraryExA.")
+#ifndef DETOURS_NO_PREFAST
+    #pragma prefast(suppress:28752, "We don't do the unicode conversion for LoadLibraryExA.")
+#endif
     HMODULE hModule = LoadLibraryExA(pszModule, NULL, 0);
     if (hModule == NULL) {
         return NULL;
@@ -189,7 +191,7 @@ PVOID WINAPI DetourFindFunction(_In_ PCSTR pszModule,
                                     (DWORD64)hModule, 0) == 0) {
         if (ERROR_SUCCESS != GetLastError()) {
             DETOUR_TRACE(("SymLoadModule64(%p) failed: %d\n",
-                          pSymInfo->hProcess, GetLastError()));
+                          pSymInfo->hProcess, (int)GetLastError()));
             return NULL;
         }
     }
@@ -201,7 +203,7 @@ PVOID WINAPI DetourFindFunction(_In_ PCSTR pszModule,
     modinfo.SizeOfStruct = sizeof(modinfo);
     if (!pSymInfo->pfSymGetModuleInfo64(pSymInfo->hProcess, (DWORD64)hModule, &modinfo)) {
         DETOUR_TRACE(("SymGetModuleInfo64(%p, %p) failed: %d\n",
-                      pSymInfo->hProcess, hModule, GetLastError()));
+                      pSymInfo->hProcess, hModule, (int)GetLastError()));
         return NULL;
     }
 
@@ -234,7 +236,7 @@ PVOID WINAPI DetourFindFunction(_In_ PCSTR pszModule,
 #endif
 
     if (!pSymInfo->pfSymFromName(pSymInfo->hProcess, szFullName, &symbol)) {
-        DETOUR_TRACE(("SymFromName(%hs) failed: %d\n", szFullName, GetLastError()));
+        DETOUR_TRACE(("SymFromName(%hs) failed: %d\n", szFullName, (int)GetLastError()));
         return NULL;
     }
 
@@ -298,7 +300,9 @@ HMODULE WINAPI DetourEnumerateModules(_In_opt_ HMODULE hModuleLast)
 
             return (HMODULE)pDosHeader;
         }
-#pragma prefast(suppress:28940, "A bad pointer means this probably isn't a PE header.")
+#ifndef DETOURS_NO_PREFAST
+    #pragma prefast(suppress:28940, "A bad pointer means this probably isn't a PE header.")
+#endif
         __except(GetExceptionCode() == EXCEPTION_ACCESS_VIOLATION ?
                  EXCEPTION_EXECUTE_HANDLER : EXCEPTION_CONTINUE_SEARCH) {
             continue;

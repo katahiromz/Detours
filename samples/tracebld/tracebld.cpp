@@ -156,7 +156,7 @@ BOOL CloseConnection(PCLIENT pClient)
             //FlushFileBuffers(pClient->hPipe);
             if (!DisconnectNamedPipe(pClient->hPipe)) {
                 DWORD error = GetLastError();
-                pClient->LogMessageV("<!-- Error %d in DisconnectNamedPipe. -->\n", error);
+                pClient->LogMessageV("<!-- Error %d in DisconnectNamedPipe. -->\n", (int)error);
             }
             CloseHandle(pClient->hPipe);
             pClient->hPipe = INVALID_HANDLE_VALUE;
@@ -214,7 +214,7 @@ PCLIENT CreatePipeConnection(HANDLE hCompletionPort, LONG nClient)
                                  NULL);
     if (pClient->hFile == INVALID_HANDLE_VALUE) {
         fprintf(stderr, "TRACEBLD: Error opening output file: %s: %d\n\n",
-                szLogFile, GetLastError());
+                szLogFile, (int)GetLastError());
         fflush(stderr);
         MyErrExit("CreateFile");
     }
@@ -278,10 +278,10 @@ BOOL DoRead(PCLIENT pClient)
     }
     else if (error != ERROR_IO_PENDING) {
         if (b) {
-            pClient->LogMessageV("<!-- **** ReadFile 002 succeeded: %d -->\n", error);
+            pClient->LogMessageV("<!-- **** ReadFile 002 succeeded: %d -->\n", (int)error);
         }
         else {
-            pClient->LogMessageV("<!-- **** ReadFile 002 failed: %d -->\n", error);
+            pClient->LogMessageV("<!-- **** ReadFile 002 failed: %d -->\n", (int)error);
         }
         CloseConnection(pClient);
     }
@@ -533,7 +533,7 @@ DWORD main(int argc, char **argv)
     if (!DetourCreateProcessWithDllExA(szFullExe[0] ? szFullExe : NULL, szCommand,
                                        NULL, NULL, TRUE, dwFlags, NULL, NULL,
                                        &si, &pi, szDllPath, NULL)) {
-        printf("TRACEBLD: DetourCreateProcessWithDllEx failed: %d\n", GetLastError());
+        printf("TRACEBLD: DetourCreateProcessWithDllEx failed: %d\n", (int)GetLastError());
         ExitProcess(9007);
     }
 
@@ -553,7 +553,7 @@ DWORD main(int argc, char **argv)
 
     if (!DetourCopyPayloadToProcess(pi.hProcess, s_guidTrace,
                                     &s_Payload, sizeof(s_Payload))) {
-        printf("TRACEBLD: DetourCopyPayloadToProcess failed: %d\n", GetLastError());
+        printf("TRACEBLD: DetourCopyPayloadToProcess failed: %d\n", (int)GetLastError());
         ExitProcess(9008);
     }
 
@@ -563,7 +563,7 @@ DWORD main(int argc, char **argv)
 
     DWORD dwResult = 0;
     if (!GetExitCodeProcess(pi.hProcess, &dwResult)) {
-        printf("TRACEBLD: GetExitCodeProcess failed: %d\n", GetLastError());
+        printf("TRACEBLD: GetExitCodeProcess failed: %d\n", (int)GetLastError());
         return 9008;
     }
 

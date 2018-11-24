@@ -26,11 +26,11 @@
 
 VOID MyErrExit(PCSTR pszMsg)
 {
-    fprintf(stderr, "Error %s: %d\n", pszMsg, GetLastError());
+    fprintf(stderr, "Error %s: %d\n", pszMsg, (int)GetLastError());
     exit(1);
 }
 
-DWORD main(int argc, char *argv[])
+int main(int argc, char *argv[])
 {
     HANDLE hPipe;
     SYELOG_MESSAGE Message;

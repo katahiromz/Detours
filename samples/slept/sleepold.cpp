@@ -23,7 +23,7 @@ int __cdecl main(int argc, char **argv)
     //
     // Verify what the code looks like.
     //
-    printf("sleepold.exe: Starting (at %p).\n", main);
+    printf("sleepold.exe: Starting (at %p).\n", (void *)main);
     if (!fQuiet) {
         Verify("SleepEx", (PBYTE)SleepEx);
         printf("\n");

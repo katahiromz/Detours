@@ -102,25 +102,25 @@ BOOL WINAPI DllMain(HINSTANCE hinst, DWORD dwReason, LPVOID reserved)
 
         DetourTransactionBegin();
         DetourUpdateThread(GetCurrentThread());
-        DetourAttach(&(PVOID&)TrueSleepEx, TimedSleepEx);
+        DetourAttach(&(PVOID&)TrueSleepEx, (void *)TimedSleepEx);
         error = DetourTransactionCommit();
 
         if (error == NO_ERROR) {
             printf("slept" DETOURS_STRINGIFY(DETOURS_BITS) ".dll: "
-                   " Detoured SleepEx() @ %p.\n", TrueSleepEx);
+                   " Detoured SleepEx() @ %p.\n", (void *)TrueSleepEx);
         }
         else {
             printf("slept" DETOURS_STRINGIFY(DETOURS_BITS) ".dll: "
-                   " Error detouring SleepEx(): %d\n", error);
+                   " Error detouring SleepEx(): %d\n", (int)error);
         }
     }
     else if (dwReason == DLL_PROCESS_DETACH) {
         DetourTransactionBegin();
         DetourUpdateThread(GetCurrentThread());
-        DetourDetach(&(PVOID&)TrueSleepEx, TimedSleepEx);
+        DetourDetach(&(PVOID&)TrueSleepEx, (void *)TimedSleepEx);
         error = DetourTransactionCommit();
         printf("slept" DETOURS_STRINGIFY(DETOURS_BITS) ".dll: "
-               " Removed SleepEx() detour (%d), slept %d ticks.\n", error, dwSlept);
+               " Removed SleepEx() detour (%d), slept %d ticks.\n", (int)error, (int)dwSlept);
         fflush(stdout);
     }
     return TRUE;

@@ -19,28 +19,28 @@ DWORD_PTR WINAPI Target0()
 DWORD_PTR WINAPI Target1(DWORD_PTR v1)
 {
     printf("    Target1 (%d)\n",
-           (DWORD)v1);
+           (int)(DWORD)v1);
     return 1001;
 }
 
 DWORD_PTR WINAPI Target2(DWORD_PTR v1, DWORD_PTR v2)
 {
     printf("    Target2 (%d,%d)\n",
-           (DWORD)v1, (DWORD)v2);
+           (int)(DWORD)v1, (int)(DWORD)v2);
     return 1002;
 }
 
 DWORD_PTR WINAPI Target3(DWORD_PTR v1, DWORD_PTR v2, DWORD_PTR v3)
 {
     printf("    Target3 (%d,%d,%d)\n",
-           (DWORD)v1, (DWORD)v2, (DWORD)v3);
+           (int)(DWORD)v1, (int)(DWORD)v2, (int)(DWORD)v3);
     return 1003;
 }
 
 DWORD_PTR WINAPI Target4(DWORD_PTR v1, DWORD_PTR v2, DWORD_PTR v3, DWORD_PTR v4)
 {
     printf("    Target4 (%d,%d,%d,%d)\n",
-           (DWORD)v1, (DWORD)v2, (DWORD)v3, (DWORD)v4);
+           (int)(DWORD)v1, (int)(DWORD)v2, (int)(DWORD)v3, (int)(DWORD)v4);
     return 1004;
 }
 
@@ -48,8 +48,8 @@ DWORD_PTR WINAPI Target5(DWORD_PTR v1, DWORD_PTR v2, DWORD_PTR v3, DWORD_PTR v4,
                          DWORD_PTR v5)
 {
     printf("    Target5 (%d,%d,%d,%d,%d)\n",
-           (DWORD)v1, (DWORD)v2, (DWORD)v3, (DWORD)v4,
-           (DWORD)v5);
+           (int)(DWORD)v1, (int)(DWORD)v2, (int)(DWORD)v3, (int)(DWORD)v4,
+           (int)(DWORD)v5);
     return 1005;
 }
 
@@ -57,8 +57,8 @@ DWORD_PTR WINAPI Target6(DWORD_PTR v1, DWORD_PTR v2, DWORD_PTR v3, DWORD_PTR v4,
                          DWORD_PTR v5, DWORD_PTR v6)
 {
     printf("    Target6 (%d,%d,%d,%d,%d,%d)\n",
-           (DWORD)v1, (DWORD)v2, (DWORD)v3, (DWORD)v4,
-           (DWORD)v5, (DWORD)v6);
+           (int)(DWORD)v1, (int)(DWORD)v2, (int)(DWORD)v3, (int)(DWORD)v4,
+           (int)(DWORD)v5, (int)(DWORD)v6);
     return 1006;
 }
 
@@ -66,8 +66,8 @@ DWORD_PTR WINAPI Target7(DWORD_PTR v1, DWORD_PTR v2, DWORD_PTR v3, DWORD_PTR v4,
                          DWORD_PTR v5, DWORD_PTR v6, DWORD_PTR v7)
 {
     printf("    Target7 (%d,%d,%d,%d,%d,%d,%d)\n",
-           (DWORD)v1, (DWORD)v2, (DWORD)v3, (DWORD)v4,
-           (DWORD)v5, (DWORD)v6, (DWORD)v7);
+           (int)(DWORD)v1, (int)(DWORD)v2, (int)(DWORD)v3, (int)(DWORD)v4,
+           (int)(DWORD)v5, (int)(DWORD)v6, (int)(DWORD)v7);
     return 1007;
 }
 
@@ -75,8 +75,8 @@ DWORD_PTR WINAPI Target8(DWORD_PTR v1, DWORD_PTR v2, DWORD_PTR v3, DWORD_PTR v4,
                          DWORD_PTR v5, DWORD_PTR v6, DWORD_PTR v7, DWORD_PTR v8)
 {
     printf("    Target8 (%d,%d,%d,%d,%d,%d,%d,%d)\n",
-           (DWORD)v1, (DWORD)v2, (DWORD)v3, (DWORD)v4,
-           (DWORD)v5, (DWORD)v6, (DWORD)v7, (DWORD)v8);
+           (int)(DWORD)v1, (int)(DWORD)v2, (int)(DWORD)v3, (int)(DWORD)v4,
+           (int)(DWORD)v5, (int)(DWORD)v6, (int)(DWORD)v7, (int)(DWORD)v8);
     return 1008;
 }
 
@@ -85,9 +85,9 @@ DWORD_PTR WINAPI Target9(DWORD_PTR v1, DWORD_PTR v2, DWORD_PTR v3, DWORD_PTR v4,
                          DWORD_PTR v9)
 {
     printf("    Target9 (%d,%d,%d,%d,%d,%d,%d,%d,%d)\n",
-           (DWORD)v1, (DWORD)v2, (DWORD)v3, (DWORD)v4,
-           (DWORD)v5, (DWORD)v6, (DWORD)v7, (DWORD)v8,
-           (DWORD)v9);
+           (int)(DWORD)v1, (int)(DWORD)v2, (int)(DWORD)v3, (int)(DWORD)v4,
+           (int)(DWORD)v5, (int)(DWORD)v6, (int)(DWORD)v7, (int)(DWORD)v8,
+           (int)(DWORD)v9);
     return 1009;
 }
 
@@ -96,9 +96,9 @@ DWORD_PTR WINAPI Target10(DWORD_PTR v1, DWORD_PTR v2, DWORD_PTR v3, DWORD_PTR v4
                           DWORD_PTR v9, DWORD_PTR v10)
 {
     printf("    Target10(%d,%d,%d,%d,%d,%d,%d,%d,%d,%d)\n",
-           (DWORD)v1, (DWORD)v2, (DWORD)v3, (DWORD)v4,
-           (DWORD)v5, (DWORD)v6, (DWORD)v7, (DWORD)v8,
-           (DWORD)v9, (DWORD)v10);
+           (int)(DWORD)v1, (int)(DWORD)v2, (int)(DWORD)v3, (int)(DWORD)v4,
+           (int)(DWORD)v5, (int)(DWORD)v6, (int)(DWORD)v7, (int)(DWORD)v8,
+           (int)(DWORD)v9, (int)(DWORD)v10);
     return 1010;
 }
 
@@ -107,9 +107,9 @@ DWORD_PTR WINAPI Target11(DWORD_PTR v1, DWORD_PTR v2, DWORD_PTR v3, DWORD_PTR v4
                           DWORD_PTR v9, DWORD_PTR v10, DWORD_PTR v11)
 {
     printf("    Target11(%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d)\n",
-           (DWORD)v1, (DWORD)v2, (DWORD)v3, (DWORD)v4,
-           (DWORD)v5, (DWORD)v6, (DWORD)v7, (DWORD)v8,
-           (DWORD)v9, (DWORD)v10, (DWORD)v11);
+           (int)(DWORD)v1, (int)(DWORD)v2, (int)(DWORD)v3, (int)(DWORD)v4,
+           (int)(DWORD)v5, (int)(DWORD)v6, (int)(DWORD)v7, (int)(DWORD)v8,
+           (int)(DWORD)v9, (int)(DWORD)v10, (int)(DWORD)v11);
     return 1011;
 }
 
@@ -118,9 +118,9 @@ DWORD_PTR WINAPI Target12(DWORD_PTR v1, DWORD_PTR v2, DWORD_PTR v3, DWORD_PTR v4
                           DWORD_PTR v9, DWORD_PTR v10, DWORD_PTR v11, DWORD_PTR v12)
 {
     printf("    Target12(%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d)\n",
-           (DWORD)v1, (DWORD)v2, (DWORD)v3, (DWORD)v4,
-           (DWORD)v5, (DWORD)v6, (DWORD)v7, (DWORD)v8,
-           (DWORD)v9, (DWORD)v10, (DWORD)v11, (DWORD)v12);
+           (int)(DWORD)v1, (int)(DWORD)v2, (int)(DWORD)v3, (int)(DWORD)v4,
+           (int)(DWORD)v5, (int)(DWORD)v6, (int)(DWORD)v7, (int)(DWORD)v8,
+           (int)(DWORD)v9, (int)(DWORD)v10, (int)(DWORD)v11, (int)(DWORD)v12);
     return 1012;
 }
 
@@ -130,10 +130,10 @@ DWORD_PTR WINAPI Target13(DWORD_PTR v1, DWORD_PTR v2, DWORD_PTR v3, DWORD_PTR v4
                           DWORD_PTR v13)
 {
     printf("    Target13(%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d)\n",
-           (DWORD)v1, (DWORD)v2, (DWORD)v3, (DWORD)v4,
-           (DWORD)v5, (DWORD)v6, (DWORD)v7, (DWORD)v8,
-           (DWORD)v9, (DWORD)v10, (DWORD)v11, (DWORD)v12,
-           (DWORD)v13);
+           (int)(DWORD)v1, (int)(DWORD)v2, (int)(DWORD)v3, (int)(DWORD)v4,
+           (int)(DWORD)v5, (int)(DWORD)v6, (int)(DWORD)v7, (int)(DWORD)v8,
+           (int)(DWORD)v9, (int)(DWORD)v10, (int)(DWORD)v11, (int)(DWORD)v12,
+           (int)(DWORD)v13);
     return 1013;
 }
 
@@ -143,10 +143,10 @@ DWORD_PTR WINAPI Target14(DWORD_PTR v1, DWORD_PTR v2, DWORD_PTR v3, DWORD_PTR v4
                           DWORD_PTR v13, DWORD_PTR v14)
 {
     printf("    Target14(%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d)\n",
-           (DWORD)v1, (DWORD)v2, (DWORD)v3, (DWORD)v4,
-           (DWORD)v5, (DWORD)v6, (DWORD)v7, (DWORD)v8,
-           (DWORD)v9, (DWORD)v10, (DWORD)v11, (DWORD)v12,
-           (DWORD)v13, (DWORD)v14);
+           (int)(DWORD)v1, (int)(DWORD)v2, (int)(DWORD)v3, (int)(DWORD)v4,
+           (int)(DWORD)v5, (int)(DWORD)v6, (int)(DWORD)v7, (int)(DWORD)v8,
+           (int)(DWORD)v9, (int)(DWORD)v10, (int)(DWORD)v11, (int)(DWORD)v12,
+           (int)(DWORD)v13, (int)(DWORD)v14);
     return 1014;
 }
 
@@ -156,10 +156,10 @@ DWORD_PTR WINAPI Target15(DWORD_PTR v1, DWORD_PTR v2, DWORD_PTR v3, DWORD_PTR v4
                           DWORD_PTR v13, DWORD_PTR v14, DWORD_PTR v15)
 {
     printf("    Target15(%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d)\n",
-           (DWORD)v1, (DWORD)v2, (DWORD)v3, (DWORD)v4,
-           (DWORD)v5, (DWORD)v6, (DWORD)v7, (DWORD)v8,
-           (DWORD)v9, (DWORD)v10, (DWORD)v11, (DWORD)v12,
-           (DWORD)v13, (DWORD)v14, (DWORD)v15);
+           (int)(DWORD)v1, (int)(DWORD)v2, (int)(DWORD)v3, (int)(DWORD)v4,
+           (int)(DWORD)v5, (int)(DWORD)v6, (int)(DWORD)v7, (int)(DWORD)v8,
+           (int)(DWORD)v9, (int)(DWORD)v10, (int)(DWORD)v11, (int)(DWORD)v12,
+           (int)(DWORD)v13, (int)(DWORD)v14, (int)(DWORD)v15);
     return 1015;
 }
 
@@ -169,10 +169,10 @@ DWORD_PTR WINAPI Target16(DWORD_PTR v1, DWORD_PTR v2, DWORD_PTR v3, DWORD_PTR v4
                           DWORD_PTR v13, DWORD_PTR v14, DWORD_PTR v15, DWORD_PTR v16)
 {
     printf("    Target16(%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d)\n",
-           (DWORD)v1, (DWORD)v2, (DWORD)v3, (DWORD)v4,
-           (DWORD)v5, (DWORD)v6, (DWORD)v7, (DWORD)v8,
-           (DWORD)v9, (DWORD)v10, (DWORD)v11, (DWORD)v12,
-           (DWORD)v13, (DWORD)v14, (DWORD)v15, (DWORD)v16);
+           (int)(DWORD)v1, (int)(DWORD)v2, (int)(DWORD)v3, (int)(DWORD)v4,
+           (int)(DWORD)v5, (int)(DWORD)v6, (int)(DWORD)v7, (int)(DWORD)v8,
+           (int)(DWORD)v9, (int)(DWORD)v10, (int)(DWORD)v11, (int)(DWORD)v12,
+           (int)(DWORD)v13, (int)(DWORD)v14, (int)(DWORD)v15, (int)(DWORD)v16);
     return 1016;
 }
 
@@ -192,9 +192,9 @@ DWORD_PTR WINAPI TargetV(DWORD_PTR v1, ...)
     printf("    TargetV (");
     int i = argc - 1;
     for (; i > 0; i--) {
-        printf("%d,", (DWORD)args[i]);
+        printf("%d,", (int)(DWORD)args[i]);
     }
-    printf("%d)\n", (DWORD)args[0]);
+    printf("%d)\n", (int)(DWORD)args[0]);
 
     return 1000 + argc;
 }
@@ -285,9 +285,9 @@ DWORD_PTR WINAPI TargetR(DWORD_PTR v1, ...)
     printf("    TargetR (");
     int i = argc - 1;
     for (; i > 0; i--) {
-        printf("%d,", (DWORD)args[i]);
+        printf("%d,", (int)(DWORD)args[i]);
     }
-    printf("%d)\n", (DWORD)args[0]);
+    printf("%d)\n", (int)(DWORD)args[0]);
 
     return 2000 + argc;
 }

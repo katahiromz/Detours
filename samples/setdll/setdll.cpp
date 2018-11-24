@@ -24,14 +24,13 @@
 
 ////////////////////////////////////////////////////////////// Error Messages.
 //
-VOID AssertMessage(PCSTR szMsg, PCSTR szFile, DWORD nLine)
+VOID AssertMessage(PCSTR szMsg, PCSTR szFile, INT nLine)
 {
-    printf("ASSERT(%s) failed in %s, line %d.", szMsg, szFile, nLine);
+    printf("ASSERT(%s) failed in %s, line %d.", szMsg, szFile, (int)nLine);
 }
 
 #define ASSERT(x)   \
 do { if (!(x)) { AssertMessage(#x, __FILE__, __LINE__); DebugBreak(); }} while (0)
-    ;
 
 
 //////////////////////////////////////////////////////////////////////////////
@@ -66,7 +65,7 @@ BOOL DoesDllExportOrdinal1(PCHAR pszDllPath)
     if (hDll == NULL) {
         printf("setdll.exe: LoadLibraryEx(%s) failed with error %d.\n",
                pszDllPath,
-               GetLastError());
+               (int)GetLastError());
         return FALSE;
     }
 
@@ -146,7 +145,7 @@ BOOL SetFile(PCHAR pszPath)
 
     if (hOld == INVALID_HANDLE_VALUE) {
         printf("Couldn't open input file: %s, error: %d\n",
-               szOrg, GetLastError());
+               szOrg, (int)GetLastError());
         bGood = FALSE;
         goto end;
     }
@@ -156,13 +155,13 @@ BOOL SetFile(PCHAR pszPath)
                        FILE_ATTRIBUTE_NORMAL | FILE_FLAG_SEQUENTIAL_SCAN, NULL);
     if (hNew == INVALID_HANDLE_VALUE) {
         printf("Couldn't open output file: %s, error: %d\n",
-               szNew, GetLastError());
+               szNew, (int)GetLastError());
         bGood = FALSE;
         goto end;
     }
 
     if ((pBinary = DetourBinaryOpen(hOld)) == NULL) {
-        printf("DetourBinaryOpen failed: %d\n", GetLastError());
+        printf("DetourBinaryOpen failed: %d\n", (int)GetLastError());
         goto end;
     }
 
@@ -180,7 +179,7 @@ BOOL SetFile(PCHAR pszPath)
             if (!DetourBinaryEditImports(pBinary,
                                          &bAddedDll,
                                          AddBywayCallback, NULL, NULL, NULL)) {
-                printf("DetourBinaryEditImports failed: %d\n", GetLastError());
+                printf("DetourBinaryEditImports failed: %d\n", (int)GetLastError());
             }
         }
 
@@ -188,11 +187,11 @@ BOOL SetFile(PCHAR pszPath)
                                      ListBywayCallback, ListFileCallback,
                                      NULL, NULL)) {
 
-            printf("DetourBinaryEditImports failed: %d\n", GetLastError());
+            printf("DetourBinaryEditImports failed: %d\n", (int)GetLastError());
         }
 
         if (!DetourBinaryWrite(pBinary, hNew)) {
-            printf("DetourBinaryWrite failed: %d\n", GetLastError());
+            printf("DetourBinaryWrite failed: %d\n", (int)GetLastError());
             bGood = FALSE;
         }
 
@@ -208,18 +207,18 @@ BOOL SetFile(PCHAR pszPath)
             if (!DeleteFileA(szOld)) {
                 DWORD dwError = GetLastError();
                 if (dwError != ERROR_FILE_NOT_FOUND) {
-                    printf("Warning: Couldn't delete %s: %d\n", szOld, dwError);
+                    printf("Warning: Couldn't delete %s: %d\n", szOld, (int)dwError);
                     bGood = FALSE;
                 }
             }
             if (!MoveFileA(szOrg, szOld)) {
                 printf("Error: Couldn't back up %s to %s: %d\n",
-                       szOrg, szOld, GetLastError());
+                       szOrg, szOld, (int)GetLastError());
                 bGood = FALSE;
             }
             if (!MoveFileA(szNew, szOrg)) {
                 printf("Error: Couldn't install %s as %s: %d\n",
-                       szNew, szOrg, GetLastError());
+                       szNew, szOrg, (int)GetLastError());
                 bGood = FALSE;
             }
         }
@@ -318,11 +317,11 @@ int CDECL main(int argc, char **argv)
     }
     else {
         if (!DoesDllExportOrdinal1(s_szDllPath)) {
-            printf("Error: %hs does not export function with ordinal #1.\n",
+            printf("Error: %s does not export function with ordinal #1.\n",
                    s_szDllPath);
             return 2;
         }
-        printf("Adding %hs to binary files.\n", s_szDllPath);
+        printf("Adding %s to binary files.\n", s_szDllPath);
     }
 
     for (arg = 1; arg < argc; arg++) {

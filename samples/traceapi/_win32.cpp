@@ -396,11 +396,7 @@ LPWSTR (__stdcall * Real_CharUpperW)(LPWSTR a0)
 
 BOOL (__stdcall * Real_CheckColorsInGamut)(
                                            HDC a0,
-#ifdef GDIPLUS_TS_QUERYVER
-                                           LPRGBTRIPLE a1,
-#else
-                                           LPVOID a1,
-#endif
+                                           RGBTRIPLE *a1,
                                            LPVOID a2,
                                            DWORD a3
                                           )
@@ -1034,7 +1030,7 @@ HRESULT (__stdcall * Real_CreateDataCache)(LPUNKNOWN a0,
                                            LPVOID* a3)
     = CreateDataCache;
 
-#if _MSC_VER < 1300
+#if defined(_MSC_VER) && _MSC_VER < 1300
 HDESK (__stdcall * Real_CreateDesktopA)(LPSTR a0,
                                         LPSTR a1,
                                         LPDEVMODEA a2,
@@ -1053,7 +1049,7 @@ HDESK (__stdcall * Real_CreateDesktopA)(LPCSTR a0,
 
 #endif
 
-#if _MSC_VER < 1300
+#if defined(_MSC_VER) && _MSC_VER < 1300
 HDESK (__stdcall * Real_CreateDesktopW)(LPWSTR a0,
                                         LPWSTR a1,
                                         LPDEVMODEW a2,
@@ -1303,7 +1299,7 @@ HRESULT (__stdcall * Real_CreateItemMoniker)(LPCOLESTR a0,
                                              IMoniker** a2)
     = CreateItemMoniker;
 
-#if _MSC_VER < 1300
+#if defined(_MSC_VER) && _MSC_VER < 1300
 HWND (__stdcall * Real_CreateMDIWindowA)(LPSTR a0,
                                          LPSTR a1,
                                          DWORD a2,
@@ -1329,7 +1325,7 @@ HWND (__stdcall * Real_CreateMDIWindowA)(LPCSTR a0,
     = CreateMDIWindowA;
 #endif
 
-#if _MSC_VER < 1300
+#if defined(_MSC_VER) && _MSC_VER < 1300
 HWND (__stdcall * Real_CreateMDIWindowW)(LPWSTR a0,
                                          LPWSTR a1,
                                          DWORD a2,
@@ -1644,7 +1640,7 @@ HWND (__stdcall * Real_CreateWindowExW)(DWORD a0,
                                         LPVOID a11)
     = CreateWindowExW;
 
-#if _MSC_VER < 1300
+#if defined(_MSC_VER) && _MSC_VER < 1300
 HWINSTA (__stdcall * Real_CreateWindowStationA)(LPSTR a0,
                                                 DWORD a1,
                                                 ACCESS_MASK a2,
@@ -1658,7 +1654,7 @@ HWINSTA (__stdcall * Real_CreateWindowStationA)(LPCSTR a0,
     = CreateWindowStationA;
 #endif
 
-#if _MSC_VER < 1300
+#if defined(_MSC_VER) && _MSC_VER < 1300
 HWINSTA (__stdcall * Real_CreateWindowStationW)(LPWSTR a0,
                                                 DWORD a1,
                                                 ACCESS_MASK a2,
@@ -2393,7 +2389,7 @@ int (__stdcall * Real_EnumPropsW)(HWND a0,
                                   PROPENUMPROCW a1)
     = EnumPropsW;
 
-#if _MSC_VER < 1300
+#if defined(_MSC_VER) && _MSC_VER < 1300
 BOOL (__stdcall * Real_EnumResourceLanguagesA)(HMODULE a0,
                                                LPCSTR a1,
                                                LPCSTR a2,
@@ -2409,7 +2405,7 @@ BOOL (__stdcall * Real_EnumResourceLanguagesA)(HMODULE a0,
     = EnumResourceLanguagesA;
 #endif
 
-#if _MSC_VER < 1300
+#if defined(_MSC_VER) && _MSC_VER < 1300
 BOOL (__stdcall * Real_EnumResourceLanguagesW)(HMODULE a0,
                                                LPCWSTR a1,
                                                LPCWSTR a2,
@@ -2425,7 +2421,7 @@ BOOL (__stdcall * Real_EnumResourceLanguagesW)(HMODULE a0,
     = EnumResourceLanguagesW;
 #endif
 
-#if _MSC_VER < 1300
+#if defined(_MSC_VER) && _MSC_VER < 1300
 BOOL (__stdcall * Real_EnumResourceNamesA)(HMODULE a0,
                                            LPCSTR a1,
                                            ENUMRESNAMEPROC a2,
@@ -2439,7 +2435,7 @@ BOOL (__stdcall * Real_EnumResourceNamesA)(HMODULE a0,
     = EnumResourceNamesA;
 #endif
 
-#if _MSC_VER < 1300
+#if defined(_MSC_VER) && _MSC_VER < 1300
 BOOL (__stdcall * Real_EnumResourceNamesW)(HMODULE a0,
                                            LPCWSTR a1,
                                            ENUMRESNAMEPROC a2,
@@ -2453,7 +2449,7 @@ BOOL (__stdcall * Real_EnumResourceNamesW)(HMODULE a0,
     = EnumResourceNamesW;
 #endif
 
-#if _MSC_VER < 1300
+#if defined(_MSC_VER) && _MSC_VER < 1300
 BOOL (__stdcall * Real_EnumResourceTypesA)(HMODULE a0,
                                            ENUMRESTYPEPROC a1,
                                            LONG a2)
@@ -2465,7 +2461,7 @@ BOOL (__stdcall * Real_EnumResourceTypesA)(HMODULE a0,
     = EnumResourceTypesA;
 #endif
 
-#if _MSC_VER < 1300
+#if defined(_MSC_VER) && _MSC_VER < 1300
 BOOL (__stdcall * Real_EnumResourceTypesW)(HMODULE a0,
                                            ENUMRESTYPEPROC a1,
                                            LONG a2)
@@ -4167,7 +4163,7 @@ BOOL (__stdcall * Real_GetSystemTimeAdjustment)(PDWORD a0,
 void (__stdcall * Real_GetSystemTimeAsFileTime)(LPFILETIME a0)
     = GetSystemTimeAsFileTime;
 
-#if _MSC_VER < 1300
+#if defined(_MSC_VER) && _MSC_VER < 1300
 DWORD (__stdcall * Real_GetTabbedTextExtentA)(HDC a0,
                                               LPCSTR a1,
                                               int a2,
@@ -4183,7 +4179,7 @@ DWORD (__stdcall * Real_GetTabbedTextExtentA)(HDC a0,
     = GetTabbedTextExtentA;
 #endif
 
-#if _MSC_VER < 1300
+#if defined(_MSC_VER) && _MSC_VER < 1300
 DWORD (__stdcall * Real_GetTabbedTextExtentW)(HDC a0,
                                               LPCWSTR a1,
                                               int a2,
@@ -4531,7 +4527,7 @@ HGLOBAL (__stdcall * Real_GlobalAlloc)(UINT a0,
                                        SIZE_T a1)
     = GlobalAlloc;
 
-#if _MSC_VER < 1300
+#if defined(_MSC_VER) && _MSC_VER < 1300
 UINT (__stdcall * Real_GlobalCompact)(DWORD a0)
     = GlobalCompact;
 #else
@@ -4970,7 +4966,7 @@ int (__stdcall * Real_LoadStringW)(HINSTANCE a0,
                                    int a3)
     = LoadStringW;
 
-#if _MSC_VER < 1300
+#if defined(_MSC_VER) && _MSC_VER < 1300
 HLOCAL (__stdcall * Real_LocalAlloc)(UINT a0,
                                      UINT a1)
     = LocalAlloc;
@@ -4980,7 +4976,7 @@ HLOCAL (__stdcall * Real_LocalAlloc)(UINT a0,
     = LocalAlloc;
 #endif
 
-#if _MSC_VER < 1300
+#if defined(_MSC_VER) && _MSC_VER < 1300
 UINT (__stdcall * Real_LocalCompact)(UINT a0)
     = LocalCompact;
 #else
@@ -5004,7 +5000,7 @@ HLOCAL (__stdcall * Real_LocalHandle)(LPCVOID a0)
 LPVOID (__stdcall * Real_LocalLock)(HLOCAL a0)
     = LocalLock;
 
-#if _MSC_VER < 1300
+#if defined(_MSC_VER) && _MSC_VER < 1300
 HLOCAL (__stdcall * Real_LocalReAlloc)(HLOCAL a0,
                                        UINT a1,
                                        UINT a2)
@@ -5016,7 +5012,7 @@ HLOCAL (__stdcall * Real_LocalReAlloc)(HLOCAL a0,
     = LocalReAlloc;
 #endif
 
-#if _MSC_VER < 1300
+#if defined(_MSC_VER) && _MSC_VER < 1300
 UINT (__stdcall * Real_LocalShrink)(HLOCAL a0,
                                       UINT a1)
     = LocalShrink;
@@ -5026,7 +5022,7 @@ SIZE_T (__stdcall * Real_LocalShrink)(HLOCAL a0,
     = LocalShrink;
 #endif
 
-#if _MSC_VER < 1300
+#if defined(_MSC_VER) && _MSC_VER < 1300
 UINT (__stdcall * Real_LocalSize)(HLOCAL a0)
     = LocalSize;
 #else
@@ -5154,7 +5150,7 @@ int (__stdcall * Real_MessageBoxExW)(HWND a0,
                                      WORD a4)
     = MessageBoxExW;
 
-#if _MSC_VER < 1300
+#if defined(_MSC_VER) && _MSC_VER < 1300
 int (__stdcall * Real_MessageBoxIndirectA)(MSGBOXPARAMSA* a0)
     = MessageBoxIndirectA;
 #else
@@ -5162,7 +5158,7 @@ int (__stdcall * Real_MessageBoxIndirectA)(CONST MSGBOXPARAMSA* a0)
     = MessageBoxIndirectA;
 #endif
 
-#if _MSC_VER < 1300
+#if defined(_MSC_VER) && _MSC_VER < 1300
 int (__stdcall * Real_MessageBoxIndirectW)(MSGBOXPARAMSW* a0)
     = MessageBoxIndirectW;
 #else
@@ -5244,7 +5240,7 @@ BOOL (__stdcall * Real_MoveWindow)(HWND a0,
                                    BOOL a5)
     = MoveWindow;
 
-#if _MSC_VER < 1300
+#if defined(_MSC_VER) && _MSC_VER < 1300
 DWORD (__stdcall * Real_MsgWaitForMultipleObjects)(DWORD a0,
                                                    HANDLE * a1,
                                                    BOOL a2,
@@ -5260,7 +5256,7 @@ DWORD (__stdcall * Real_MsgWaitForMultipleObjects)(DWORD a0,
     = MsgWaitForMultipleObjects;
 #endif
 
-#if _MSC_VER < 1300
+#if defined(_MSC_VER) && _MSC_VER < 1300
 DWORD (__stdcall * Real_MsgWaitForMultipleObjectsEx)(DWORD a0,
                                                      HANDLE * a1,
                                                      DWORD a2,
@@ -5664,8 +5660,8 @@ void (__stdcall * Real_OleUninitialize)(void)
 BOOL (__stdcall * Real_OpenClipboard)(HWND a0)
     = OpenClipboard;
 
-#if _MSC_VER < 1300
-HDESK (__stdcall * Real_OpenDesktopA)(LPSTR a0,
+#if defined(_MSC_VER) && _MSC_VER < 1300
+HDESK (__stdcall * Real_OpenDesktopA)(LPCSTR a0,
                                       DWORD a1,
                                       BOOL a2,
                                       ACCESS_MASK a3)
@@ -5678,7 +5674,7 @@ HDESK (__stdcall * Real_OpenDesktopA)(LPCSTR a0,
     = OpenDesktopA;
 #endif
 
-#if _MSC_VER < 1300
+#if defined(_MSC_VER) && _MSC_VER < 1300
 HDESK (__stdcall * Real_OpenDesktopW)(LPWSTR a0,
                                       DWORD a1,
                                       BOOL a2,
@@ -5766,7 +5762,7 @@ HANDLE (__stdcall * Real_OpenWaitableTimerW)(DWORD a0,
                                              LPCWSTR a2)
     = OpenWaitableTimerW;
 
-#if _MSC_VER < 1300
+#if defined(_MSC_VER) && _MSC_VER < 1300
 HWINSTA (__stdcall * Real_OpenWindowStationA)(LPSTR a0,
                                               BOOL a1,
                                               ACCESS_MASK a2)
@@ -5778,7 +5774,7 @@ HWINSTA (__stdcall * Real_OpenWindowStationA)(LPCSTR a0,
     = OpenWindowStationA;
 #endif
 
-#if _MSC_VER < 1300
+#if defined(_MSC_VER) && _MSC_VER < 1300
 HWINSTA (__stdcall * Real_OpenWindowStationW)(LPWSTR a0,
                                               BOOL a1,
                                               ACCESS_MASK a2)
@@ -7279,7 +7275,7 @@ HRESULT (__stdcall * Real_StgCreatePropStg)(IUnknown* a0,
                                             IPropertyStorage** a5)
     = StgCreatePropStg;
 
-#if _MSC_VER < 1300
+#if defined(_MSC_VER) && _MSC_VER < 1300
 HRESULT (__stdcall * Real_StgCreateStorageEx)(CONST WCHAR* a0,
                                               DWORD a1,
                                               DWORD a2,
@@ -7336,7 +7332,7 @@ HRESULT (__stdcall * Real_StgOpenStorage)(CONST OLECHAR* a0,
                                           IStorage** a5)
     = StgOpenStorage;
 
-#if _MSC_VER < 1300
+#if defined(_MSC_VER) && _MSC_VER < 1300
 HRESULT (__stdcall * Real_StgOpenStorageEx)(CONST WCHAR* a0,
                                             DWORD a1,
                                             DWORD a2,
@@ -7470,7 +7466,7 @@ BOOL (__stdcall * Real_SystemTimeToTzSpecificLocalTime)(
                                                        )
     = SystemTimeToTzSpecificLocalTime;
 
-#if _MSC_VER < 1300
+#if defined(_MSC_VER) && _MSC_VER < 1300
 LONG (__stdcall * Real_TabbedTextOutA)(HDC a0,
                                        int a1,
                                        int a2,
@@ -7492,7 +7488,7 @@ LONG (__stdcall * Real_TabbedTextOutA)(HDC a0,
     = TabbedTextOutA;
 #endif
 
-#if _MSC_VER < 1300
+#if defined(_MSC_VER) && _MSC_VER < 1300
 LONG (__stdcall * Real_TabbedTextOutW)(HDC a0,
                                        int a1,
                                        int a2,
@@ -7543,7 +7539,7 @@ WORD (__stdcall * Real_TileWindows)(HWND a0,
                                     CONST HWND * a4)
     = TileWindows;
 
-#if _MSC_VER < 1300
+#if defined(_MSC_VER) && _MSC_VER < 1300
 int (__stdcall * Real_ToAscii)(UINT a0,
                                UINT a1,
                                BYTE* a2,
@@ -7559,7 +7555,7 @@ int (__stdcall * Real_ToAscii)(UINT a0,
     = ToAscii;
 #endif
 
-#if _MSC_VER < 1300
+#if defined(_MSC_VER) && _MSC_VER < 1300
 int (__stdcall * Real_ToAsciiEx)(UINT a0,
                                  UINT a1,
                                  BYTE* a2,
@@ -7577,7 +7573,7 @@ int (__stdcall * Real_ToAsciiEx)(UINT a0,
     = ToAsciiEx;
 #endif
 
-#if _MSC_VER < 1300
+#if defined(_MSC_VER) && _MSC_VER < 1300
 int (__stdcall * Real_ToUnicode)(UINT a0,
                                  UINT a1,
                                  BYTE* a2,
@@ -7595,7 +7591,7 @@ int (__stdcall * Real_ToUnicode)(UINT a0,
     = ToUnicode;
 #endif
 
-#if _MSC_VER < 1300
+#if defined(_MSC_VER) && _MSC_VER < 1300
 int (__stdcall * Real_ToUnicodeEx)(UINT a0,
                                    UINT a1,
                                    BYTE* a2,
@@ -8368,7 +8364,7 @@ BOOL (__stdcall * Real_WritePrivateProfileStructW)(LPCWSTR a0,
                                                    LPCWSTR a4)
     = WritePrivateProfileStructW;
 
-#if _MSC_VER < 1300
+#if defined(_MSC_VER) && _MSC_VER < 1300
 BOOL (__stdcall * Real_WriteProcessMemory)(HANDLE a0,
                                            LPVOID a1,
                                            LPVOID a2,
@@ -11702,7 +11698,7 @@ HRESULT __stdcall Mine_CreateDataCache(LPUNKNOWN a0,
     return rv;
 }
 
-#if _MSC_VER < 1300
+#if defined(_MSC_VER) && _MSC_VER < 1300
 HDESK __stdcall Mine_CreateDesktopA(LPSTR a0,
                                     LPSTR a1,
                                     LPDEVMODEA a2,
@@ -11729,7 +11725,7 @@ HDESK __stdcall Mine_CreateDesktopA(LPCSTR a0,
     return rv;
 }
 
-#if _MSC_VER < 1300
+#if defined(_MSC_VER) && _MSC_VER < 1300
 HDESK __stdcall Mine_CreateDesktopW(LPWSTR a0, // NT 3.51 and older. NT4?
                                     LPWSTR a1, // NT 3.51 and older. NT4?
                                     LPDEVMODEW a2,
@@ -12358,7 +12354,7 @@ HRESULT __stdcall Mine_CreateItemMoniker(LPCOLESTR a0,
     return rv;
 }
 
-#if _MSC_VER < 1300
+#if defined(_MSC_VER) && _MSC_VER < 1300
 HWND __stdcall Mine_CreateMDIWindowA(LPSTR a0, // NT 3.51 and older. NT4?
                                      LPSTR a1, // NT 3.51 and older. NT4?
                                      DWORD a2,
@@ -12393,7 +12389,7 @@ HWND __stdcall Mine_CreateMDIWindowA(LPCSTR a0, // Windows 2000 and newer; NT4?
     return rv;
 }
 
-#if _MSC_VER < 1300
+#if defined(_MSC_VER) && _MSC_VER < 1300
 HWND __stdcall Mine_CreateMDIWindowW(LPWSTR a0,
                                      LPWSTR a1,
                                      DWORD a2,
@@ -13319,7 +13315,7 @@ HWND __stdcall Mine_CreateWindowExW(DWORD a0,
     return rv;
 }
 
-#if _MSC_VER < 1300
+#if defined(_MSC_VER) && _MSC_VER < 1300
 HWINSTA __stdcall Mine_CreateWindowStationA(LPSTR a0,
                                             DWORD a1,
                                             ACCESS_MASK a2,
@@ -13342,7 +13338,7 @@ HWINSTA __stdcall Mine_CreateWindowStationA(LPCSTR a0,
     return rv;
 }
 
-#if _MSC_VER < 1300
+#if defined(_MSC_VER) && _MSC_VER < 1300
 HWINSTA __stdcall Mine_CreateWindowStationW(LPWSTR a0,
                                             DWORD a1,
                                             ACCESS_MASK a2,
@@ -15462,7 +15458,7 @@ int __stdcall Mine_EnumPropsW(HWND a0,
     return rv;
 }
 
-#if _MSC_VER < 1300
+#if defined(_MSC_VER) && _MSC_VER < 1300
 BOOL __stdcall Mine_EnumResourceLanguagesA(HMODULE a0,
                                            LPCSTR a1,
                                            LPCSTR a2,
@@ -15487,7 +15483,7 @@ BOOL __stdcall Mine_EnumResourceLanguagesA(HMODULE a0,
     return rv;
 }
 
-#if _MSC_VER < 1300
+#if defined(_MSC_VER) && _MSC_VER < 1300
 BOOL __stdcall Mine_EnumResourceLanguagesW(HMODULE a0,
                                            LPCWSTR a1,
                                            LPCWSTR a2,
@@ -15512,7 +15508,7 @@ BOOL __stdcall Mine_EnumResourceLanguagesW(HMODULE a0,
     return rv;
 }
 
-#if _MSC_VER < 1300
+#if defined(_MSC_VER) && _MSC_VER < 1300
 BOOL __stdcall Mine_EnumResourceNamesA(HMODULE a0,
                                        LPCSTR a1,
                                        ENUMRESNAMEPROC a2,
@@ -15535,7 +15531,7 @@ BOOL __stdcall Mine_EnumResourceNamesA(HMODULE a0,
     return rv;
 }
 
-#if _MSC_VER < 1300
+#if defined(_MSC_VER) && _MSC_VER < 1300
 BOOL __stdcall Mine_EnumResourceNamesW(HMODULE a0,
                                        LPCWSTR a1,
                                        ENUMRESNAMEPROC a2,
@@ -15558,7 +15554,7 @@ BOOL __stdcall Mine_EnumResourceNamesW(HMODULE a0,
     return rv;
 }
 
-#if _MSC_VER < 1300
+#if defined(_MSC_VER) && _MSC_VER < 1300
 BOOL __stdcall Mine_EnumResourceTypesA(HMODULE a0,
                                        ENUMRESTYPEPROC a1,
                                        LONG_PTR a2)
@@ -15579,7 +15575,7 @@ BOOL __stdcall Mine_EnumResourceTypesA(HMODULE a0,
     return rv;
 }
 
-#if _MSC_VER < 1300
+#if defined(_MSC_VER) && _MSC_VER < 1300
 BOOL __stdcall Mine_EnumResourceTypesW(HMODULE a0,
                                        ENUMRESTYPEPROC a1,
                                        LONG_PTR a2)
@@ -25247,7 +25243,7 @@ BOOL __stdcall Mine_OpenClipboard(HWND a0)
     return rv;
 }
 
-#if _MSC_VER < 1300
+#if defined(_MSC_VER) && _MSC_VER < 1300
 HDESK __stdcall Mine_OpenDesktopA(LPSTR a0,
                                   DWORD a1,
                                   BOOL a2,
@@ -25270,7 +25266,7 @@ HDESK __stdcall Mine_OpenDesktopA(LPCSTR a0,
     return rv;
 }
 
-#if _MSC_VER < 1300
+#if defined(_MSC_VER) && _MSC_VER < 1300
 HDESK __stdcall Mine_OpenDesktopW(LPWSTR a0,
                                   DWORD a1,
                                   BOOL a2,
@@ -25525,7 +25521,7 @@ HANDLE __stdcall Mine_OpenWaitableTimerW(DWORD a0,
     return rv;
 }
 
-#if _MSC_VER < 1300
+#if defined(_MSC_VER) && _MSC_VER < 1300
 HWINSTA __stdcall Mine_OpenWindowStationA(LPSTR a0,
                                           BOOL a1,
                                           ACCESS_MASK a2)
@@ -25546,7 +25542,7 @@ HWINSTA __stdcall Mine_OpenWindowStationA(LPCSTR a0,
     return rv;
 }
 
-#if _MSC_VER < 1300
+#if defined(_MSC_VER) && _MSC_VER < 1300
 HWINSTA __stdcall Mine_OpenWindowStationW(LPWSTR a0,
                                           BOOL a1,
                                           ACCESS_MASK a2)
@@ -30095,7 +30091,7 @@ HRESULT __stdcall Mine_StgCreatePropStg(IUnknown* a0,
     return rv;
 }
 
-#if _MSC_VER < 1300
+#if defined(_MSC_VER) && _MSC_VER < 1300
 HRESULT __stdcall Mine_StgCreateStorageEx(WCHAR* a0,
                                           DWORD a1,
                                           DWORD a2,
@@ -30231,7 +30227,7 @@ HRESULT __stdcall Mine_StgOpenStorage(OLECHAR* a0,
     return rv;
 }
 
-#if _MSC_VER < 1300
+#if defined(_MSC_VER) && _MSC_VER < 1300
 HRESULT __stdcall Mine_StgOpenStorageEx(WCHAR* a0,
                                         DWORD a1,
                                         DWORD a2,
@@ -37044,7 +37040,7 @@ LONG DetachDetours(VOID)
         LONG error = DetourTransactionCommitEx(&ppbFailedPointer);
 
         printf("traceapi.dll: Detach transaction failed to commit. Error %d (%p/%p)",
-               error, ppbFailedPointer, *ppbFailedPointer);
+               (int)error, (void *)ppbFailedPointer, (void *)*ppbFailedPointer);
         return error;
     }
     return 0;

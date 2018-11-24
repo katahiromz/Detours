@@ -18,9 +18,11 @@ struct CPrivateStuff
 };
 
 #ifdef INCLUDE_THIS
-#pragma data_seg(".detour")
+#ifndef DETOURS_NO_SEG
+    #pragma data_seg(".detour")
+#endif
 
-static CPrivateStuff private_stuff = {
+static CPrivateStuff private_stuff DETOURS_SHARED(".detour") = {
     DETOUR_SECTION_HEADER_DECLARE(sizeof(CPrivateStuff)),
     {
         (sizeof(CPrivateStuff) - sizeof(DETOUR_SECTION_HEADER)),
@@ -34,7 +36,9 @@ static CPrivateStuff private_stuff = {
     },
     "The Application!"
 };
-#pragma data_seg()
+#ifndef DETOURS_NO_SEG
+    #pragma data_seg()
+#endif
 #endif
 
 GUID my_guid =

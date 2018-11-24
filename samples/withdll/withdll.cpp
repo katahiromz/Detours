@@ -447,7 +447,7 @@ int CDECL main(int argc, char **argv)
         if (hDll == NULL) {
             printf("withdll.exe: Error: %s failed to load (error %d).\n",
                    rpszDllsOut[n],
-                   GetLastError());
+                   (int)GetLastError());
             return 9003;
         }
 
@@ -508,7 +508,7 @@ int CDECL main(int argc, char **argv)
                                      NULL, NULL, TRUE, dwFlags, NULL, NULL,
                                      &si, &pi, nDlls, rpszDllsOut, NULL)) {
         DWORD dwError = GetLastError();
-        printf("withdll.exe: DetourCreateProcessWithDllEx failed: %d\n", dwError);
+        printf("withdll.exe: DetourCreateProcessWithDllEx failed: %d\n", (int)dwError);
         if (dwError == ERROR_INVALID_HANDLE) {
 #if DETOURS_64BIT
             printf("withdll.exe: Can't detour a 32-bit target process from a 64-bit parent process.\n");
@@ -529,7 +529,7 @@ int CDECL main(int argc, char **argv)
 
     DWORD dwResult = 0;
     if (!GetExitCodeProcess(pi.hProcess, &dwResult)) {
-        printf("withdll.exe: GetExitCodeProcess failed: %d\n", GetLastError());
+        printf("withdll.exe: GetExitCodeProcess failed: %d\n", (int)GetLastError());
         return 9010;
     }
 

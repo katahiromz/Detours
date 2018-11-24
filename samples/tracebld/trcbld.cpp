@@ -4081,7 +4081,7 @@ BOOL ProcessAttach(HMODULE hDll)
     LONG error = AttachDetours();
     if (error != NO_ERROR) {
         DEBUG_BREAK();
-        Tblog("<!-- Error attaching detours: %d -->\n", error);
+        Tblog("<!-- Error attaching detours: %d -->\n", (int)error);
     }
 
     ThreadAttach(hDll);
@@ -4097,7 +4097,7 @@ BOOL ProcessDetach(HMODULE hDll)
 
     LONG error = DetachDetours();
     if (error != NO_ERROR) {
-        Tblog("<!-- Error detaching detours: %d -->\n", error);
+        Tblog("<!-- Error detaching detours: %d -->\n", (int)error);
     }
 
     TblogClose();

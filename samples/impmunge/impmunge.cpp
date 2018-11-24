@@ -27,7 +27,7 @@
 
 ////////////////////////////////////////////////////////////// Error Messages.
 //
-VOID AssertMessage(PCSTR szMsg, PCSTR szFile, DWORD nLine)
+VOID AssertMessage(PCSTR szMsg, PCSTR szFile, INT nLine)
 {
     printf("ASSERT(%s) failed in %s, line %d.", szMsg, szFile, nLine);
 }
@@ -274,13 +274,13 @@ BOOL EditFile(PCHAR pszInput, PCHAR pszOutput)
 
     if (hOld == INVALID_HANDLE_VALUE) {
         printf("Couldn't open input file: %s, error: %d\n",
-               pszInput, GetLastError());
+               pszInput, (int)GetLastError());
         fGood = FALSE;
         goto end;
     }
 
     if ((pBinary = DetourBinaryOpen(hOld)) == NULL) {
-        printf("DetourBinaryOpen failed: %d\n", GetLastError());
+        printf("DetourBinaryOpen failed: %d\n", (int)GetLastError());
         goto end;
     }
 
@@ -297,7 +297,7 @@ BOOL EditFile(PCHAR pszInput, PCHAR pszOutput)
                                      RestoreSymbol,
                                      RestoreCommit)) {
 
-            printf("DetourBinaryEditImports for munge failed: %d\n", GetLastError());
+            printf("DetourBinaryEditImports for munge failed: %d\n", (int)GetLastError());
         }
     }
 
@@ -313,7 +313,7 @@ BOOL EditFile(PCHAR pszInput, PCHAR pszOutput)
                                      MungeSymbol,
                                      MungeCommit)) {
 
-            printf("DetourBinaryEditImports for munge failed: %d\n", GetLastError());
+            printf("DetourBinaryEditImports for munge failed: %d\n", (int)GetLastError());
         }
     }
 
@@ -325,7 +325,7 @@ BOOL EditFile(PCHAR pszInput, PCHAR pszOutput)
                                      ListSymbol,
                                      ListCommit)) {
 
-            printf("DetourBinaryEditImports for list failed: %d\n", GetLastError());
+            printf("DetourBinaryEditImports for list failed: %d\n", (int)GetLastError());
         }
     }
 
@@ -335,13 +335,13 @@ BOOL EditFile(PCHAR pszInput, PCHAR pszOutput)
                            FILE_ATTRIBUTE_NORMAL | FILE_FLAG_SEQUENTIAL_SCAN, NULL);
         if (hNew == INVALID_HANDLE_VALUE) {
             printf("Couldn't open output file: %s, error: %d\n",
-                   pszOutput, GetLastError());
+                   pszOutput, (int)GetLastError());
             fGood = FALSE;
             goto end;
         }
 
         if (!DetourBinaryWrite(pBinary, hNew)) {
-            printf("DetourBinaryWrite failed: %d\n", GetLastError());
+            printf("DetourBinaryWrite failed: %d\n", (int)GetLastError());
             fGood = FALSE;
         }
 
@@ -355,7 +355,7 @@ BOOL EditFile(PCHAR pszInput, PCHAR pszOutput)
 
     if (fGood && pszOutput != NULL) {
         if (!BindImageEx(BIND_NO_BOUND_IMPORTS, pszOutput, ".", ".", NULL)) {
-            printf("Warning: Couldn't bind binary %s: %d\n", pszOutput, GetLastError());
+            printf("Warning: Couldn't bind binary %s: %d\n", pszOutput, (int)GetLastError());
         }
     }
 

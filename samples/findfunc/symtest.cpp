@@ -220,7 +220,7 @@ int __cdecl main(void)
                   API_VERSION_NUMBER);
 
     if (!pfSymInitialize(hProcess, NULL, FALSE)) {
-        printf("SymInitialize failed: %d\n", GetLastError());
+        printf("SymInitialize failed: %d\n", (int)GetLastError());
         return 1;
     }
 
@@ -259,7 +259,7 @@ int __cdecl main(void)
     PCHAR pszFile = "target.dll";
     HMODULE hModule = LoadLibraryA(pszFile);
     if (hModule == NULL) {
-        printf("LoadLibraryA(%s) failed: %d\n", pszFile, GetLastError());
+        printf("LoadLibraryA(%s) failed: %d\n", pszFile, (int)GetLastError());
         return 2;
     }
 
@@ -274,7 +274,7 @@ int __cdecl main(void)
                                        (PCHAR)pszFile/*szFull*/, NULL,
                                        (DWORD64)hModule, 0);
     if (loaded == 0) {
-        printf("SymLoadModule64(%p) failed: %d\n", hProcess, GetLastError());
+        printf("SymLoadModule64(%p) failed: %d\n", hProcess, (int)GetLastError());
         printf("\n");
     }
     else {
@@ -294,11 +294,11 @@ int __cdecl main(void)
     modinfo.SizeOfStruct = 512/*sizeof(modinfo)*/;
     if (!pfSymGetModuleInfo64(hProcess, (DWORD64)hModule, &modinfo)) {
         printf("SymGetModuleInfo64(%p, %p) [64] failed: %d\n",
-                      hProcess, hModule, GetLastError());
+                      hProcess, hModule, (int)GetLastError());
     }
     else {
         printf("SymGetModuleInfo64(%p, %p) [64] succeeded: %d\n",
-                      hProcess, hModule, GetLastError());
+                      hProcess, hModule, (int)GetLastError());
         StringCchCopyA(szModName, ARRAYSIZE(szModName), modinfo.ModuleName);
         StringCchCatA(szModName, ARRAYSIZE(szModName), "!");
 
@@ -353,7 +353,7 @@ int __cdecl main(void)
 
     SetLastError(0);
     if (!pfSymFromName(hProcess, szFullName, &symbol)) {
-        printf("--SymFromName(%s) failed: %d\n", szFullName, GetLastError());
+        printf("--SymFromName(%s) failed: %d\n", szFullName, (int)GetLastError());
     }
     if (symbol.Address != 0) {
         printf("--SymFromName(%s) succeeded\n", szFullName);
@@ -376,7 +376,7 @@ int __cdecl main(void)
 
     SetLastError(0);
     if (!pfSymFromName(hProcess, szFullName, &symbol)) {
-        printf("--SymFromName(%s) failed: %d\n", szFullName, GetLastError());
+        printf("--SymFromName(%s) failed: %d\n", szFullName, (int)GetLastError());
     }
     if (symbol.Address != 0) {
         printf("--SymFromName(%s) succeeded\n", szFullName);

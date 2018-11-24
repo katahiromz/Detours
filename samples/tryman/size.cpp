@@ -79,7 +79,7 @@ int __cdecl main(int argc, char **argv)
                         NULL, NULL, TRUE, 0, NULL, NULL, &si, &pi)) {
         DWORD dwError = GetLastError();
         printf("size" DETOURS_STRINGIFY(DETOURS_BITS) ".exe:"
-               " CreateProcess failed: %d\n", dwError);
+               " CreateProcess failed: %d\n", (int)dwError);
         return 1;
     }
 
@@ -88,7 +88,7 @@ int __cdecl main(int argc, char **argv)
     DWORD dwResult = 0;
     if (!GetExitCodeProcess(pi.hProcess, &dwResult)) {
         printf("size" DETOURS_STRINGIFY(DETOURS_BITS) ".exe:"
-               " GetExitCodeProcess failed: %d\n", GetLastError());
+               " GetExitCodeProcess failed: %d\n", (int)GetLastError());
         return 9010;
     }
 

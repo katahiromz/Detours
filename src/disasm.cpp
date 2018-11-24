@@ -157,8 +157,10 @@
 //      offsets.
 //
 
-#pragma data_seg(".detourd")
-#pragma const_seg(".detourc")
+#ifndef DETOURS_NO_SEG
+    #pragma data_seg(".detourd")
+    #pragma const_seg(".detourc")
+#endif
 
 //////////////////////////////////////////////////// X86 and X64 Disassembler.
 //
@@ -4248,5 +4250,9 @@ BOOL WINAPI DetourSetCodeModule(_In_ HMODULE hModule,
 #endif
 }
 
+#ifndef DETOURS_NO_SEG
+    #pragma data_seg()
+    #pragma const_seg()
+#endif
 //
 ///////////////////////////////////////////////////////////////// End of File.

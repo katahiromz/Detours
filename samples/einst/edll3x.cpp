@@ -31,9 +31,11 @@ struct CPrivateStuff
     CPrivateStuffPart2      record2;
 };
 
-#pragma data_seg(".detour")
+#ifndef DETOURS_NO_SEG
+    #pragma data_seg(".detour")
+#endif
 
-static CPrivateStuff private_stuff = {
+static CPrivateStuff private_stuff DETOURS_SHARED(".detour") = {
     DETOUR_SECTION_HEADER_DECLARE(sizeof(CPrivateStuff)),
     {
         {
@@ -62,7 +64,10 @@ static CPrivateStuff private_stuff = {
         "The Third DLL Part Two!"
     }
 };
-#pragma data_seg()
+
+#ifndef DETOURS_NO_SEG
+    #pragma data_seg()
+#endif
 
 __declspec(dllexport) VOID WINAPI EDll3Function(VOID)
 {

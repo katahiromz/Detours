@@ -37,7 +37,7 @@ do { if (!(x)) { DetourAssertMessage(#x, __FILE__, __LINE__); PCHAR p=(PCHAR)(x)
 
 ////////////////////////////////////////////////////////////// Error Messages.
 //
-VOID DetourAssertMessage(CONST PCHAR szMsg, CONST PCHAR szFile, DWORD nLine)
+VOID DetourAssertMessage(CONST CHAR *szMsg, CONST CHAR *szFile, INT nLine)
 {
     printf("ASSERT(%s) failed in %s, line %d.", szMsg, szFile, nLine);
 }
@@ -52,7 +52,7 @@ static BOOL CALLBACK ExportCallback(PVOID pContext,
     (void)pContext;
 
     printf("    %7d      %p %-30s\n",
-           (ULONG)nOrdinal,
+           (int)(ULONG)nOrdinal,
            pbTarget,
            pszSymbol ? pszSymbol : "[NONAME]");
     return TRUE;
@@ -62,11 +62,11 @@ BOOL DumpFile(PCHAR pszPath)
 {
     HINSTANCE hInst = LoadLibraryA(pszPath);
     if (hInst == NULL) {
-        printf("Unable to load %s: Error %d\n", pszPath, GetLastError());
+        printf("Unable to load %s: Error %d\n", pszPath, (int)GetLastError());
         return FALSE;
     }
 
-    printf("%s @ %p\n", pszPath, hInst);
+    printf("%s @ %p\n", pszPath, (void *)hInst);
 
     PVOID pbEntry = DetourGetEntryPoint(hInst);
     printf("  EntryPoint: %p\n", pbEntry);

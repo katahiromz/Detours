@@ -109,7 +109,6 @@ subdirs(
     setdll
     withdll
     #cping
-    disas
     dtest
     dumpe
     dumpi
@@ -127,6 +126,10 @@ subdirs(
     tracelnk
     impmunge
 )
+
+if (MSVC)
+    subdirs(disas)
+endif()
 
 if (NOT (DETOURS_TARGET_PROCESSOR STREQUAL "ARM64"))
     subdirs(

@@ -419,7 +419,7 @@ int WINAPI WinMain(HINSTANCE hinst, HINSTANCE hprev, LPSTR lpszCmdLine, int nCmd
     error = DetourTransactionCommit();
     if (error != NO_ERROR) {
       failed:
-        printf("talloc.exe: Error detouring functions: %d\n", error);
+        printf("talloc.exe: Error detouring functions: %d\n", (int)error);
         exit(1);
     }
 

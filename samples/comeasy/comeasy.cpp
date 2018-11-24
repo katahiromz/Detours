@@ -24,7 +24,7 @@ int __cdecl main(int argc, char **argv)
     ULARGE_INTEGER ul;
     LARGE_INTEGER li;
 
-    printf("comeasy.exe: Starting (at %p).\n", main);
+    printf("comeasy.exe: Starting (at %p).\n", (void *)main);
 
     CoInitialize(NULL);
 

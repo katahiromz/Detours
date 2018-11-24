@@ -86,7 +86,9 @@ static bool detour_is_imported(PBYTE pbCode, PBYTE pbAddress)
             return true;
         }
     }
-#pragma prefast(suppress:28940, "A bad pointer means this probably isn't a PE header.")
+#ifndef DETOURS_NO_PREFAST
+    #pragma prefast(suppress:28940, "A bad pointer means this probably isn't a PE header.")
+#endif
     __except(GetExceptionCode() == EXCEPTION_ACCESS_VIOLATION ?
              EXCEPTION_EXECUTE_HANDLER : EXCEPTION_CONTINUE_SEARCH) {
         return false;
@@ -1438,7 +1440,7 @@ static DetourOperation *    s_pPendingOperations    = NULL;
 
 //////////////////////////////////////////////////////////////////////////////
 //
-PVOID WINAPI DetourCodeFromPointer(_In_ PVOID pPointer,
+PVOID WINAPI DetourCodeFromPointer(_In_ const VOID *pPointer,
                                    _Out_opt_ PVOID *ppGlobals)
 {
     return detour_skip_jmp((PBYTE)pPointer, ppGlobals);
@@ -2240,7 +2242,7 @@ LONG WINAPI DetourAttachEx(_Inout_ PVOID *ppPointer,
 }
 
 LONG WINAPI DetourDetach(_Inout_ PVOID *ppPointer,
-                         _In_ PVOID pDetour)
+                         _In_ const VOID *pDetour)
 {
     LONG error = NO_ERROR;
 

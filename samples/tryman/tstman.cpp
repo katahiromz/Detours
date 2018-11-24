@@ -327,7 +327,7 @@ BOOL WINAPI DllMain(HINSTANCE hinst, DWORD dwReason, LPVOID reserved)
         LONG error = DetourTransactionCommit();
 
         if (error != NO_ERROR) {
-            printf("Error detach detours failed: %d\n", error);
+            printf("Error detach detours failed: %d\n", (int)error);
         }
     }
 

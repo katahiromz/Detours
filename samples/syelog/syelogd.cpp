@@ -53,7 +53,7 @@ LONG        s_nActiveClients = 0;
 LONGLONG    s_llStartTime = 0;
 LONGLONG    s_llLastTime = 0;
 
-BOOL LogMessageV(BYTE nSeverity, PCHAR pszMsg, ...);
+BOOL LogMessageV(BYTE nSeverity, PCSTR pszMsg, ...);
 
 //////////////////////////////////////////////////////////////////////////////
 //
@@ -62,7 +62,7 @@ VOID MyErrExit(PCSTR pszMsg)
     DWORD error = GetLastError();
 
     LogMessageV(SYELOG_SEVERITY_FATAL, "Error %d in %s.", error, pszMsg);
-    fprintf(stderr, "SYELOGD: Error %d in %s.\n", error, pszMsg);
+    fprintf(stderr, "SYELOGD: Error %d in %s.\n", (int)error, pszMsg);
     fflush(stderr);
     exit(1);
 }
@@ -197,7 +197,7 @@ PCLIENT CreatePipeConnection(HANDLE hCompletionPort)
     return pClient;
 }
 
-BOOL LogMessageV(BYTE nSeverity, PCHAR pszMsg, ...)
+BOOL LogMessageV(BYTE nSeverity, PCSTR pszMsg, ...)
 {
     FILETIME ftOccurance;
     CHAR szTime[64];
@@ -288,9 +288,9 @@ BOOL LogMessage(PSYELOG_MESSAGE pMessage, DWORD nBytes)
                ? "%-7.7s %4d %02x.%02x: %s\n"
                : "%-17.17s %4d %02x.%02x: %s\n",
                szTime,
-               pMessage->nProcessId,
-               pMessage->nFacility,
-               pMessage->nSeverity,
+               (int)pMessage->nProcessId,
+               (int)pMessage->nFacility,
+               (int)pMessage->nSeverity,
                pMessage->szMessage);
     }
     if (s_hOutFile != INVALID_HANDLE_VALUE) {
@@ -306,9 +306,9 @@ BOOL LogMessage(PSYELOG_MESSAGE pMessage, DWORD nBytes)
                                 ? "%-7.7s %4d %02x.%02x: %s\n"
                                 : "%-17.17s %4d %02x.%02x: %s\n",
                                 szTime,
-                                pMessage->nProcessId,
-                                pMessage->nFacility,
-                                pMessage->nSeverity,
+                                (int)pMessage->nProcessId,
+                                (int)pMessage->nFacility,
+                                (int)pMessage->nSeverity,
                                 pMessage->szMessage);
         if (FAILED(hr)) {
             goto Cleanup;
@@ -366,7 +366,7 @@ DWORD WINAPI WorkerThread(LPVOID pvVoid)
             if (!b) {
                 if (GetLastError() != ERROR_IO_PENDING) {
                     LogMessageV(SYELOG_SEVERITY_ERROR,
-                                "ReadFile failed %d.", GetLastError());
+                                "ReadFile failed %d.", (int)GetLastError());
                     continue;
                 }
             }
@@ -442,7 +442,7 @@ BOOL WINAPI ControlHandler(DWORD dwCtrlType)
     return FALSE;
 }
 
-DWORD main(int argc, char **argv)
+int main(int argc, char **argv)
 {
     HANDLE hCompletionPort;
     BOOL fNeedHelp = FALSE;
@@ -506,7 +506,7 @@ DWORD main(int argc, char **argv)
                                      NULL);
             if (s_hOutFile == INVALID_HANDLE_VALUE) {
                 printf("SYELOGD: Error opening output file: %s: %d\n\n",
-                       argv[arg], GetLastError());
+                       argv[arg], (int)GetLastError());
                 fNeedHelp = TRUE;
                 break;
             }
@@ -531,7 +531,7 @@ DWORD main(int argc, char **argv)
 
 
     // Create the completion port.
-    hCompletionPort = CreateIoCompletionPort(INVALID_HANDLE_VALUE, NULL, NULL, 0);
+    hCompletionPort = CreateIoCompletionPort(INVALID_HANDLE_VALUE, NULL, 0, 0);
     if (hCompletionPort == NULL) {
         MyErrExit("CreateIoCompletionPort");
     }

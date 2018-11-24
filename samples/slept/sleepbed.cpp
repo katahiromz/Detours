@@ -66,7 +66,7 @@ int __cdecl main(void)
         printf("sleepbed.exe: Detoured SleepEx().\n");
     }
     else {
-        printf("sleepbed.exe: Error detouring SleepEx(): %d\n", error);
+        printf("sleepbed.exe: Error detouring SleepEx(): %d\n", (int)error);
         return error;
     }
     fflush(stdout);

@@ -278,6 +278,21 @@ typedef ULONG ULONG_PTR;
     #define __except else if
 #endif
 
+#if defined(__GNUC__) || defined(__clang__)
+    #ifndef DETOURS_NO_SEG
+        #define DETOURS_NO_SEG
+    #endif
+    #ifndef DETOURS_NO_PREFAST
+        #define DETOURS_NO_PREFAST
+    #endif
+#endif
+
+#ifdef DETOURS_NO_SEG
+    #define DETOURS_SHARED(name) __attribute__((section(name), shared))
+#else
+    #define DETOURS_SHARED(name)
+#endif
+
 //////////////////////////////////////////////////////////////////////////////
 //
 #ifndef GUID_DEFINED
@@ -523,7 +538,7 @@ LONG WINAPI DetourAttachEx(_Inout_ PVOID *ppPointer,
                            _Out_opt_ PVOID *ppRealDetour);
 
 LONG WINAPI DetourDetach(_Inout_ PVOID *ppPointer,
-                         _In_ PVOID pDetour);
+                         _In_ const VOID *pDetour);
 
 BOOL WINAPI DetourSetIgnoreTooSmall(_In_ BOOL fIgnore);
 BOOL WINAPI DetourSetRetainRegions(_In_ BOOL fRetain);
@@ -534,7 +549,7 @@ PVOID WINAPI DetourSetSystemRegionUpperBound(_In_ PVOID pSystemRegionUpperBound)
 //
 PVOID WINAPI DetourFindFunction(_In_ LPCSTR pszModule,
                                 _In_ LPCSTR pszFunction);
-PVOID WINAPI DetourCodeFromPointer(_In_ PVOID pPointer,
+PVOID WINAPI DetourCodeFromPointer(_In_ const VOID *pPointer,
                                    _Out_opt_ PVOID *ppGlobals);
 PVOID WINAPI DetourCopyInstruction(_In_opt_ PVOID pDst,
                                    _Inout_opt_ PVOID *ppDstPool,

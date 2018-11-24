@@ -109,7 +109,7 @@ add_library(detours
     disolarm64.cpp)
 target_compile_options(detours PRIVATE ${DETOURS_CFLAGS})
 
-file(COPY detours.h DESTINATION ${INCD})
-file(COPY detver.h DESTINATION ${INCD})
+configure_file(detours.h ${INCD}/detours.h COPYONLY)
+configure_file(detver.h ${INCD}/detver.h COPYONLY)
 
 ##############################################################################

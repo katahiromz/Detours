@@ -90,7 +90,7 @@ int WINAPI WinMain(HINSTANCE hinst, HINSTANCE hprev, LPSTR lpszCmdLine, int nCmd
 
     s_pvData = VirtualAlloc(NULL, sizeof(ULONG), MEM_RESERVE|MEM_COMMIT, PAGE_READWRITE);
     if (s_pvData == NULL) {
-        printf("VirtualAlloc failed: %d\n", GetLastError());
+        printf("VirtualAlloc failed: %d\n", (int)GetLastError());
         return 0;
     }
     *(PULONG)s_pvData = 1;

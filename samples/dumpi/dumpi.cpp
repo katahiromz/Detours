@@ -24,14 +24,13 @@
 
 ////////////////////////////////////////////////////////////// Error Messages.
 //
-VOID AssertMessage(PCSTR szMsg, PCSTR szFile, DWORD nLine)
+VOID AssertMessage(PCSTR szMsg, PCSTR szFile, INT nLine)
 {
     printf("ASSERT(%s) failed in %s, line %d.", szMsg, szFile, nLine);
 }
 
 #define ASSERT(x)   \
 do { if (!(x)) { AssertMessage(#x, __FILE__, __LINE__); DebugBreak(); }} while (0)
-    ;
 
 //////////////////////////////////////////////////////////////////////////////
 //
@@ -77,7 +76,7 @@ BOOL CALLBACK ListSymbolCallback(_In_opt_ PVOID pContext,
 
     if (nOrigOrdinal != 0) {
         printf("  %s::#%d\n",
-               s_szFile, nOrigOrdinal);
+               s_szFile, (int)nOrigOrdinal);
     }
     else {
         printf("  %s::%s\n",
@@ -104,13 +103,13 @@ BOOL DimpFile(PCHAR pszPath)
 
     if (hOld == INVALID_HANDLE_VALUE) {
         printf("%s: Failed to open input file with error: %d\n",
-               pszPath, GetLastError());
+               pszPath, (int)GetLastError());
         bGood = FALSE;
         goto end;
     }
 
     if ((pBinary = DetourBinaryOpen(hOld)) == NULL) {
-        printf("%s: DetourBinaryOpen failed: %d\n", pszPath, GetLastError());
+        printf("%s: DetourBinaryOpen failed: %d\n", pszPath, (int)GetLastError());
         goto end;
     }
 
@@ -127,7 +126,7 @@ BOOL DimpFile(PCHAR pszPath)
                                  ListSymbolCallback,
                                  NULL)) {
 
-        printf("%s: DetourBinaryEditImports failed: %d\n", pszPath, GetLastError());
+        printf("%s: DetourBinaryEditImports failed: %d\n", pszPath, (int)GetLastError());
     }
 
     DetourBinaryClose(pBinary);

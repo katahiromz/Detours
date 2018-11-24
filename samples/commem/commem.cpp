@@ -48,9 +48,9 @@ HRESULT STDMETHODCALLTYPE MineIStreamWrite(IStream * This,
         pcbWritten = &cbWritten;
     }
 
-    printf("commem:   %p->IStreamWrite(pv=%p, cb=%d)\n", This, pv, cb);
+    printf("commem:   %p->IStreamWrite(pv=%p, cb=%d)\n", (void *)This, pv, (int)cb);
     hr = RealIStreamWrite(This, pv, cb, pcbWritten);
-    printf("commem:   %p->IStreamWrite -> %08x (pcbWritten=%d)\n", This, hr, *pcbWritten);
+    printf("commem:   %p->IStreamWrite -> %08x (pcbWritten=%d)\n", (void *)This, (int)hr, (int)*pcbWritten);
 
     return hr;
 }
@@ -86,7 +86,7 @@ int main(int argc, char **argv)
 
     DetourTransactionBegin();
     DetourUpdateThread(GetCurrentThread());
-    DetourAttach(&(PVOID&)RealIStreamWrite, MineIStreamWrite);
+    DetourAttach(&(PVOID&)RealIStreamWrite, (void *)MineIStreamWrite);
     DetourTransactionCommit();
 
     printf("commem: Calling Write w/o after attach.\n");
@@ -96,7 +96,7 @@ int main(int argc, char **argv)
 
     DetourTransactionBegin();
     DetourUpdateThread(GetCurrentThread());
-    DetourDetach(&(PVOID&)RealIStreamWrite, MineIStreamWrite);
+    DetourDetach(&(PVOID&)RealIStreamWrite, (void *)MineIStreamWrite);
     DetourTransactionCommit();
 
     printf("commem: Calling Write w/o after detach.\n");

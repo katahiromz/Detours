@@ -53,7 +53,7 @@ BOOL WINAPI DllMain(HINSTANCE hinst, DWORD dwReason, LPVOID reserved)
         }
         else {
             printf("ogldet" DETOURS_STRINGIFY(DETOURS_BITS) ".dll:"
-                   " Error detouring glFinish(): %d\n", error);
+                   " Error detouring glFinish(): %d\n", (int)error);
         }
     }
     else if (dwReason == DLL_PROCESS_DETACH) {
@@ -63,7 +63,7 @@ BOOL WINAPI DllMain(HINSTANCE hinst, DWORD dwReason, LPVOID reserved)
         error = DetourTransactionCommit();
 
         printf("ogldet" DETOURS_STRINGIFY(DETOURS_BITS) ".dll:"
-               " Removed detour glFinish() (result=%d)\n", error);
+               " Removed detour glFinish() (result=%d)\n", (int)error);
         fflush(stdout);
     }
 
