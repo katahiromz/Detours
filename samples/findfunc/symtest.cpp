@@ -9,12 +9,16 @@
 
 #include <windows.h>
 #include <stdio.h>
-#pragma warning(push)
+#ifdef _MSC_VER
+    #pragma warning(push)
+#endif
 #if _MSC_VER > 1400
-#pragma warning(disable:6102 6103) // /analyze warnings
+    #pragma warning(disable:6102 6103) // /analyze warnings
 #endif
 #include <strsafe.h>
-#pragma warning(pop)
+#ifdef _MSC_VER
+    #pragma warning(pop)
+#endif
 #include <detours.h>
 #include "target.h"
 
@@ -25,10 +29,14 @@ typedef PIMAGEHLP_MODULE PIMAGEHLP_MODULE64;
 typedef IMAGEHLP_SYMBOL SYMBOL_INFO;
 typedef PIMAGEHLP_SYMBOL PSYMBOL_INFO;
 #else
-#pragma warning(push)
-#pragma warning(disable:4091) // empty typedef
+#ifdef _MSC_VER
+    #pragma warning(push)
+    #pragma warning(disable:4091) // empty typedef
+#endif
 #include <dbghelp.h>
-#pragma warning(pop)
+#ifdef _MSC_VER
+    #pragma warning(pop)
+#endif
 #endif
 
 //////////////////////////////////////////////////////////////////////////////

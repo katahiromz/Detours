@@ -37,7 +37,9 @@
 #define STGOPTIONS          PVOID
 
 //////////////////////////////////////////////////////////////////////////////
-#pragma warning(disable:4127)   // Many of our asserts are constants.
+#ifdef _MSC_VER
+    #pragma warning(disable:4127)   // Many of our asserts are constants.
+#endif
 
 #define ASSERT_ALWAYS(x)   \
     do {                                                        \

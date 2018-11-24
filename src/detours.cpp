@@ -7,18 +7,22 @@
 //  Copyright (c) Microsoft Corporation.  All rights reserved.
 //
 
-#pragma warning(disable:4068) // unknown pragma (suppress)
+#ifdef _MSC_VER
+    #pragma warning(disable:4068) // unknown pragma (suppress)
+#endif
 
 #if _MSC_VER >= 1900
-#pragma warning(push)
-#pragma warning(disable:4091) // empty typedef
+    #pragma warning(push)
+    #pragma warning(disable:4091) // empty typedef
 #endif
 
 #define _ARM_WINAPI_PARTITION_DESKTOP_SDK_AVAILABLE 1
 #include <windows.h>
 
+#ifdef _MSC_VER
 #if (_MSC_VER < 1299)
-#pragma warning(disable: 4710)
+    #pragma warning(disable: 4710)
+#endif
 #endif
 
 //#define DETOUR_DEBUG 1
@@ -31,7 +35,7 @@
 #endif
 
 #if _MSC_VER >= 1900
-#pragma warning(pop)
+    #pragma warning(pop)
 #endif
 
 #define NOTHROW

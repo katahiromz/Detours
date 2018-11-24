@@ -8,19 +8,23 @@
 //
 
 #if _MSC_VER >= 1900
-#pragma warning(push)
-#pragma warning(disable:4091) // empty typedef
+    #pragma warning(push)
+    #pragma warning(disable:4091) // empty typedef
 #endif
 #define _CRT_STDIO_ARBITRARY_WIDE_SPECIFIERS 1
 #define _ARM_WINAPI_PARTITION_DESKTOP_SDK_AVAILABLE 1
 #include <windows.h>
 #include <stddef.h>
-#pragma warning(push)
+#ifdef _MSC_VER
+    #pragma warning(push)
+#endif
 #if _MSC_VER > 1400
-#pragma warning(disable:6102 6103) // /analyze warnings
+    #pragma warning(disable:6102 6103) // /analyze warnings
 #endif
 #include <strsafe.h>
-#pragma warning(pop)
+#ifdef _MSC_VER
+    #pragma warning(pop)
+#endif
 
 // #define DETOUR_DEBUG 1
 #define DETOURS_INTERNAL
@@ -32,7 +36,7 @@
 #endif
 
 #if _MSC_VER >= 1900
-#pragma warning(pop)
+    #pragma warning(pop)
 #endif
 
 #define IMPORT_DIRECTORY OptionalHeader.DataDirectory[IMAGE_DIRECTORY_ENTRY_IMPORT]
@@ -1097,7 +1101,9 @@ BOOL WINAPI AllocExeHelper(_Out_ PDETOUR_EXE_HELPER *pHelper,
 
 // REVIEW 28020 The expression '1<=_Param_(2)& &_Param_(2)<=2147483647' is not true at this call.
 // REVIEW 28313 Analysis will not proceed past this point because of annotation evaluation. The annotation expression *_Param_(3)<_Param_(2)&&*_Param_(3)<=stringLength$(_Param_(1)) cannot be true under any assumptions at this point in the program.
-#pragma warning(suppress:28020 28313)
+#ifdef _MSC_VER
+    #pragma warning(suppress:28020 28313)
+#endif
         hr = StringCchLengthA(psz, cSize - cOffset, &cchDest);
         if (!SUCCEEDED(hr)) {
             goto Cleanup;

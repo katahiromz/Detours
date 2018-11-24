@@ -4,7 +4,7 @@
 ##############################################################################
 
 # CMake minimum version
-cmake_minimum_required(VERSION 3.13)
+cmake_minimum_required(VERSION 3.12.4)
 
 # project name and language
 project(Detours CXX)
@@ -33,10 +33,16 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
     # using Clang
     set(CMAKE_C_FLAGS "-static")
     set(CMAKE_CXX_FLAGS "-static")
+
+    # SEH
+    add_compile_options(-D__try=__try1 -D__except=__except1)
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     # using GCC
     set(CMAKE_C_FLAGS "-static -static-libgcc -static-libstdc++")
     set(CMAKE_CXX_FLAGS "-static -static-libgcc -static-libstdc++")
+
+    # SEH
+    add_compile_options(-D__try=__try1 -D__except=__except1)
 elseif (MSVC)
     # replace "/MD" with "/MT" (building without runtime DLLs)
     set(CompilerFlags

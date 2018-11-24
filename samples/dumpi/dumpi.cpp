@@ -10,12 +10,16 @@
 #include <stdlib.h>
 #include <windows.h>
 #include <shellapi.h>
-#pragma warning(push)
+#ifdef _MSC_VER
+    #pragma warning(push)
+#endif
 #if _MSC_VER > 1400
-#pragma warning(disable:6102 6103) // /analyze warnings
+    #pragma warning(disable:6102 6103) // /analyze warnings
 #endif
 #include <strsafe.h>
-#pragma warning(pop)
+#ifdef _MSC_VER
+    #pragma warning(pop)
+#endif
 #include <detours.h>
 
 ////////////////////////////////////////////////////////////// Error Messages.

@@ -16,7 +16,7 @@
 #include "firstexc.h"
 
 #if _MSC_VER > 1000
-#pragma warning(disable: 4740)
+    #pragma warning(disable: 4740)
 #endif
 
 //////////////////////////////////////////////////////////////////////////////
@@ -35,8 +35,10 @@ VOID (NTAPI *Real_KiUserExceptionDispatcher)(IN PEXCEPTION_RECORD ExceptionRecor
 //  This function effectively removes all try..catch frames for the current
 //  stack.  It forces all exceptions to be treated as unhandled exceptions.
 //
-#pragma warning(push)
-#pragma warning(disable: 4733)
+#ifdef _MSC_VER
+    #pragma warning(push)
+    #pragma warning(disable: 4733)
+#endif
 static VOID WINAPI RemoveAllExceptionHandlers(VOID)
 {
     // The basic, OS defined exception frame
@@ -63,7 +65,9 @@ static VOID WINAPI RemoveAllExceptionHandlers(VOID)
     __asm mov eax, [pLastGood];
     __asm mov FS:[0], eax;
 }
-#pragma warning(pop)
+#ifdef _MSC_VER
+    #pragma warning(pop)
+#endif
 
 //////////////////////////////////////////////////////////////////////////////
 // Routine Description:

@@ -11,23 +11,29 @@
 
 #define _CRT_STDIO_ARBITRARY_WIDE_SPECIFIERS 1
 
-#pragma warning(disable:4068) // unknown pragma (suppress)
+#ifdef _MSC_VER
+    #pragma warning(disable:4068) // unknown pragma (suppress)
+#endif
 
 #if _MSC_VER >= 1900
-#pragma warning(push)
-#pragma warning(disable:4091) // empty typedef
+    #pragma warning(push)
+    #pragma warning(disable:4091) // empty typedef
 #endif
 
 #define _ARM_WINAPI_PARTITION_DESKTOP_SDK_AVAILABLE 1
 #include <windows.h>
 #if (_MSC_VER < 1310)
 #else
-#pragma warning(push)
+#ifdef _MSC_VER
+    #pragma warning(push)
+#endif
 #if _MSC_VER > 1400
-#pragma warning(disable:6102 6103) // /analyze warnings
+    #pragma warning(disable:6102 6103) // /analyze warnings
 #endif
 #include <strsafe.h>
-#pragma warning(pop)
+#ifdef _MSC_VER
+    #pragma warning(pop)
+#endif
 #endif
 
 // #define DETOUR_DEBUG 1
@@ -39,7 +45,7 @@
 #endif
 
 #if _MSC_VER >= 1900
-#pragma warning(pop)
+    #pragma warning(pop)
 #endif
 
 #define CLR_DIRECTORY OptionalHeader.DataDirectory[IMAGE_DIRECTORY_ENTRY_COM_DESCRIPTOR]
@@ -321,7 +327,9 @@ PVOID WINAPI DetourGetEntryPoint(_In_opt_ HMODULE hModule)
     }
 
     __try {
-#pragma warning(suppress:6011) // GetModuleHandleW(NULL) never returns NULL.
+#ifdef _MSC_VER
+    #pragma warning(suppress:6011) // GetModuleHandleW(NULL) never returns NULL.
+#endif
         if (pDosHeader->e_magic != IMAGE_DOS_SIGNATURE) {
             SetLastError(ERROR_BAD_EXE_FORMAT);
             return NULL;
@@ -394,7 +402,9 @@ ULONG WINAPI DetourGetModuleSize(_In_opt_ HMODULE hModule)
     }
 
     __try {
-#pragma warning(suppress:6011) // GetModuleHandleW(NULL) never returns NULL.
+#ifdef _MSC_VER
+    #pragma warning(suppress:6011) // GetModuleHandleW(NULL) never returns NULL.
+#endif
         if (pDosHeader->e_magic != IMAGE_DOS_SIGNATURE) {
             SetLastError(ERROR_BAD_EXE_FORMAT);
             return NULL;
@@ -487,7 +497,9 @@ BOOL WINAPI DetourEnumerateExports(_In_ HMODULE hModule,
     }
 
     __try {
-#pragma warning(suppress:6011) // GetModuleHandleW(NULL) never returns NULL.
+#ifdef _MSC_VER
+    #pragma warning(suppress:6011) // GetModuleHandleW(NULL) never returns NULL.
+#endif
         if (pDosHeader->e_magic != IMAGE_DOS_SIGNATURE) {
             SetLastError(ERROR_BAD_EXE_FORMAT);
             return NULL;
@@ -565,7 +577,9 @@ BOOL WINAPI DetourEnumerateImportsEx(_In_opt_ HMODULE hModule,
     }
 
     __try {
-#pragma warning(suppress:6011) // GetModuleHandleW(NULL) never returns NULL.
+#ifdef _MSC_VER
+    #pragma warning(suppress:6011) // GetModuleHandleW(NULL) never returns NULL.
+#endif
         if (pDosHeader->e_magic != IMAGE_DOS_SIGNATURE) {
             SetLastError(ERROR_BAD_EXE_FORMAT);
             return FALSE;
@@ -699,7 +713,9 @@ static PDETOUR_LOADED_BINARY WINAPI GetPayloadSectionFromModule(HMODULE hModule)
     }
 
     __try {
-#pragma warning(suppress:6011) // GetModuleHandleW(NULL) never returns NULL.
+#ifdef _MSC_VER
+    #pragma warning(suppress:6011) // GetModuleHandleW(NULL) never returns NULL.
+#endif
         if (pDosHeader->e_magic != IMAGE_DOS_SIGNATURE) {
             SetLastError(ERROR_BAD_EXE_FORMAT);
             return NULL;

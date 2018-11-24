@@ -10,23 +10,27 @@
 //
 
 #if _MSC_VER >= 1900
-#pragma warning(push)
-#pragma warning(disable:4091) // empty typedef
+    #pragma warning(push)
+    #pragma warning(disable:4091) // empty typedef
 #endif
 #define _CRT_STDIO_ARBITRARY_WIDE_SPECIFIERS 1
 #define _ARM_WINAPI_PARTITION_DESKTOP_SDK_AVAILABLE 1
 #include <windows.h>
 #if _MSC_VER >= 1310
-#pragma warning(push)
+    #pragma warning(push)
 #if _MSC_VER > 1400
-#pragma warning(disable:6102 6103) // /analyze warnings
+    #pragma warning(disable:6102 6103) // /analyze warnings
 #endif
 #include <strsafe.h>
-#pragma warning(pop)
+#ifdef _MSC_VER
+    #pragma warning(pop)
+#endif
 #endif
 
+#ifdef _MSC_VER
 #if (_MSC_VER < 1299)
-#pragma warning(disable: 4710)
+    #pragma warning(disable: 4710)
+#endif
 #endif
 
 // #define DETOUR_DEBUG 1
@@ -39,7 +43,7 @@
 #endif
 
 #if _MSC_VER >= 1900
-#pragma warning(pop)
+    #pragma warning(pop)
 #endif
 
 namespace Detour
@@ -2059,7 +2063,7 @@ BOOL CImage::Write(HANDLE hFile)
     return TRUE;
 }
 
-};                                                      // namespace Detour
+}                                                       // namespace Detour
 
 //////////////////////////////////////////////////////////////////////////////
 //

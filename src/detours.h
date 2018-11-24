@@ -233,7 +233,9 @@ typedef ULONG ULONG_PTR;
 
 #ifdef DETOURS_INTERNAL
 
-#pragma warning(disable:4615) // unknown warning type (suppress with older compilers)
+#ifdef _MSC_VER
+    #pragma warning(disable:4615) // unknown warning type (suppress with older compilers)
+#endif
 
 #ifndef _Benign_race_begin_
 #define _Benign_race_begin_
@@ -257,6 +259,13 @@ typedef ULONG ULONG_PTR;
 
 #endif // DETOURS_INTERNAL
 #endif // DETOURS_DONT_REMOVE_SAL_20
+
+#undef C_ASSERT
+#if __cplusplus >= 201103L
+    #define C_ASSERT(expr) static_assert(expr, #expr)
+#else
+    #define C_ASSERT(expr) typedef char __C_ASSERT__[(expr) ? 1 : -1]
+#endif
 
 //////////////////////////////////////////////////////////////////////////////
 //
@@ -317,7 +326,7 @@ typedef struct _DETOUR_TRAMPOLINE DETOUR_TRAMPOLINE, *PDETOUR_TRAMPOLINE;
 
 /////////////////////////////////////////////////////////// Binary Structures.
 //
-#pragma pack(push, 8)
+#include <pshpack8.h>
 typedef struct _DETOUR_SECTION_HEADER
 {
     DWORD       cbHeaderSize;
@@ -411,7 +420,7 @@ typedef struct _DETOUR_EXE_HELPER
     CHAR                rDlls[4];
 } DETOUR_EXE_HELPER, *PDETOUR_EXE_HELPER;
 
-#pragma pack(pop)
+#include <poppack.h>
 
 #define DETOUR_SECTION_HEADER_DECLARE(cbSectionSize) \
 { \
@@ -790,22 +799,22 @@ VOID CALLBACK DetourFinishHelperProcess(_In_ HWND,
 //////////////////////////////////////////////////////////////////////////////
 //
 #if (_MSC_VER < 1299)
-#include <imagehlp.h>
-typedef IMAGEHLP_MODULE IMAGEHLP_MODULE64;
-typedef PIMAGEHLP_MODULE PIMAGEHLP_MODULE64;
-typedef IMAGEHLP_SYMBOL SYMBOL_INFO;
-typedef PIMAGEHLP_SYMBOL PSYMBOL_INFO;
+    #include <imagehlp.h>
+    typedef IMAGEHLP_MODULE IMAGEHLP_MODULE64;
+    typedef PIMAGEHLP_MODULE PIMAGEHLP_MODULE64;
+    typedef IMAGEHLP_SYMBOL SYMBOL_INFO;
+    typedef PIMAGEHLP_SYMBOL PSYMBOL_INFO;
 
-static inline
-LONG InterlockedCompareExchange(_Inout_ LONG *ptr, _In_ LONG nval, _In_ LONG oval)
-{
-    return (LONG)::InterlockedCompareExchange((PVOID*)ptr, (PVOID)nval, (PVOID)oval);
-}
+    static inline
+    LONG InterlockedCompareExchange(_Inout_ LONG *ptr, _In_ LONG nval, _In_ LONG oval)
+    {
+        return (LONG)::InterlockedCompareExchange((PVOID*)ptr, (PVOID)nval, (PVOID)oval);
+    }
 #else
-#pragma warning(push)
-#pragma warning(disable:4091) // empty typedef
-#include <dbghelp.h>
-#pragma warning(pop)
+    #pragma warning(push)
+    #pragma warning(disable:4091) // empty typedef
+    #include <dbghelp.h>
+    #pragma warning(pop)
 #endif
 
 #ifdef IMAGEAPI // defined by DBGHELP.H

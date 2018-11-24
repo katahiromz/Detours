@@ -72,19 +72,26 @@ elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
 endif()
 
 if (DETOURS_SOURCE_BROWSING EQUAL 1)
-    set(DETOURS_CFLAGS ${DETOURS_CFLAGS} /FR)
+    if (MSVC)
+        set(DETOURS_CFLAGS ${DETOURS_CFLAGS} /FR)
+    endif()
 else()
-    set(DETOURS_CFLAGS ${DETOURS_CFLAGS} /DWIN32_LEAN_AND_MEAN /D_WIN32_WINNT=0x501)
+    set(DETOURS_CFLAGS ${DETOURS_CFLAGS} -DWIN32_LEAN_AND_MEAN -D_WIN32_WINNT=0x501)
 endif()
 
 if (DETOURS_TARGET_PROCESSOR STREQUAL "IA64")
-    set(DETOURS_CFLAGS ${DETOURS_CFLAGS} /wd4163) # intrinsic rdtebex not available; using newer Windows headers with older compiler
+    if (MSVC)
+        # intrinsic rdtebex not available; using newer Windows headers with older compiler
+        set(DETOURS_CFLAGS ${DETOURS_CFLAGS} /wd4163) 
+    endif()
 endif()
 
 if (DETOURS_WIN_7 AND DETOURS_CL_17_OR_NEWER)
-    set(DETOURS_CFLAGS ${DETOURS_CFLAGS} /D_USING_V110_SDK71_)
+    set(DETOURS_CFLAGS ${DETOURS_CFLAGS} -D_USING_V110_SDK71_)
 elseif (DETOURS_ANALYZE)
-    set(DETOURS_CFLAGS ${DETOURS_CFLAGS} /analyze)
+    if (MSVC)
+        set(DETOURS_CFLAGS ${DETOURS_CFLAGS} /analyze)
+    endif()
 endif()
 
 ##############################################################################
@@ -100,7 +107,7 @@ add_library(detours
     disolia64.cpp
     disolarm.cpp
     disolarm64.cpp)
-target_compile_definitions(detours PRIVATE ${DETOURS_CFLAGS})
+target_compile_options(detours PRIVATE ${DETOURS_CFLAGS})
 
 file(COPY detours.h DESTINATION ${INCD})
 file(COPY detver.h DESTINATION ${INCD})

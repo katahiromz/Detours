@@ -31,7 +31,9 @@
 #define STGOPTIONS          PVOID
 
 //////////////////////////////////////////////////////////////////////////////
-#pragma warning(disable:4127)   // Many of our asserts are constants.
+#ifdef _MSC_VER
+    #pragma warning(disable:4127)   // Many of our asserts are constants.
+#endif
 
 #define ASSERT_ALWAYS(x)   \
     do {                                                        \
@@ -455,8 +457,8 @@ static inline PBYTE RvaToVa(PBYTE pbBase, DWORD nOffset)
 }
 
 #if _MSC_VER >= 1900
-#pragma warning(push)
-#pragma warning(disable:4456) // declaration hides previous local declaration
+    #pragma warning(push)
+    #pragma warning(disable:4456) // declaration hides previous local declaration
 #endif
 
 BOOL ImportEnumerate(HINSTANCE hInst)
@@ -554,7 +556,7 @@ BOOL ImportEnumerate(HINSTANCE hInst)
 }
 
 #if _MSC_VER >= 1900
-#pragma warning(pop)
+    #pragma warning(pop)
 #endif
 
 BOOL InstanceEnumerate(HINSTANCE hInst)

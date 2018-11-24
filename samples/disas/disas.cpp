@@ -250,7 +250,9 @@ BOOL CALLBACK ExportCallback(_In_opt_ PVOID pContext,
 //////////////////////////////////////////////////////////////////////// IA64.
 //
 #ifdef DETOURS_IA64
-#pragma warning(disable: 4201)  // ignore warning about unnamed sturcture in union.
+#ifdef _MSC_VER
+    #pragma warning(disable: 4201)  // ignore warning about unnamed sturcture in union.
+#endif
 
 void DumpHi(PBYTE pbData, ULONG cbData, ULONG cbSpace)
 {

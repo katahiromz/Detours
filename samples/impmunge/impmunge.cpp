@@ -9,15 +9,21 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <windows.h>
-#pragma warning(push)
+#ifdef _MSC_VER
+    #pragma warning(push)
+#endif
 #if _MSC_VER > 1400
-#pragma warning(disable:6102 6103) // /analyze warnings
+    #pragma warning(disable:6102 6103) // /analyze warnings
 #endif
 #include <strsafe.h>
 #include <detours.h>
-#pragma warning(disable:4091) // empty typedef
+#ifdef _MSC_VER
+    #pragma warning(disable:4091) // empty typedef
+#endif
 #include <imagehlp.h>
-#pragma warning(pop)
+#ifdef _MSC_VER
+    #pragma warning(pop)
+#endif
 
 ////////////////////////////////////////////////////////////// Error Messages.
 //

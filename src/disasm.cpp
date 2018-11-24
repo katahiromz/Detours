@@ -8,8 +8,8 @@
 //
 
 #if _MSC_VER >= 1900
-#pragma warning(push)
-#pragma warning(disable:4091) // empty typedef
+    #pragma warning(push)
+    #pragma warning(disable:4091) // empty typedef
 #endif
 
 #define _ARM_WINAPI_PARTITION_DESKTOP_SDK_AVAILABLE 1
@@ -26,7 +26,7 @@
 #endif
 
 #if _MSC_VER >= 1900
-#pragma warning(pop)
+    #pragma warning(pop)
 #endif
 
 #undef ASSERT
@@ -2139,7 +2139,9 @@ UINT DETOUR_IA64_BUNDLE::Copy(_Out_ DETOUR_IA64_BUNDLE *pDst,
 {
     // Copy the bytes unchanged.
 
-#pragma warning(suppress:6001) // using uninitialized *pDst
+#ifdef _MSC_VER
+    #pragma warning(suppress:6001) // using uninitialized *pDst
+#endif
     pDst->wide[0] = wide[0];
     pDst->wide[1] = wide[1];
 

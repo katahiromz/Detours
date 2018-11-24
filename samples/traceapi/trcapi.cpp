@@ -21,12 +21,16 @@
 #endif
 #include <windows.h>
 #include <stdio.h>
-#pragma warning(push)
+#ifdef _MSC_VER
+    #pragma warning(push)
+#endif
 #if _MSC_VER > 1400
-#pragma warning(disable:6102 6103) // /analyze warnings
+    #pragma warning(disable:6102 6103) // /analyze warnings
 #endif
 #include <strsafe.h>
-#pragma warning(pop)
+#ifdef _MSC_VER
+    #pragma warning(pop)
+#endif
 #include "detours.h"
 #include "syelog.h"
 
@@ -43,10 +47,14 @@
 #define PDWORD_PTR  PDWORD
 #endif
 
-#pragma warning(disable:4996)   // We don't care about deprecated APIs.
+#ifdef _MSC_VER
+    #pragma warning(disable:4996)   // We don't care about deprecated APIs.
+#endif
 
 //////////////////////////////////////////////////////////////////////////////
-#pragma warning(disable:4127)   // Many of our asserts are constants.
+#ifdef _MSC_VER
+    #pragma warning(disable:4127)   // Many of our asserts are constants.
+#endif
 
 #define ASSERT_ALWAYS(x)   \
     do {                                                        \

@@ -10,12 +10,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stddef.h>
-#pragma warning(push)
+#ifdef _MSC_VER
+    #pragma warning(push)
+#endif
 #if _MSC_VER > 1400
-#pragma warning(disable:6102 6103) // /analyze warnings
+    #pragma warning(disable:6102 6103) // /analyze warnings
 #endif
 #include <strsafe.h>
-#pragma warning(pop)
+#ifdef _MSC_VER
+    #pragma warning(pop)
+#endif
 #include <detours.h>
 #include "tracebld.h"
 
@@ -27,7 +31,9 @@ typedef LONG LONG_PTR;
 #endif
 
 //////////////////////////////////////////////////////////////////////////////
-#pragma warning(disable:4127)   // Many of our asserts are constants.
+#ifdef _MSC_VER
+    #pragma warning(disable:4127)   // Many of our asserts are constants.
+#endif
 
 #define ASSERT_ALWAYS(x)   \
     do {                                                        \

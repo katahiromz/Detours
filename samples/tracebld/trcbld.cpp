@@ -17,12 +17,16 @@
 
 #include <windows.h>
 #include <stdio.h>
-#pragma warning(push)
+#ifdef _MSC_VER
+    #pragma warning(push)
+#endif
 #if _MSC_VER > 1400
-#pragma warning(disable:6102 6103) // /analyze warnings
+    #pragma warning(disable:6102 6103) // /analyze warnings
 #endif
 #include <strsafe.h>
-#pragma warning(pop)
+#ifdef _MSC_VER
+    #pragma warning(pop)
+#endif
 #include "detours.h"
 #include "tracebld.h"
 
@@ -32,7 +36,9 @@
 
 //////////////////////////////////////////////////////////////////////////////
 
-#pragma warning(disable:4127)   // Many of our asserts are constants.
+#ifdef _MSC_VER
+    #pragma warning(disable:4127)   // Many of our asserts are constants.
+#endif
 
 #define DEBUG_BREAK() DebugBreak()
 
@@ -1872,8 +1878,8 @@ static PCHAR do_ewstr(PCHAR pszOut, PCHAR pszEnd, PCWSTR pszIn)
 }
 
 #if _MSC_VER >= 1900
-#pragma warning(push)
-#pragma warning(disable:4456) // declaration hides previous local declaration
+    #pragma warning(push)
+    #pragma warning(disable:4456) // declaration hides previous local declaration
 #endif
 
 VOID VSafePrintf(PCSTR pszMsg, va_list args, PCHAR pszBuffer, LONG cbBuffer)
@@ -2202,7 +2208,7 @@ VOID VSafePrintf(PCSTR pszMsg, va_list args, PCHAR pszBuffer, LONG cbBuffer)
 }
 
 #if _MSC_VER >= 1900
-#pragma warning(pop)
+    #pragma warning(pop)
 #endif
 
 PCHAR SafePrintf(PCHAR pszBuffer, LONG cbBuffer, PCSTR pszMsg, ...)

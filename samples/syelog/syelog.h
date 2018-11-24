@@ -11,9 +11,11 @@
 #define _SYELOGD_H_
 #include <stdarg.h>
 
-#pragma pack(push, 1)
-#pragma warning(push)
-#pragma warning(disable: 4200)
+#include <pshpack1.h>
+#ifdef _MSC_VER
+    #pragma warning(push)
+    #pragma warning(disable: 4200)
+#endif
 
 //////////////////////////////////////////////////////////////////////////////
 //
@@ -81,8 +83,10 @@ VOID Syelog(BYTE nSeverity, PCSTR pszMsgf, ...);
 VOID SyelogV(BYTE nSeverity, PCSTR pszMsgf, va_list args);
 VOID SyelogClose(BOOL fTerminate);
 
-#pragma warning(pop)
-#pragma pack(pop)
+#ifdef _MSC_VER
+    #pragma warning(pop)
+#endif
+#include <poppack.h>
 
 #endif //  _SYELOGD_H_
 //

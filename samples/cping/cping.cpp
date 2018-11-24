@@ -18,12 +18,16 @@
 #include <shellapi.h>
 #include <stdio.h>
 #include <stdlib.h>
-#pragma warning(push)
+#ifdef _MSC_VER
+    #pragma warning(push)
+#endif
 #if _MSC_VER > 1400
-#pragma warning(disable:6102 6103) // /analyze warnings
+    #pragma warning(disable:6102 6103) // /analyze warnings
 #endif
 #include <strsafe.h>
-#pragma warning(pop)
+#ifdef _MSC_VER
+    #pragma warning(pop)
+#endif
 #include <winnt.h>
 #include <rpc.h>
 #include <rpcdcep.h>
@@ -60,7 +64,9 @@ UINT64 GetTimeStamp(void)
 #define BE_VERBOSE
 ////////////////////////////////////////////////////////// Assertion Handling.
 //
-#pragma warning(disable:4127)   // Many of our asserts are constants.
+#ifdef _MSC_VER
+    #pragma warning(disable:4127)   // Many of our asserts are constants.
+#endif
 
 #ifndef NODEBUG
 #undef ASSERT
