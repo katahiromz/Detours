@@ -1,9 +1,10 @@
 add_library(target${DETOURS_BITS} SHARED target.cpp target.rc target.def)
+target_link_libraries(target${DETOURS_BITS} ${DEPS})
 set_target_properties(target${DETOURS_BITS} PROPERTIES OUTPUT_NAME "target${DETOURS_BITS}")
 if (MSVC)
     set_target_properties(target${DETOURS_BITS} PROPERTIES LINK_FLAGS "/base:0x1900000")
 else()
-    set_target_properties(target${DETOURS_BITS} PROPERTIES LINK_FLAGS "-Ttext-segment=1900000")
+    set_target_properties(target${DETOURS_BITS} PROPERTIES LINK_FLAGS "-Ttext 1900000")
 endif()
 
 add_library(extend${DETOURS_BITS} SHARED extend.cpp extend.rc extend.def)
@@ -12,7 +13,7 @@ set_target_properties(extend${DETOURS_BITS} PROPERTIES OUTPUT_NAME "extend${DETO
 if (MSVC)
     set_target_properties(extend${DETOURS_BITS} PROPERTIES LINK_FLAGS "/base:0x1a00000")
 else()
-    set_target_properties(extend${DETOURS_BITS} PROPERTIES LINK_FLAGS "-Ttext-segment=1a00000")
+    set_target_properties(extend${DETOURS_BITS} PROPERTIES LINK_FLAGS "-Ttext 1a00000")
 endif()
 
 add_executable(findfunc findfunc.cpp)

@@ -1863,7 +1863,7 @@ BOOL CImage::Write(HANDLE hFile)
         for (CImageImportFile *pImportFile = m_pImportFiles;
              pImportFile != NULL; pImportFile = pImportFile->m_pNextFile) {
 
-            ZeroMemory(piidDst, sizeof(piidDst));
+            ZeroMemory(piidDst, sizeof(*piidDst));
             nameTable.Allocate(pImportFile->m_pszName, (DWORD *)&piidDst->Name);
             piidDst->TimeDateStamp = 0;
             piidDst->ForwarderChain = pImportFile->m_nForwarderChain;
@@ -1905,7 +1905,7 @@ BOOL CImage::Write(HANDLE hFile)
             }
             piidDst++;
         }
-        ZeroMemory(piidDst, sizeof(piidDst));
+        ZeroMemory(piidDst, sizeof(*piidDst));
 
         //////////////////////////////////////////////////////////////////////////
         //
