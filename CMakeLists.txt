@@ -35,7 +35,7 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
     set(CMAKE_CXX_FLAGS "-static")
 
     # SEH
-    add_compile_options(-D__try=__try1 -D__except=__except1)
+    add_compile_options("-D__try=if(1)" "-D__except=else if")
 
     # __declspec(align(...))
     add_compile_options(-DDETOURS_ALIGNAS=alignas)
@@ -45,7 +45,7 @@ elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     set(CMAKE_CXX_FLAGS "-static -static-libgcc -static-libstdc++")
 
     # SEH
-    add_compile_options(-D__try=__try1 -D__except=__except1)
+    add_compile_options("-D__try=if(1)" "-D__except=else if")
 
     # __declspec(align(...))
     add_compile_options(-DDETOURS_ALIGNAS=alignas)

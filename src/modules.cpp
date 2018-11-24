@@ -22,19 +22,7 @@
 
 #define _ARM_WINAPI_PARTITION_DESKTOP_SDK_AVAILABLE 1
 #include <windows.h>
-#if (_MSC_VER < 1310)
-#else
-#ifdef _MSC_VER
-    #pragma warning(push)
-#endif
-#if _MSC_VER > 1400
-    #pragma warning(disable:6102 6103) // /analyze warnings
-#endif
 #include <strsafe.h>
-#ifdef _MSC_VER
-    #pragma warning(pop)
-#endif
-#endif
 
 // #define DETOUR_DEBUG 1
 #define DETOURS_INTERNAL
@@ -852,13 +840,12 @@ PVOID WINAPI DetourFindPayload(_In_opt_ HMODULE hModule,
             pbData = (PBYTE)pSection + pSection->cbBytes;
         }
         SetLastError(ERROR_INVALID_HANDLE);
-        return NULL;
     }
     __except(GetExceptionCode() == EXCEPTION_ACCESS_VIOLATION ?
              EXCEPTION_EXECUTE_HANDLER : EXCEPTION_CONTINUE_SEARCH) {
         SetLastError(ERROR_INVALID_HANDLE);
-        return NULL;
     }
+    return NULL;
 }
 
 _Writable_bytes_(*pcbData)
