@@ -608,6 +608,7 @@ VOID VSafePrintf(PCSTR pszMsg, va_list args, PCHAR pszBuffer, LONG cbBuffer)
                         *pszOut++ = *pszArg++;
                     }
                 }
+                fDigit = fDigit;
             }
             else {
                 if (pszOut < pszEnd) {

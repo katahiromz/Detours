@@ -361,7 +361,7 @@ PVOID WINAPI DetourGetEntryPoint(_In_opt_ HMODULE hModule)
             }
 
             SetLastError(NO_ERROR);
-            return GetProcAddress(hClr, "_CorExeMain");
+            return (PVOID)GetProcAddress(hClr, "_CorExeMain");
         }
 
         SetLastError(NO_ERROR);
@@ -378,8 +378,8 @@ PVOID WINAPI DetourGetEntryPoint(_In_opt_ HMODULE hModule)
     __except(GetExceptionCode() == EXCEPTION_ACCESS_VIOLATION ?
              EXCEPTION_EXECUTE_HANDLER : EXCEPTION_CONTINUE_SEARCH) {
         SetLastError(ERROR_EXE_MARKED_INVALID);
-        return NULL;
     }
+    return NULL;
 }
 
 ULONG WINAPI DetourGetModuleSize(_In_opt_ HMODULE hModule)

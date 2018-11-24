@@ -736,6 +736,8 @@ BOOL WINAPI DetourUpdateProcessWithDllEx(_In_ HANDLE hProcess,
         DETOUR_TRACE(("DetourCopyPayloadToProcess failed: %d\n", GetLastError()));
         return FALSE;
     }
+
+    bIs32BitExe = bIs32BitExe;
     return TRUE;
 }
 
