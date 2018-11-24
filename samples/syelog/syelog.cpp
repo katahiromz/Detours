@@ -58,10 +58,10 @@ static PCHAR do_base(PCHAR pszOut, UINT64 nValue, UINT nBase, PCSTR pszDigits)
         szTmp[nDigit] = pszDigits[nValue % nBase];
         nValue /= nBase;
     }
-    for (nDigit = 0; nDigit < sizeof(szTmp) - 2 && szTmp[nDigit] == '0'; nDigit++) {
+    for (nDigit = 0; nDigit < (int)(sizeof(szTmp) - 2) && szTmp[nDigit] == '0'; nDigit++) {
         // skip leading zeros.
     }
-    for (; nDigit < sizeof(szTmp) - 1; nDigit++) {
+    for (; nDigit < (int)(sizeof(szTmp) - 1); nDigit++) {
         *pszOut++ = szTmp[nDigit];
     }
     *pszOut = '\0';

@@ -798,24 +798,16 @@ VOID CALLBACK DetourFinishHelperProcess(_In_ HWND,
 
 //////////////////////////////////////////////////////////////////////////////
 //
-#if (_MSC_VER < 1299)
-    #include <imagehlp.h>
-    typedef IMAGEHLP_MODULE IMAGEHLP_MODULE64;
-    typedef PIMAGEHLP_MODULE PIMAGEHLP_MODULE64;
-    typedef IMAGEHLP_SYMBOL SYMBOL_INFO;
-    typedef PIMAGEHLP_SYMBOL PSYMBOL_INFO;
-
-    static inline
-    LONG InterlockedCompareExchange(_Inout_ LONG *ptr, _In_ LONG nval, _In_ LONG oval)
-    {
-        return (LONG)::InterlockedCompareExchange((PVOID*)ptr, (PVOID)nval, (PVOID)oval);
-    }
-#else
+#ifdef _MSC_VER
     #pragma warning(push)
     #pragma warning(disable:4091) // empty typedef
-    #include <dbghelp.h>
+#endif
+#include <dbghelp.h>
+#ifdef _MSC_VER
     #pragma warning(pop)
 #endif
+
+#include <excpt.h>      // for __try and __except (SEH)
 
 #ifdef IMAGEAPI // defined by DBGHELP.H
 typedef LPAPI_VERSION (NTAPI *PF_ImagehlpApiVersionEx)(_In_ LPAPI_VERSION AppVersion);
@@ -890,7 +882,7 @@ PDETOUR_SYM_INFO DetourLoadImageHlp(VOID);
 
 C_ASSERT(DETOUR_IA64_TEMPLATE_SIZE + DETOUR_IA64_INSTRUCTIONS_PER_BUNDLE * DETOUR_IA64_INSTRUCTION_SIZE == 128);
 
-__declspec(align(16)) struct DETOUR_IA64_BUNDLE
+struct DETOURS_ALIGNAS(16) DETOUR_IA64_BUNDLE
 {
   public:
     union

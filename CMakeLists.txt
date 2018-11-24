@@ -36,6 +36,9 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
 
     # SEH
     add_compile_options(-D__try=__try1 -D__except=__except1)
+
+    # __declspec(align(...))
+    add_compile_options(-DDETOURS_ALIGNAS=alignas)
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     # using GCC
     set(CMAKE_C_FLAGS "-static -static-libgcc -static-libstdc++")
@@ -43,6 +46,9 @@ elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
 
     # SEH
     add_compile_options(-D__try=__try1 -D__except=__except1)
+
+    # __declspec(align(...))
+    add_compile_options(-DDETOURS_ALIGNAS=alignas)
 elseif (MSVC)
     # replace "/MD" with "/MT" (building without runtime DLLs)
     set(CompilerFlags
@@ -57,7 +63,11 @@ elseif (MSVC)
     foreach(CompilerFlags ${CompilerFlags})
         string(REPLACE "/MD" "/MT" ${CompilerFlags} "${${CompilerFlags}}")
     endforeach()
+
     add_link_options(/NODEFAULTLIB:libcmtd)
+
+    # __declspec(align(...))
+    add_compile_options(-DDETOURS_ALIGNAS=alignas)
 endif()
 
 ##############################################################################
