@@ -267,6 +267,17 @@ typedef ULONG ULONG_PTR;
     #define C_ASSERT(expr) typedef char __C_ASSERT__[(expr) ? 1 : -1]
 #endif
 
+#if __cplusplus >= 201103L
+    #define DETOURS_ALIGNAS(x) alignas(x)
+#else
+    #define DETOURS_ALIGNAS(x) __declspec(align(x))
+#endif
+
+#if defined(__GNUC__) || defined(__clang__) || defined(DETOURS_NO_SEH)
+    #define __try if (1)
+    #define __except else if
+#endif
+
 //////////////////////////////////////////////////////////////////////////////
 //
 #ifndef GUID_DEFINED

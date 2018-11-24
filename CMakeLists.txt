@@ -33,22 +33,10 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
     # using Clang
     set(CMAKE_C_FLAGS "-static")
     set(CMAKE_CXX_FLAGS "-static")
-
-    # SEH
-    add_compile_options("-D__try=if(1)" "-D__except=else if")
-
-    # __declspec(align(...))
-    add_compile_options(-DDETOURS_ALIGNAS=alignas)
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     # using GCC
     set(CMAKE_C_FLAGS "-static -static-libgcc -static-libstdc++")
     set(CMAKE_CXX_FLAGS "-static -static-libgcc -static-libstdc++")
-
-    # SEH
-    add_compile_options("-D__try=if(1)" "-D__except=else if")
-
-    # __declspec(align(...))
-    add_compile_options(-DDETOURS_ALIGNAS=alignas)
 elseif (MSVC)
     # replace "/MD" with "/MT" (building without runtime DLLs)
     set(CompilerFlags
@@ -65,9 +53,6 @@ elseif (MSVC)
     endforeach()
 
     add_link_options(/NODEFAULTLIB:libcmtd)
-
-    # __declspec(align(...))
-    add_compile_options(-DDETOURS_ALIGNAS=alignas)
 endif()
 
 ##############################################################################
@@ -76,6 +61,11 @@ endif()
 option(DETOURS_WIN_7 "DETOURS_WIN_7" OFF)
 option(DETOURS_CL_17_OR_NEWER "DETOURS_CL_17_OR_NEWER" OFF)
 option(DETOURS_ANALYZE "DETOURS_ANALYZE" OFF)
+option(DETOURS_NO_SEH "DETOURS_NO_SEH" OFF)
+
+if (DETOURS_NO_SEH)
+    add_definitions(-DDETOURS_NO_SEH)
+endif()
 
 ##############################################################################
 
